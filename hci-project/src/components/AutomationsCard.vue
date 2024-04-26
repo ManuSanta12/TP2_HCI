@@ -1,7 +1,7 @@
 <template>
   <v-row dense>
     <v-col >
-      <v-card class="pa-2">
+      <v-card class="pa-2" width="300">
         <v-row class="px-3 pt-3">
           <v-col cols="10">
             <v-card-title class="pa-0 text-h8">Close Curtains</v-card-title>
