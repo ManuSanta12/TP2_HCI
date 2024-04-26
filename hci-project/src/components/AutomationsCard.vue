@@ -4,7 +4,7 @@
       <v-card class="pa-2">
         <v-row class="px-3 pt-3">
           <v-col cols="10">
-            <v-card-title class="pa-0">Close Curtains</v-card-title>
+            <v-card-title class="pa-0 text-h8">Close Curtains</v-card-title>
           </v-col>
           <v-col cols="2" class="d-flex justify-end pa-0">
             <v-btn icon :color="iconColor" @click="togglePlay">
