@@ -1,6 +1,6 @@
 <template>
     <v-row dense>
-        <v-col cols="12" md="4">
+        <v-col >
             <v-card class="pa-3"> 
                 <!-- margen de 12x se puede poner mas chico cambiar el 3 por 1 o 2 -->
                 <v-row class="px-3">

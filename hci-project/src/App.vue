@@ -3,9 +3,14 @@
     <NavigationBar/>
     <v-app-bar title="Home"  :order="order" color='#DDEAF4'/>
     <v-main color='#DDEAF4'>
+      <v-row class="pa-6 scrollable" >
         <DeviceCard class="ma-2"/>
         <LightDeviceCard class="ma-2"/>
         <AutomationsCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
+        
+      </v-row>
     </v-main>
   </v-layout>
 </template>
