@@ -1,5 +1,5 @@
 <template>
-      <v-navigation-drawer>
+      <v-navigation-drawer color='#D8D7D7' permanent width="194">
         <v-list>
             <v-list-item class="my-2">
             <v-list-item-content>
@@ -35,10 +35,13 @@
   };
   </script>
   
-<style>
-.navigation-drawer-background{
-    background-color:'#D8D7D7' !important;
-}
-</style>
+  <style>
+  .background{
+      background-color: var(--v-background-base) !important;
+  }
+  .navigation-drawer-background{
+      background-color:'#D8D7D7' !important;
+  }
+  </style>
 
   

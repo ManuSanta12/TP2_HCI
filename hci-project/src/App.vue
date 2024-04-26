@@ -1,9 +1,10 @@
 <template>
   <v-layout class="rounded rounded-md">
     <NavigationBar/>
-    <v-app-bar title="Home"/>
-    <v-main class="background">
+    <v-app-bar title="Home"  :order="order" color='#DDEAF4'/>
+    <v-main color='#DDEAF4'>
         <DeviceCard class="ma-2"/>
+        <LightDeviceCard class="ma-2"/>
         <AutomationsCard class="ma-2"/>
     </v-main>
   </v-layout>
