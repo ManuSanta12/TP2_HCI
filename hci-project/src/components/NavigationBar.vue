@@ -7,11 +7,13 @@
             </v-list-item-content>
             </v-list-item>
             <v-list-item-group>
-            <v-list-item v-for="item in items" :key="item.title" link :prepend-icon="item.icon">
+            <router-link v-for="item in items" :key="item.title" link :prepend-icon="item.icon" :to="item.to">
+              <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+            </router-link>
             </v-list-item-group>
             </v-list>      
       </v-navigation-drawer>
@@ -24,8 +26,8 @@
     name: 'Sidebar',
     setup() {
       const items = ref([
-        { title: "Home", icon: "mdi-home"},
-        { title: "Devices", icon: "mdi-monitor-cellphone-star" },
+        { title: "Home", icon: "mdi-home", to:"/home"},
+        { title: "Devices", icon: "mdi-monitor-cellphone-star", to:"/devices" },
         { title: "Automations", icon: "mdi-creation"},
         { title: "Settings", icon: "mdi-cog-outline" }
       ]);

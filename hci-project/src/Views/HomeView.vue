@@ -1,20 +1,30 @@
 <template>
-    <v-layout class="rounded rounded-md">
-      <NavigationBar/>
-      <v-app-bar title="Home" :order="order" color="blue"/>
-      <v-main>
-          <DeviceCard class="ma-2"/>
-          <AutomationsCard class="ma-2"/>
-      </v-main>
-    </v-layout>
-  </template>
-  
-  
-  <script>
-  import AutomationsCard from "./src/components/AutomationsCard.vue";
-  import NavigationBar from './src/components/NavigationBar.vue';
-  import DeviceCard from "./src/components/DeviceCard.vue";
-  </script>
+  <v-layout class="rounded rounded-md">
+    <NavigationBar/>
+    <v-app-bar title="Home"  :order="order" color='#DDEAF4'/>
+    <v-main color='#DDEAF4'>
+      <v-row class="pa-6 scrollable" >
+        <DeviceCard class="ma-2"/>
+        <LightDeviceCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
+        <AirConditionerDeviceCard class="ma-2"/>
+      </v-row>
+    </v-main>
+  </v-layout>
+</template>
 
-  
-  
+<script>
+import AutomationsCard from './components/AutomationsCard.vue';
+import NavigationBar from './components/NavigationBar.vue';
+import DeviceCard from './components/DeviceCard.vue';
+import AirConditionerDeviceCard from './components/DeviceCard.vue';
+</script>
+<style>
+.background{
+    background-color: var(--v-background-base) !important;
+}
+.navigation-drawer-background{
+    background-color:'#D8D7D7' !important;
+}
+</style>
+
