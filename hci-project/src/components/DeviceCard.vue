@@ -11,14 +11,14 @@
                         <v-switch inset color="green" class="small-switch"></v-switch>
                     </v-col>
                 </v-row>
-                <v-col class="d-flex justify-center ">
+                <v-col class="d-flex justify-center">
                     <v-card-actions>
                         <v-btn icon><v-icon>mdi-skip-previous</v-icon></v-btn>
                         <v-btn icon><v-icon>mdi-pause</v-icon></v-btn>
                         <v-btn icon><v-icon>mdi-skip-next</v-icon></v-btn>
                     </v-card-actions>
                 </v-col>
-            <v-card-subtitle class="d-flex justify-center">
+            <v-card-subtitle class=" ma-2 d-flex justify-center">
                 Now playing: La bestia Pop - Patricio Rey y sus... 
                 <!-- aca deberia estar la info de la musica -->
             </v-card-subtitle>
@@ -26,13 +26,10 @@
                 <v-expansion-panel>
                         <v-expansion-panel-title>More</v-expansion-panel-title>
                         <v-expansion-panel-text>
-                        <v-expansion-panel-content>
-                            <v-card-text>
-                                Now playing: La bestia Pop - Patricio Rey y sus...
-                            </v-card-text>
-                            <v-card-text> Playing from genre: Rock</v-card-text>
-                            <v-card-text>Pick a song:
-                                <v-select dense solo hide-details
+                        <v-expansion-panel-content class="pa-0">
+                            <v-card-text class="pa-1"> Playing from genre: Rock</v-card-text>
+                            <v-card-text class="pa-1">Pick a song:
+                                <v-select dense solo hide-details outlined small
                                 :items="['La Bestia Pop', 'De música Ligera', 'Rock para los dientes', 'Campanas en la noche', 'Me matan limón!']"
                                 label="Song"
                                 ></v-select>

@@ -6,8 +6,8 @@
       <v-row class="pa-6 scrollable" >
         <DeviceCard class="ma-2"/>
         <LightDeviceCard class="ma-2"/>
-        <AutomationsCard class="ma-2"/>
         <AirConditionerDeviceCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
       </v-row>
     </v-main>
   </v-layout>

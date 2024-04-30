@@ -1,0 +1,8 @@
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+  }
+  
+  /* Optional: Adjust button styles */
+  /* .button-container v-btn {
+    /* Add your custom button styles here */

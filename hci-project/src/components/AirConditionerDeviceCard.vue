@@ -14,7 +14,7 @@
                 <v-col class="d-flex justify-center ">
                     <v-card-actions>
                         <v-btn icon><v-icon>mdi-minus</v-icon></v-btn>
-                        <v-card-text>24°C</v-card-text>
+                        <v-card-text class="text-h6">24°C</v-card-text>
                         <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
                     </v-card-actions>
                 </v-col>
@@ -23,17 +23,18 @@
                         <v-expansion-panel-title>More</v-expansion-panel-title>
                         <v-expansion-panel-text>
                         <v-expansion-panel-content>
-                            <v-card-text>
-                                Now playing: La bestia Pop - Patricio Rey y sus...
-                            </v-card-text>
-                            <v-card-text> Playing from genre: Rock</v-card-text>
-                            <v-card-text>Pick a song:
-                                <v-select dense solo hide-details
-                                :items="['La Bestia Pop', 'De música Ligera', 'Rock para los dientes', 'Campanas en la noche', 'Me matan limón!']"
-                                label="Song"
-                                ></v-select>
-                            </v-card-text>
-                            <v-slider dense hide-details></v-slider>
+                            <v-card-text>Mode</v-card-text>
+                            <!-- ver si es solo ventilacion frio y calor -->
+                            <div class="button-container-row">
+                                <v-btn>Cool</v-btn>
+                                <v-btn>Dry</v-btn>
+                                <v-btn>Heat</v-btn>
+                            </div>
+                            <div class="button-container-row d-flex justify-center">
+                                <v-btn class="ma-1">Fan</v-btn>
+                                <v-btn class="ma-1">Auto</v-btn>
+                            </div>
+                            <v-card-text>Fan</v-card-text>
                             <v-row>
                                 <v-col cols="6" class="d-flex justify-start">
                                     <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
@@ -51,6 +52,12 @@
     </v-row>
 </template>
 
-
+<style>
+.button-container-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+</style>
  
   
