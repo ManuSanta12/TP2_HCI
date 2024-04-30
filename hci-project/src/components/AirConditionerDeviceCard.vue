@@ -11,35 +11,60 @@
                         <v-switch inset color="green" class="small-switch"></v-switch>
                     </v-col>
                 </v-row>
-                <v-col class="d-flex justify-center ">
-                    <v-card-actions>
-                        <v-btn icon><v-icon>mdi-minus</v-icon></v-btn>
+                <v-col class="d-flex justify-center pa-0">
+                    <v-card-actions class="pa-0">
+                        <v-btn density="compact" icon="mdi-minus"></v-btn>
                         <v-card-text class="text-h6">24°C</v-card-text>
-                        <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+                        <v-btn density="compact" icon="mdi-plus"></v-btn>
                     </v-card-actions>
                 </v-col>
             <v-expansion-panels>
-                <v-expansion-panel >
+                <v-expansion-panel class="pa-1">
                         <v-expansion-panel-title>More</v-expansion-panel-title>
                         <v-expansion-panel-text>
                         <v-expansion-panel-content>
                             <v-card-text>Mode</v-card-text>
                             <!-- ver si es solo ventilacion frio y calor -->
-                            <div class="button-container-row">
+                            <div class="button-container-row mx-3">
                                 <v-btn>Cool</v-btn>
-                                <v-btn>Dry</v-btn>
+                                <v-btn>Fan</v-btn>
                                 <v-btn>Heat</v-btn>
                             </div>
-                            <div class="button-container-row d-flex justify-center">
-                                <v-btn class="ma-1">Fan</v-btn>
-                                <v-btn class="ma-1">Auto</v-btn>
-                            </div>
-                            <v-card-text>Fan</v-card-text>
-                            <v-row>
-                                <v-col cols="6" class="d-flex justify-start">
-                                    <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                            <v-col class="d-flex justify-left align-center pa-0">
+                                <v-card-text >Velocity</v-card-text>
+                                <v-col class="d-flex justify-right align-center">
+                                    <v-btn density="compact" icon="mdi-minus"></v-btn>
+                                    <div class="d-flex align-center justify-center" style="width: 50px;"> <!-- Adjust width as needed -->
+                                    <v-card-text class="text-h6">25</v-card-text>
+                                    </div>
+                                    <v-btn density="compact" icon="mdi-plus"></v-btn>
                                 </v-col>
-                                <v-col cols="6" class="d-flex justify-end">
+                            </v-col>
+                            <v-col class="d-flex justify-left align-center pa-0">
+                                <v-card-text >Horizontal Blade</v-card-text>
+                                <v-col class="d-flex justify-right align-center">
+                                    <v-btn density="compact" icon="mdi-minus"></v-btn>
+                                    <div class="d-flex align-center justify-center" style="width: 50px;"> <!-- Adjust width as needed -->
+                                    <v-card-text class="text-h6">25</v-card-text>
+                                    </div>
+                                    <v-btn density="compact" icon="mdi-plus"></v-btn>
+                                </v-col>
+                            </v-col>
+                            <v-col class="d-flex justify-left align-center pa-0">
+                                <v-card-text >Vertical Blade</v-card-text>
+                                <v-col class="d-flex justify-right align-center">
+                                    <v-btn density="compact" icon="mdi-minus"></v-btn>
+                                    <div class="d-flex align-center justify-center" style="width: 50px;"> <!-- Adjust width as needed -->
+                                    <v-card-text class="text-h6">25</v-card-text>
+                                    </div>
+                                    <v-btn density="compact" icon="mdi-plus"></v-btn>
+                                </v-col>
+                            </v-col>
+                            <v-row class="align-center">
+                                <v-col cols="4" class="d-flex justify-start  ">
+                                    <v-btn variant="text" icon="mdi-trash-can-outline"></v-btn>
+                                </v-col>
+                                <v-col cols="8" class="d-flex justify-end">
                                     <v-checkbox label="Show in home"></v-checkbox>
                                 </v-col>
                             </v-row>

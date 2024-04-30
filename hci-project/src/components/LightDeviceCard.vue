@@ -11,8 +11,8 @@
                         <v-switch inset color="green" class="small-switch"></v-switch>
                     </v-col>
                 </v-row>
-                <v-card-text>Brightness</v-card-text>
-                <v-slider dense :max="100" :min="0" thumb-label="always"></v-slider>
+                <v-card-text class="pa-0">Brightness</v-card-text>
+                <v-slider dense :max="100" :min="0" thumb-label></v-slider>
                 
             <v-expansion-panels>
                 <v-expansion-panel>
@@ -21,11 +21,11 @@
                             <v-expansion-panel-content>
                                 <v-row>
                                 <v-card-text>Color picker</v-card-text>
-                                <v-color-picker width="250"></v-color-picker>
-                                    <v-col cols="6" class="d-flex justify-start">
-                                    <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                                <v-color-picker width="250" hide-inputs></v-color-picker>
+                                <v-col cols="4" class="d-flex justify-start">
+                                    <v-btn icon="mdi-trash-can-outline"></v-btn>
                                 </v-col>
-                                <v-col cols="6" class="d-flex justify-end">
+                                <v-col cols="8" class="d-flex justify-end">
                                     <v-checkbox label="Show in home"></v-checkbox>
                                 </v-col>
                             </v-row>
@@ -39,5 +39,9 @@
 </template>
 
 
- 
-  
+<style>
+.expansion-panel-margin {
+    margin-bottom: 20px; /* You can adjust this value based on your needs */
+}
+
+</style>

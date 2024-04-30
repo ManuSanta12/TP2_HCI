@@ -11,11 +11,11 @@
                         <v-switch inset color="green" class="small-switch"></v-switch>
                     </v-col>
                 </v-row>
-                <v-col class="d-flex justify-center">
+                <v-col class="d-flex justify-center pa-0">
                     <v-card-actions>
-                        <v-btn icon><v-icon>mdi-skip-previous</v-icon></v-btn>
-                        <v-btn icon><v-icon>mdi-pause</v-icon></v-btn>
-                        <v-btn icon><v-icon>mdi-skip-next</v-icon></v-btn>
+                        <v-btn icon="mdi-skip-previous"></v-btn>
+                        <v-btn icon="mdi-pause"></v-btn>
+                        <v-btn icon="mdi-skip-next"></v-btn>
                     </v-card-actions>
                 </v-col>
             <v-card-subtitle class=" ma-2 d-flex justify-center">
@@ -36,10 +36,10 @@
                             </v-card-text>
                             <v-slider dense hide-details></v-slider>
                             <v-row>
-                                <v-col cols="6" class="d-flex justify-start">
-                                    <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                                <v-col cols="4" class="d-flex justify-start">
+                                    <v-btn icon="mdi-trash-can-outline"></v-btn>
                                 </v-col>
-                                <v-col cols="6" class="d-flex justify-end">
+                                <v-col cols="8" class="d-flex justify-end">
                                     <v-checkbox label="Show in home"></v-checkbox>
                                 </v-col>
                             </v-row>
