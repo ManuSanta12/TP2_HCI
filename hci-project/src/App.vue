@@ -4,7 +4,7 @@
     <v-app-bar title="Home"  :order="order" color='#DDEAF4'/>
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
-        <DeviceCard class="ma-2"/>
+        <SpeakerDeviceCard class="ma-2"/>
         <LightDeviceCard class="ma-2"/>
         <AirConditionerDeviceCard class="ma-2"/>
         <AutomationsCard class="ma-2"/>
@@ -16,8 +16,8 @@
 <script>
 import AutomationsCard from './components/AutomationsCard.vue';
 import NavigationBar from './components/NavigationBar.vue';
-import DeviceCard from './components/DeviceCard.vue';
-import AirConditionerDeviceCard from './components/DeviceCard.vue';
+import SpeakerDeviceCard from './components/SpeakerDeviceCard.vue';
+import AirConditionerDeviceCard from './components/SpeakerDeviceCard.vue';
 </script>
 <style>
 .background{

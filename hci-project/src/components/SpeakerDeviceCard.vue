@@ -18,7 +18,7 @@
                         <v-btn icon="mdi-skip-next"></v-btn>
                     </v-card-actions>
                 </v-col>
-            <v-card-subtitle class=" ma-2 d-flex justify-center">
+            <v-card-subtitle class="ma-2 d-flex justify-center">
                 Now playing: La bestia Pop - Patricio Rey y sus... 
                 <!-- aca deberia estar la info de la musica -->
             </v-card-subtitle>
@@ -27,22 +27,19 @@
                         <v-expansion-panel-title>More</v-expansion-panel-title>
                         <v-expansion-panel-text>
                         <v-expansion-panel-content class="pa-0">
-                            <v-card-text class="pa-1"> Playing from genre: Rock</v-card-text>
-                            <v-card-text class="pa-1">Pick a song:
-                                <v-select dense solo hide-details outlined small
-                                :items="['La Bestia Pop', 'De música Ligera', 'Rock para los dientes', 'Campanas en la noche', 'Me matan limón!']"
-                                label="Song"
-                                ></v-select>
-                            </v-card-text>
-                            <v-slider dense hide-details></v-slider>
-                            <v-row>
-                                <v-col cols="4" class="d-flex justify-start">
-                                    <v-btn icon="mdi-trash-can-outline"></v-btn>
+                            <v-select dense solo hide-details outlined compact
+                            :items="['Rock', 'Pop']"
+                            label="Genre"
+                            ></v-select>
+                            <v-select dense solo hide-details outlined small
+                            :items="['La Bestia Pop', 'De música Ligera', 'Rock para los dientes', 'Campanas en la noche', 'Me matan limón!']"
+                            label="Song"
+                            ></v-select>
+                            <v-slider dense hide-details class="ma-2"></v-slider>
+                            <v-col class="d-flex justify-center pa-1">
+                                <v-checkbox density="compact" label="Show in home"></v-checkbox>
                                 </v-col>
-                                <v-col cols="8" class="d-flex justify-end">
-                                    <v-checkbox label="Show in home"></v-checkbox>
-                                </v-col>
-                            </v-row>
+                                <v-btn block prepend-icon="mdi-trash-can-outline">Delete</v-btn>
                         </v-expansion-panel-content>
                     </v-expansion-panel-text>
                 </v-expansion-panel>

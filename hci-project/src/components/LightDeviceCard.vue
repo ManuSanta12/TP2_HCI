@@ -11,7 +11,7 @@
                         <v-switch inset color="green" class="small-switch"></v-switch>
                     </v-col>
                 </v-row>
-                <v-card-text class="pa-0">Brightness</v-card-text>
+                <v-list-item-title class="pa-0">Brightness</v-list-item-title>
                 <v-slider dense :max="100" :min="0" thumb-label></v-slider>
                 
             <v-expansion-panels>
@@ -20,15 +20,13 @@
                         <v-expansion-panel-text>
                             <v-expansion-panel-content>
                                 <v-row>
-                                <v-card-text>Color picker</v-card-text>
-                                <v-color-picker width="250" hide-inputs></v-color-picker>
-                                <v-col cols="4" class="d-flex justify-start">
-                                    <v-btn icon="mdi-trash-can-outline"></v-btn>
+                                    <v-list-item-title class="pa-2">Color picker</v-list-item-title>
+                                    <v-color-picker width="250" hide-inputs canvas-height="150"></v-color-picker>
+                                </v-row>
+                                <v-col class="d-flex justify-center pa-1">
+                                <v-checkbox density="compact" label="Show in home"></v-checkbox>
                                 </v-col>
-                                <v-col cols="8" class="d-flex justify-end">
-                                    <v-checkbox label="Show in home"></v-checkbox>
-                                </v-col>
-                            </v-row>
+                                <v-btn block prepend-icon="mdi-trash-can-outline">Delete</v-btn>
                         </v-expansion-panel-content>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
