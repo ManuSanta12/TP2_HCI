@@ -8,24 +8,24 @@
             <v-card-title>Edit automation</v-card-title>
             <v-card-text>
             <div class="d-flex align-center">
-                <span style="font-size:18px;">Title</span>
+                <span class="text-subtitle-1">Title</span>
                 <v-text-field placeholder="Title" variant="outlined" class="ml-10" ></v-text-field>
             </div>
             <div class="d-flex align-start mb-4">
-                <span class="align-self-start" style="font-size:18px; margin-top: 16px;">Starters</span>
-                <v-card class="ml-3" style="max-height: 150px;min-width: 300px; overflow-y: auto;">
+                <span class="align-self-start text-subtitle-1 margin-top" >Starters</span>
+                <v-card class="ml-3 scrollable-list-card" >
                     <v-list :items="items"></v-list>
                 </v-card>
             </div>
             <div class="d-flex align-start">
-                <span class="align-self-start" style="font-size:18px; margin-top: 16px;">Actions</span>
-                <v-card class="ml-3" style="max-height: 150px; min-width: 300px; overflow-y: auto;">
+                <span class="align-self-start text-subtitle-1 margin-top">Actions</span>
+                <v-card class="ml-3 scrollable-list-card" >
                     <v-list :items="items"></v-list>
                 </v-card>
             </div>
 
             <div class="d-flex align-start">
-                <span class="align-self-start" style="font-size:18px; margin-top: 16px;">Show in home</span>
+                <span class="align-self-start text-subtitle-1 margin-top mt-4" >Show in home</span>
                 <v-switch inset color="green" class="small-switch ml-5"></v-switch>
             </div>
             </v-card-text>
@@ -38,6 +38,16 @@
       </v-row>
     </v-container>
   </template>
+
+<style scoped>  
+  .top-margin{
+    margin-top: 16px;
+  }
+
+  .scrollable-list-card{
+    max-height: 150px; min-width: 300px; overflow-y: auto;
+  }
+</style>
   
 
 <script>

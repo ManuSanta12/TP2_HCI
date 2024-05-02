@@ -8,6 +8,7 @@
         <LightDeviceCard class="ma-2"/>
         <AirConditionerDeviceCard class="ma-2"/>
         <AutomationsCard class="ma-2"/>
+        <EditAutomation />
       </v-row>
     </v-main>
   </v-layout>
@@ -15,6 +16,7 @@
 
 <script>
 import AutomationsCard from './components/AutomationsCard.vue';
+import EditAutomation from './components/EditAutomation.vue';
 import NavigationBar from './components/NavigationBar.vue';
 import SpeakerDeviceCard from './components/SpeakerDeviceCard.vue';
 import AirConditionerDeviceCard from './components/SpeakerDeviceCard.vue';
