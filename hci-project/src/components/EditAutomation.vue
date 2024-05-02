@@ -1,3 +1,5 @@
+<!--TODO LO QUE DICE STYLE SACARLO DE TEMPLATE Y MANDARLO A STYLE-->
+
 <template>
     <v-container fluid>
       <v-row justify="center">
