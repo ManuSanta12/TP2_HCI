@@ -1,7 +1,6 @@
 <template>\
     <v-app>
       <NavigationBar/>
-      <v-app-bar title="Home"  color='#DDEAF4'/>
       <v-main color='#DDEAF4'>
         <RouterView/>
       </v-main>

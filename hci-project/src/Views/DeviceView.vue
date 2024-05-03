@@ -4,6 +4,7 @@ import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 </script>
 <template>
+<v-app-bar title="Device"  color='#DDEAF4'/>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
