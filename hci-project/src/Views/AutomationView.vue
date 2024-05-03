@@ -4,7 +4,9 @@ import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 </script>
 
 <template>
-<v-app-bar title="Automations"  color='#DDEAF4'/>
+<v-app-bar title="Automations"  color='#DDEAF4'>
+    <v-btn>Add new</v-btn>
+</v-app-bar>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
