@@ -29,10 +29,12 @@
                 <v-switch inset color="green" class="small-switch ml-5"></v-switch>
             </div>
             </v-card-text>
-            <v-card-actions >
-                <v-btn variant="tonal" color="error" dark>Cancel</v-btn>
-                <v-btn variant="tonal"color="primary" dark>Save</v-btn>
-            </v-card-actions>
+            <v-card-actions>
+              <v-btn prepend-icon="mdi-delete" variant="tonal" small color="error" dark>Delete </v-btn>
+              <v-spacer></v-spacer> 
+              <v-btn variant="tonal" color="secondary" dark>Cancel</v-btn>
+              <v-btn variant="tonal" color="primary" dark>Save</v-btn>
+          </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
