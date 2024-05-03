@@ -1,19 +1,21 @@
 <script>
+import AutomationsCard from '@/components/AutomationsCard.vue';
 import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 </script>
+
 <template>
-<v-app-bar title="Device"  color='#DDEAF4'/>
+<v-app-bar title="Automations"  color='#DDEAF4'/>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
-        <SpeakerDeviceCard class="ma-2"/>
-        <LightDeviceCard class="ma-2"/>
-        <AirConditionerDeviceCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
+        <AutomationsCard class="ma-2"/>
       </v-row>
     </v-main>
   </v-layout>
 </template>
+
 <style>
 .background{
     background-color: var(--v-background-base) !important;
@@ -22,4 +24,3 @@ import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
     background-color:'#D8D7D7' !important;
 }
 </style>
-
