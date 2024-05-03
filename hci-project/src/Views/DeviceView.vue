@@ -7,11 +7,17 @@ import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
 <v-app-bar title="Device"  color='#DDEAF4'/>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
-      <v-row class="pa-6 scrollable" >
-        <SpeakerDeviceCard class="ma-2"/>
-        <LightDeviceCard class="ma-2"/>
-        <AirConditionerDeviceCard class="ma-2"/>
-        <SprinklerDeviceCard class="ma-2"/>
+      <v-row class="scrollable cols=3" >
+        <v-col>
+          <SpeakerDeviceCard class="ma-2"/>
+          <SpeakerDeviceCard class="ma-2"/>
+        </v-col>
+        <v-col>
+          <AirConditionerDeviceCard class="ma-2"/>
+        </v-col>
+        <v-col>
+          <AutomationsCard class="ma-2"/>
+        </v-col>
       </v-row>
     </v-main>
   </v-layout>

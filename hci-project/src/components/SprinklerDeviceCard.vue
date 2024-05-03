@@ -36,9 +36,9 @@ water-circle
                             <v-expansion-panel-content class="pa-1">
                                 <div>  
                                     <v-list-item-title>Pump water</v-list-item-title> 
-                                    <v-text-field label="Quantity in ml."></v-text-field>
-                                    <div class="button-container-row justify-center">
-                                        <v-btn>PUMP NOW</v-btn>
+                                    <v-text-field class="my-0" label="Quantity in ml."></v-text-field>
+                                    <div class="my-0 button-container-row justify-center">
+                                        <v-btn class="my-0">PUMP NOW</v-btn>
                                     </div> 
                                 </div>
                                 <v-col class="d-flex justify-center pa-1">
