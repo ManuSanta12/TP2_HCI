@@ -41,10 +41,9 @@ export default {
   <v-layout class="rounded rounded-md">
     <v-main color="#DDEAF4">
       <v-row class="scrollable" cols="3">
-        <!-- Itera sobre cada columna en devices -->
-        <v-col v-for="(column, index) in device_grid" :key="'col-' + index">
+        <v-col v-for="column in device_grid">
           <!-- Itera sobre cada dispositivo en la columna -->
-          <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" class="ma-2"></component>
+          <component v-for="device in column" :is="getComponent(device.type)" class="ma-2"></component>
         </v-col>
       </v-row>
     </v-main>
