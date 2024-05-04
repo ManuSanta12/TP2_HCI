@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       device_grid: [
-        [{ type: 'Speaker', id: 1}, { type: 'Speaker', id: 2}],
+        [],
         [{ type: 'AirConditioner', id: 3}, { type: 'AirConditioner', id: 4}, { type: 'AirConditioner', id: 5}],
         [{type:'Sprinkler', id: 6}, {type:'Sprinkler', id: 7}, {type:'Sprinkler', id: 8}]
       ]
@@ -31,6 +31,9 @@ export default {
       default:
         return 'div'; // Un componente por defecto o un mensaje de error
     }
+  },
+  addDevice(device, columnIndex) {
+    this.device_grid[columnIndex].push(device);
   }
 }
 };
@@ -52,6 +55,7 @@ Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispo
           <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" class="ma-2"></component>
         </v-col>
       </v-row>
+      <button @click="addDevice({ type: 'Speaker'}, 0)">Add Speaker to First Column</button>
     </v-main>
   </v-layout>
 </template>
