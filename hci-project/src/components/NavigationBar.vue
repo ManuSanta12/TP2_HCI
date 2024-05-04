@@ -25,10 +25,9 @@
     name: 'Sidebar',
     setup() {
       const items = ref([
-        { title: "Home", icon: "mdi-home", to:"/home"},
+        { title: "Scripted CROTO", icon: "mdi-home-outline", to:"/scripted_croto"},
+        { title: "Scripted", icon: "mdi-home", to:"/scripted"},
         { title: "Devices", icon: "mdi-monitor-cellphone-star", to:"/devices" },
-        { title: "Automations", icon: "mdi-creation", to:"/automations"},
-        { title: "Settings", icon: "mdi-cog-outline" }
       ]);
   
       return { items };

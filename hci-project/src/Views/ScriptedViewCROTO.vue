@@ -12,14 +12,14 @@ export default {
   data() {
     return {
       devices: [
-        { type: 'Speaker', id: 1 },
-        { type: 'Speaker', id: 2 },
-        { type: 'AirConditioner', id: 3 },
-        { type: 'AirConditioner', id: 3 },
-        { type: 'AirConditioner', id: 3 },
-        { type: 'AirConditioner', id: 3 },
-        { type: 'AirConditioner', id: 3 },
-        { type: 'Automation', id: 4 }
+        { type: 'Speaker'},
+        { type: 'Speaker'},
+        { type: 'AirConditioner'},
+        { type: 'AirConditioner'},
+        { type: 'AirConditioner'},
+        { type: 'AirConditioner'},
+        { type: 'AirConditioner'},
+        { type: 'Automation'}
       ]
     };
   },
@@ -44,7 +44,7 @@ export default {
   <v-app-bar title="Home" color="#DDEAF4" />
   <v-layout class="rounded rounded-md">
     <v-main color="#DDEAF4">
-      <v-row class="scrollable cols=4">
+      <v-row class="scrollable cols=3">
         <v-col v-for="device in devices" :key="device.id" class="ma-2">
           <component :is="getComponent(device.type)"></component>
         </v-col>

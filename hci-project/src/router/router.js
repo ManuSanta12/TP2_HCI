@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/Views/HomeView.vue'
+import ScriptedViewCROTO from '@/Views/ScriptedViewCROTO.vue'
+import ScriptedView from '@/Views/ScriptedView.vue'
 import DeviceView from '@/Views/DeviceView.vue'
-import AutomationView from '@/Views/AutomationView'
-import EditAutomationView from '@/Views/EditAutomationView'
 
 
 const router = createRouter({
@@ -10,12 +9,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/home',
+      redirect: '/scripted',
     },
     {
-        path: '/home',
-        name: 'home',
-        component:HomeView
+        path: '/scripted',
+        name: 'scripted',
+        component:ScriptedView
       },
       {
         path: '/devices',
@@ -23,14 +22,9 @@ const router = createRouter({
         component:DeviceView
       },
       {
-        path: '/automations',
-        name: 'automations',
-        component:AutomationView
-      },
-      {
-        path: '/editAutomation',
-        name: 'editAutomation',
-        component:EditAutomationView
+        path: '/scripted_croto',
+        name: 'script croto',
+        component:ScriptedViewCROTO
       },
   ]
 })
