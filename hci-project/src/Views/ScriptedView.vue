@@ -1,11 +1,13 @@
 <script>
 import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
+import Sprinkler from '@/components/Sprinkler.vue';
 import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 import AirConditionerDeviceCard from '@/components/AirConditionerDeviceCard.vue';
 
 export default {
   components: {
     SprinklerDeviceCard,
+    Sprinkler,
     SpeakerDeviceCard,
     AirConditionerDeviceCard
   },
@@ -23,7 +25,8 @@ export default {
     const componentMap = {
       Speaker: SpeakerDeviceCard,
       AirConditioner: AirConditionerDeviceCard,
-      Sprinkler: SprinklerDeviceCard
+      SprinklerCard: SprinklerDeviceCard,
+      Sprinkler: Sprinkler
     };
 
     return componentMap[type] || 'div'; // Un componente por defecto o un mensaje de error
@@ -50,6 +53,7 @@ Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispo
           <!-- Itera sobre cada dispositivo en la columna -->
           <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" class="ma-2"></component>
         </v-col>
+        <sprinkler :initial-data="{ device_name: 'mi regadera', toggle_status: true, pump_status: 'puto el que lee' }" />
       </v-row>
       <button @click="addDevice({ type: 'Speaker'}, 0)">Add Speaker to First Column</button>
     </v-main>
