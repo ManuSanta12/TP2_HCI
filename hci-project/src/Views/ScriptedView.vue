@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       device_grid: [
-        [],
+        [{type:'Speaker', id: 1}, {type:'Speaker', id: 2}],
         [{ type: 'AirConditioner', id: 3}, { type: 'AirConditioner', id: 4}, { type: 'AirConditioner', id: 5}],
         [{type:'Sprinkler', id: 6}, {type:'Sprinkler', id: 7}, {type:'Sprinkler', id: 8}]
       ]
