@@ -14,7 +14,8 @@ export default {
   data() {
     return {
       device_grid: [
-        [{type:'Sprinkler', id: 0, initial_data: { device_name: 'mi regadera', toggle_status: true, pump_status: 'puto el que lee' }}],
+        [{type:'Sprinkler', id: 0, initial_data: { device_name: 'mi regadera', toggle_status: true, pump_status: 'puto el que lee' }},
+        {type:'Sprinkler', id: 0}],
         [{type:'Sprinkler', id: 1, initial_data: { device_name: 'mi otra regadera', toggle_status: false, pump_status: 'puto '}}],
         [{type:'Sprinkler', id: 2, initial_data: { device_name: 'mi regadera favorita', toggle_status: true, pump_status: '<3'}}]
       ]
