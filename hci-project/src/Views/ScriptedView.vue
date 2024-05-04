@@ -12,25 +12,21 @@ export default {
   data() {
     return {
       device_grid: [
-        [{type:'Speaker', id: 1}, {type:'Speaker', id: 2}],
-        [{ type: 'AirConditioner', id: 3}, { type: 'AirConditioner', id: 4}, { type: 'AirConditioner', id: 5}],
-        [{type:'Sprinkler', id: 6}, {type:'Sprinkler', id: 7}, {type:'Sprinkler', id: 8}]
+        [],
+        [],
+        [{type:'Sprinkler', id: 6}]
       ]
     };
   },
   methods: {
-  //TODO podria hacer un mapa mas que un switch! gpt daun
   getComponent(type) {
-    switch (type) {
-      case 'Speaker':
-        return SpeakerDeviceCard;
-      case 'AirConditioner':
-        return AirConditionerDeviceCard;
-      case 'Sprinkler':
-        return SprinklerDeviceCard;
-      default:
-        return 'div'; // Un componente por defecto o un mensaje de error
-    }
+    const componentMap = {
+      Speaker: SpeakerDeviceCard,
+      AirConditioner: AirConditionerDeviceCard,
+      Sprinkler: SprinklerDeviceCard
+    };
+
+    return componentMap[type] || 'div'; // Un componente por defecto o un mensaje de error
   },
   addDevice(device, columnIndex) {
     this.device_grid[columnIndex].push(device);
