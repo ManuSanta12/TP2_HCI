@@ -25,7 +25,7 @@ water-circle
                         <v-btn icon="mdi-water-off"></v-btn>
                     </v-card-actions>
                 </v-col>
-                <v-col class="d-flex justify-center pa-0">
+                <v-col class="d-flex justify-center pa-0"><q></q>
                     <v-icon>mdi-water-pump</v-icon>
                     <p>Current status: Pump on</p>
                 </v-col>
