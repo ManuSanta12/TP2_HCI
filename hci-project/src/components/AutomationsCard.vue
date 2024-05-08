@@ -30,7 +30,7 @@ export default {
   methods: {
     togglePlay() {
       this.icon = this.icon === 'mdi-pause' ? 'mdi-play' : 'mdi-pause';
-      this.iconColor = this.icon == 'mdi-pause' ? 'green' : 'red';
+      this.iconColor = this.icon == 'mdi-pause' ? 'red' : 'green';
     },
   },
 };
