@@ -1,22 +1,32 @@
-<!-- 
-water
-water-off
-water-pump
-water-pump-off
-water-circle 
--->
+<script>
+export default {
+  props: {
+    initialData: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  data() {
+    return {
+      device_name: this.initialData.device_name || "NO DATA",
+      toggle_status: this.initialData.toggle_status || false,
+      pump_status: this.initialData.pump_status || "NO DATA"
+    };
+  }
+};
+</script>
+
 
 <template>
     <v-row dense>
-        <v-col >
+        <v-col>
             <v-card class="pa-3" width="300"> 
-                <!-- margen de 12x se puede poner mas chico cambiar el 3 por 1 o 2 -->
                 <v-row class="px-3">
                     <v-col cols="10">
-                        <v-card-title class="pa-0 text-h8">My Sprinkler</v-card-title>
+                        <v-card-title class="pa-0 text-h8">{{ device_name }}</v-card-title>
                     </v-col>
                     <v-col cols="2" class="d-flex justify-end pa-0">
-                        <v-switch inset color="green" class="small-switch"></v-switch>
+                        <v-switch inset :model-value="toggle_status" color="green" class="small-switch"></v-switch>
                     </v-col>
                 </v-row>
                 <v-col class="d-flex justify-center pa-0">
@@ -25,9 +35,9 @@ water-circle
                         <v-btn icon="mdi-water-off"></v-btn>
                     </v-card-actions>
                 </v-col>
-                <v-col class="d-flex justify-center pa-0"><q></q>
+                <v-col class="d-flex justify-center pa-0">
                     <v-icon>mdi-water-pump</v-icon>
-                    <p>Current status: Pump on</p>
+                    <p>Current status: {{ pump_status }}</p>
                 </v-col>
             <v-expansion-panels>
                 <v-expansion-panel>
