@@ -1,6 +1,6 @@
 <script>
 import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
-import Sprinkler from '@/components/Sprinkler.vue';
+import Sprinkler from '@/components_composition_api/Sprinkler.vue';
 import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 import AirConditionerDeviceCard from '@/components/AirConditionerDeviceCard.vue';
 
@@ -14,10 +14,9 @@ export default {
   data() {
     return {
       device_grid: [
-        [{type:'Sprinkler', id: 0, initial_data: { device_name: 'mi regadera', toggle_status: true, pump_status: 'puto el que lee' }},
-        {type:'Sprinkler', id: 0}],
-        [{type:'Sprinkler', id: 1, initial_data: { device_name: 'mi otra regadera', toggle_status: false, pump_status: 'puto '}}],
-        [{type:'Sprinkler', id: 2, initial_data: { device_name: 'mi regadera favorita', toggle_status: true, pump_status: '<3'}}]
+        [{type:'Sprinkler', id: 0}],
+        [{type:'Sprinkler', id: 1}],
+        [{type:'Sprinkler', id: 2}, {type:'Sprinkler', id: 3}]
       ]
     };
   },
@@ -45,7 +44,7 @@ Clave de Dispositivo: :key="device.id" se usa para cada dispositivo dentro de la
 Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispositivos o cambias la estructura de los datos, manteniendo la capacidad de Vue de gestionar estos cambios sin pérdida de rendimiento. -->
 
 <template>
-  <v-app-bar title="Home" color="#DDEAF4" />
+  <v-app-bar title="Home -- SCRIPTED" color="#DDEAF4" />
   <v-layout class="rounded rounded-md">
     <v-main color="#DDEAF4">
       <v-row class="scrollable" cols="3">

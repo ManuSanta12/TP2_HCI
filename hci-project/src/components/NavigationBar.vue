@@ -28,6 +28,7 @@
         { title: "Home", icon: "mdi-home", to:"/home"},
         { title: "Devices", icon: "mdi-monitor-cellphone-star", to:"/devices" },
         { title: "Automations", icon: "mdi-creation", to:"/automations"},
+        { title: "SCRIPTED", icon: "mdi-home-outline", to: "/scripted" },
         { title: "Settings", icon: "mdi-cog-outline" }
       ]);
   
