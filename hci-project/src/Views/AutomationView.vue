@@ -21,7 +21,7 @@
         <v-card-title>Edit automation</v-card-title>
         <v-text-field placeholder="Title" variant="outlined" class="px-3" ></v-text-field>
         <v-list-text class="mx-3">Starters</v-list-text>
-        <v-container class="pa-0 px-3">
+        <v-container class="pa-0 px-3 scrollable-list-card">
           <!-- Display existing starters -->
               <div v-for="(starter, index) in starters" :key="index">
                 <v-row>
@@ -38,7 +38,7 @@
             <v-btn @click="addStarter" class="justify-center">Add Starter</v-btn>
           </v-card-text>
         <v-list-text class="mx-3">Actions</v-list-text>
-        <v-container class="pa-0 px-3">
+        <v-container class="pa-0 px-3 scrollable-list-card  ">
           <div v-for="(action, index) in actions" :key="'action-' + index">
                 <v-row >
                   <v-col>
@@ -103,7 +103,11 @@
     backdrop-filter: blur(5px);
 
 }
+.scrollable-list-card{
+  max-height: 150px; min-height:75px; min-width: 300px; overflow-y: auto;
+}
 </style>
+
 <script>
 import AutomationsCard from '@/components/AutomationsCard.vue';
 // import EditAutomationCard from '@/components/EditAutomationCard.vue';
