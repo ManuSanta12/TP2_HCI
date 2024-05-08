@@ -3,6 +3,7 @@
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card>
+          <v-btn class= "mt-2 ml-2"density="compact" icon="mdi-close"/>
           <v-card-title>Edit automation</v-card-title>
           <v-card-text>
           <div class="d-flex align-center">
@@ -45,7 +46,7 @@
 }
 
 .scrollable-list-card{
-  max-height: 150px; min-width: 300px; overflow-y: auto;
+  max-height: 150px; min-height:75px; min-width: 300px; overflow-y: auto;
 }
 </style>
 
@@ -53,6 +54,7 @@
 <script>
 export default {
 data: () => ({
+  
   items: [
     {
       title: 'Sundays 21:00',

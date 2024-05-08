@@ -26,7 +26,6 @@ import EditAutomationCard from '@/components/EditAutomationCard.vue';
 
   <template v-slot:default="{ isActive }">
     <EditAutomationCard class="ma-2"/>
-  
   </template>
   </v-dialog>
 </template>
