@@ -51,7 +51,7 @@
                                 <v-col class="d-flex justify-end align-center pa-0">
                                     <v-btn density="compact" icon><v-icon>mdi-minus</v-icon></v-btn>
                                     <div class="d-flex align-center justify-center" style="width: 50px;">
-                                        <v-list-item-title class="text-h7">45°</v-list-item-title> <!-- Use v-list-item-title here as well -->
+                                        <v-list-item-title class="text-h7">45°</v-list-item-title> 
                                     </div>
                                     <v-btn density="compact" icon><v-icon>mdi-plus</v-icon></v-btn>
                                 </v-col>
@@ -63,7 +63,7 @@
                                 <v-col class="d-flex justify-end align-center pa-0">
                                     <v-btn density="compact" icon><v-icon>mdi-minus</v-icon></v-btn>
                                     <div class="d-flex align-center justify-center" style="width: 50px;">
-                                        <v-list-item-title class="text-h7">45°</v-list-item-title> <!-- Use v-list-item-title here as well -->
+                                        <v-list-item-title class="text-h7">45°</v-list-item-title> 
                                     </div>
                                     <v-btn density="compact" icon><v-icon>mdi-plus</v-icon></v-btn>
                                 </v-col>
