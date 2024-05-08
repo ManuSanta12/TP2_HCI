@@ -1,23 +1,32 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import Status from '@/scripting/Status.ts'
+import { ref, onMounted, onUpdated } from 'vue';
+import SprinklerStatus from '@/scripting/SprinklerStatus.ts'
 
 // Recibir props utilizando `defineProps`
 const props = defineProps({
     status: {
-        type: Status,
-        default: () => ({ device_name: "NO DATA", toggle_status: false, pump_status: "NO DATA" }),
+        type: SprinklerStatus,
+        default: () => ({
+            device_name: "NO DATA",
+            toggle_status: false,
+            show_in_home: false,
+            pump_status: "NO DATA"}),
+        required: true
     }
 });
 
 //  Usar ref() le dice a vue que es una variable reactiva y debe chequear y updatear su valor constantemente!
 const device_name = ref(props.status.device_name);
 const toggle_status = ref(props.status.toggle_status);
+const show_in_home = ref(props.status.show_in_home);
 const pump_status = ref(props.status.pump_status);
 
 onMounted(() => {
-    console.log("Component mounted");
-    // Aquí puedes agregar más lógica que se ejecutará cuando el componente se monte
+    console.log("COMPONENT MOUNTED | Sprinkler.vue - status: ", props.status);
+});
+
+onUpdated(() => {
+    console.log("COMPONENT UPDATED | Sprinkler.vue - status: ", props.status);
 });
 </script>
 

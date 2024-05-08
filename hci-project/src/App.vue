@@ -1,4 +1,4 @@
-<template>\
+<template>
     <v-app>
       <NavigationBar/>
       <v-main color='#DDEAF4'>
