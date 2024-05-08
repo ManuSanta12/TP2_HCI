@@ -52,17 +52,25 @@
                     </div>
                   </v-col>
                   <v-col v-if="action.option === 'Select Ac Temperature'">
-                    <v-slider dense :max="100" :min="0" thumb-label></v-slider>
+                    <v-card-actions class="pa-0">
+                        <v-btn density="compact" icon="mdi-minus"></v-btn>
+                        <v-card-text class="text-h6">24°C</v-card-text>
+                        <v-btn density="compact" icon="mdi-plus"></v-btn>
+                    </v-card-actions>
                   </v-col>
                   <v-col v-if="action.option === 'Select Light color'">
-                    <v-color-picker hide-canvas hide-inputs></v-color-picker>
+                      <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0"></v-color-picker>
                   </v-col>
                   <v-col v-if="action.option === 'Select Light Brightness'">
                     <v-list-item-title class="pa-0">Brightness</v-list-item-title>
                     <v-slider dense :max="100" :min="0" thumb-label></v-slider>
                   </v-col>
                   <v-col v-if="action.option === 'Select Speaker Volume'">
+                    <v-list-item-title class="pa-0">Volume</v-list-item-title>
                     <v-slider dense :max="100" :min="0" thumb-label></v-slider>
+                  </v-col>
+                  <v-col v-if="action.option === 'Select Sprinkler Pump'">
+                    <v-text-field class="my-0" label="Quantity in ml."></v-text-field>
                   </v-col>
                 </v-row>
               </div>
@@ -111,7 +119,7 @@ export default {
         { option: ''}
       ],
       days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'],
-      actionOptions: ['Select Ac mode', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select sprinkler config'] 
+      actionOptions: ['Select Ac mode','Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'] 
     };
   },
   methods: {
