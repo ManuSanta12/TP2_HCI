@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ScriptedViewCROTO from '@/Views/ScriptedViewCROTO.vue'
 import ScriptedView from '@/Views/ScriptedView.vue'
-import DeviceView from '@/Views/DeviceView.vue'
+import DeviceView from '@/Views/HardcodeadoView.vue'
 
 
 const router = createRouter({
