@@ -21,6 +21,10 @@ const toggle_status = ref(props.status.toggle_status);
 const show_in_home = ref(props.status.show_in_home);
 const pump_status = ref(props.status.pump_status);
 
+function alternate_toggle_status(){
+    toggle_status.value = !toggle_status.value;
+}
+
 onMounted(() => {
     console.log("COMPONENT MOUNTED | Sprinkler.vue - status: ", props.status);
 });
@@ -38,7 +42,7 @@ onUpdated(() => {
                 <v-card-title class="pa-0 text-h8">{{ device_name }}</v-card-title>
             </v-col>
             <v-col cols="2" class="d-flex justify-end pa-0">
-                <v-switch inset :model-value="toggle_status" color="green" class="small-switch"></v-switch>
+                <v-switch inset :model-value="toggle_status" color="green" class="small-switch" @change="alternate_toggle_status"></v-switch>
             </v-col>
         </v-row>
         <v-col class="d-flex justify-center pa-0">
