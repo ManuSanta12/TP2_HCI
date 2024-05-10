@@ -13,9 +13,9 @@
                 </v-row>
                 <v-col class="d-flex justify-center pa-0">
                     <v-card-actions class="pa-0">
-                        <v-btn density="compact" icon="mdi-minus"></v-btn>
-                        <v-card-text class="text-h6">24°C</v-card-text>
-                        <v-btn density="compact" icon="mdi-plus"></v-btn>
+                        <v-btn density="compact" icon="mdi-minus" @click="decrementTemp"></v-btn>
+                        <v-card-text class="text-h6">{{Temp}}°C</v-card-text>
+                        <v-btn density="compact" icon="mdi-plus" @click="incrementTemp"></v-btn>
                     </v-card-actions>
                 </v-col>
             <v-expansion-panels>
@@ -37,11 +37,11 @@
                                     <v-list-item-title>Velocity</v-list-item-title> 
                                 </v-col>
                                 <v-col class="d-flex justify-end align-center pa-0">
-                                    <v-btn density="compact" icon><v-icon>mdi-minus</v-icon></v-btn>
+                                    <v-btn density="compact" icon="mdi-minus" @click="decrementVel"></v-btn>
                                     <div class="d-flex align-center justify-center" style="width: 50px;">
-                                        <v-list-item-title class="text-h7">25%</v-list-item-title>
+                                        <v-list-item-title class="text-h7">{{ Vel }}%</v-list-item-title>
                                     </div>
-                                    <v-btn density="compact" icon><v-icon>mdi-plus</v-icon></v-btn>
+                                    <v-btn density="compact" icon="mdi-plus" @click="incrementVel"></v-btn>
                                 </v-col>
                             </v-row>
                             <v-row class="align-center pa-0">
@@ -49,11 +49,11 @@
                                     <v-list-item-title>Horizontal Blade</v-list-item-title> 
                                 </v-col>
                                 <v-col class="d-flex justify-end align-center pa-0">
-                                    <v-btn density="compact" icon><v-icon>mdi-minus</v-icon></v-btn>
+                                    <v-btn density="compact" icon="mdi-minus" @click="decrementHBlade"></v-btn>
                                     <div class="d-flex align-center justify-center" style="width: 50px;">
-                                        <v-list-item-title class="text-h7">45°</v-list-item-title> 
+                                        <v-list-item-title class="text-h7">{{ displayHBlade }}</v-list-item-title> 
                                     </div>
-                                    <v-btn density="compact" icon><v-icon>mdi-plus</v-icon></v-btn>
+                                    <v-btn density="compact" icon="mdi-plus" @click="incrementHBlade"></v-btn>
                                 </v-col>
                             </v-row>
                             <v-row class="align-center pa-0">
@@ -61,11 +61,11 @@
                                     <v-list-item-title >Vertical Blade</v-list-item-title> 
                                 </v-col>
                                 <v-col class="d-flex justify-end align-center pa-0">
-                                    <v-btn density="compact" icon><v-icon>mdi-minus</v-icon></v-btn>
+                                    <v-btn density="compact" icon="mdi-minus" @click="decrementVBlade"></v-btn>
                                     <div class="d-flex align-center justify-center" style="width: 50px;">
-                                        <v-list-item-title class="text-h7">45°</v-list-item-title> 
+                                        <v-list-item-title class="text-h7">{{ displayVBlade }}</v-list-item-title> 
                                     </div>
-                                    <v-btn density="compact" icon><v-icon>mdi-plus</v-icon></v-btn>
+                                    <v-btn density="compact" icon="mdi-plus" @click="incrementVBlade"></v-btn>
                                 </v-col>
                             </v-row>
                             <v-col class="d-flex justify-center pa-1">
@@ -80,7 +80,87 @@
         </v-col>
     </v-row>
 </template>
-<!-- esto va al css -->
+<script setup>
+import { ref, computed } from 'vue'
+// VBlades
+const validVBlades = ['auto', 22,45,67,90 ]
+const VBlade = ref(45)
+
+function incrementVBlade() {
+  const currentIndex = validVBlades.indexOf(VBlade.value)
+  if (currentIndex < validVBlades.length - 1) {
+    VBlade.value = validVBlades[currentIndex + 1]
+  }
+}
+
+function decrementVBlade() {
+  const currentIndex = validVBlades.indexOf(VBlade.value)
+  if (currentIndex > 0) {
+    VBlade.value = validVBlades[currentIndex - 1]
+  }
+}
+
+const displayVBlade = computed(() => {
+  return VBlade.value === 'auto' ? 'auto' : `${VBlade.value}°`
+})
+// HBlades
+const validHBlades = [ 'auto', -90, -45, 0, 45, 90]
+const HBlade = ref(0)
+
+function incrementHBlade() {
+  const currentIndex = validHBlades.indexOf(HBlade.value)
+  if (currentIndex < validHBlades.length - 1) {
+    HBlade.value = validHBlades[currentIndex + 1]
+  }
+}
+
+function decrementHBlade() {
+  const currentIndex = validHBlades.indexOf(HBlade.value)
+  if (currentIndex > 0) {
+    HBlade.value = validHBlades[currentIndex - 1]
+  }
+}
+
+const displayHBlade = computed(() => {
+  return HBlade.value === 'auto' ? 'auto' : `${HBlade.value}°`
+})
+// velocity
+const validVelocity = [25, 50, 75, 100]
+const Vel = ref(25)
+function incrementVel() {
+  const currentIndex = validVelocity.indexOf(Vel.value)
+  if (currentIndex < validVelocity.length - 1) {
+    Vel.value = validVelocity[currentIndex + 1]
+  } else {
+    Vel.value = validVelocity[0]
+  }
+}
+
+function decrementVel() {
+  const currentIndex = validVelocity.indexOf(Vel.value)
+  if (currentIndex > 0) {
+    Vel.value = validVelocity[currentIndex - 1]
+  } else {
+    Vel.value = validVelocity[validVelocity.length - 1]
+  }
+}
+// temperature
+const minTemp = 18
+const maxTemp = 38
+const Temp = ref(18)
+
+function incrementTemp() {
+  if (Temp.value < maxTemp) {
+    Temp.value++
+  }
+}
+
+function decrementTemp() {
+  if (Temp.value > minTemp) {
+    Temp.value--
+  }
+}
+</script>
 <style>
 .button-container-row {
     display: flex;
