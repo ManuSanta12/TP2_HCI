@@ -40,7 +40,7 @@
         <v-list-text class="mx-3">Actions</v-list-text>
         <v-container class="pa-0 px-3 scrollable-list-card  ">
           <div v-for="(action, index) in actions" :key="'action-' + index">
-                <v-row >
+                <v-row>
                   <v-col>
                     <v-select v-model="action.option" :items="actionOptions" label="Option"></v-select>
                   </v-col>

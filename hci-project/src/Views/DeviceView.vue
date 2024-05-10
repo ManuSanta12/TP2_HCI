@@ -22,22 +22,18 @@
         <v-card-title>Add a new device</v-card-title>
         <v-divider/>
         <v-text-field placeholder="Title"  class="pa-3" ></v-text-field>
-        <v-row class="px-3 py-1 align-center"> <!-- Adjust vertical padding and alignment -->
-              <v-col cols="10" class="d-flex align-center"> <!-- Use flexbox to align items vertically -->
+        <v-select :items="deviceTypes"  label="Type"class="pa-3"
+        ></v-select>
+        <v-row class="px-3 align-center"> 
+              <v-col cols="10" class="d-flex align-center"> 
                 <v-list-item class="pa-0 text-subtitle-1">Show in home</v-list-item>
               </v-col>
-              <v-col cols="2" class="d-flex justify-end align-center"> <!-- Ensure vertical alignment -->
-                <v-switch inset color="green" class="small-switch align-center"></v-switch>
+              <v-col cols="2" class="d-flex justify-end align-center"> 
+                <v-switch inset color="green" class="small-switch align-center mt-4"></v-switch>
               </v-col>
-            </v-row>
-        <v-select
-              :items="deviceTypes"
-              label="Type"
-              class="pa-3"
-            ></v-select>
-        <v-divider/>
-        <v-card-actions>
-              <v-btn prepend-icon="mdi-delete" variant="tonal" small color="error" dark @click="dialog = false">Delete</v-btn>
+        </v-row>
+              <v-divider/>
+              <v-card-actions>
               <v-spacer></v-spacer> 
               <v-btn variant="tonal" color="secondary" dark @click="cancel">Cancel</v-btn>
               <v-btn variant="tonal" color="primary" dark @click="dialog = false">Save</v-btn>
@@ -65,7 +61,7 @@ export default {
     return {
       dialog: false,
       deviceTypes: [
-        'Light Panel', 'Control Panel', 'Air Conditioner', 'Speaker', 'Vacuum', 'Oven', 'Fridge'
+        'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
       ]
     };
   },

@@ -24,9 +24,9 @@
                                     <v-color-picker width="250" hide-inputs canvas-height="150"></v-color-picker>
                                 </v-row>
                                 <v-col class="d-flex justify-center pa-1">
-                                <v-checkbox density="compact" label="Show in home"></v-checkbox>
+                                <v-checkbox density="compact" label="Show in home" class="py-3"></v-checkbox>
                                 </v-col>
-                                <v-btn block prepend-icon="mdi-trash-can-outline">Delete</v-btn>
+                                <v-btn block prepend-icon="mdi-trash-can-outline" class="py-0">Delete</v-btn>
                         </v-expansion-panel-content>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
