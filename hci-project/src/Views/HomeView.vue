@@ -5,8 +5,8 @@ import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 </script>
 <template>
   <v-app-bar title="Home"  color='#DDEAF4'/>
-  <v-layout class="rounded rounded-md">
-    <v-main color='#DDEAF4'>
+  <v-layout class="rounded rounded-md" >
+    <v-main>
       <v-row class="pa-6 scrollable" >
         <SpeakerDeviceCard class="ma-2"/>
         <LightDeviceCard class="ma-2"/>
@@ -17,8 +17,8 @@ import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
   </v-layout>
 </template>
 <style>
-.background{
-    background-color: var(--v-background-base) !important;
+.custom-background{
+    background-color: '#F2F6FF';
 }
 .navigation-drawer-background{
     background-color:'#D8D7D7' !important;

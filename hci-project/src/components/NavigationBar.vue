@@ -26,7 +26,6 @@
         { title: "Home", icon: "mdi-home", to:"/home"},
         { title: "Devices", icon: "mdi-monitor-cellphone-star", to:"/devices" },
         { title: "Automations", icon: "mdi-creation", to:"/automations"},
-        { title: "Settings", icon: "mdi-cog-outline" }
       ]);
   
       return { items };

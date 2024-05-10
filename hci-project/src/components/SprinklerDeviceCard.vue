@@ -9,7 +9,7 @@ water-circle
 <template>
     <v-row dense>
         <v-col >
-            <v-card class="pa-3" width="300"> 
+            <v-card class="pa-3" width="300" > 
                 <!-- margen de 12x se puede poner mas chico cambiar el 3 por 1 o 2 -->
                 <v-row class="px-3">
                     <v-col cols="10">
@@ -36,7 +36,7 @@ water-circle
                             <v-expansion-panel-content class="pa-1">
                                 <div>  
                                     <v-list-item-title>Pump water</v-list-item-title> 
-                                    <v-text-field class="my-0" label="Quantity in ml."></v-text-field>
+                                    <v-text-field class="my-0" label="Quantity in ml." :min=0 :max=100></v-text-field>
                                     <div class="my-0 button-container-row justify-center">
                                         <v-btn class="my-0">PUMP NOW</v-btn>
                                     </div> 

@@ -1,8 +1,7 @@
 <template>
     <v-row dense>
         <v-col >
-            <v-card class="pa-3" width="300"> 
-                <!-- margen de 12x se puede poner mas chico cambiar el 3 por 1 o 2 -->
+            <v-card class="pa-3" width="300" > 
                 <v-row class="px-3">
                     <v-col cols="10">
                         <v-card-title class="pa-0 text-h8">My Air Conditioner</v-card-title>
@@ -83,7 +82,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 // VBlades
-const validVBlades = ['auto', 22,45,67,90 ]
+const validVBlades = [1, 22,45,67,90 ]
 const VBlade = ref(45)
 
 function incrementVBlade() {
@@ -101,10 +100,10 @@ function decrementVBlade() {
 }
 
 const displayVBlade = computed(() => {
-  return VBlade.value === 'auto' ? 'auto' : `${VBlade.value}°`
+  return VBlade.value === 1 ? 'auto' : `${VBlade.value}°`
 })
 // HBlades
-const validHBlades = [ 'auto', -90, -45, 0, 45, 90]
+const validHBlades = [1, -90, -45, 0, 45, 90]
 const HBlade = ref(0)
 
 function incrementHBlade() {
@@ -122,7 +121,7 @@ function decrementHBlade() {
 }
 
 const displayHBlade = computed(() => {
-  return HBlade.value === 'auto' ? 'auto' : `${HBlade.value}°`
+  return HBlade.value === 1 ? 'auto' : `${HBlade.value}°`
 })
 // velocity
 const validVelocity = [25, 50, 75, 100]
@@ -131,18 +130,14 @@ function incrementVel() {
   const currentIndex = validVelocity.indexOf(Vel.value)
   if (currentIndex < validVelocity.length - 1) {
     Vel.value = validVelocity[currentIndex + 1]
-  } else {
-    Vel.value = validVelocity[0]
-  }
+  } 
 }
 
 function decrementVel() {
   const currentIndex = validVelocity.indexOf(Vel.value)
   if (currentIndex > 0) {
     Vel.value = validVelocity[currentIndex - 1]
-  } else {
-    Vel.value = validVelocity[validVelocity.length - 1]
-  }
+  } 
 }
 // temperature
 const minTemp = 18
