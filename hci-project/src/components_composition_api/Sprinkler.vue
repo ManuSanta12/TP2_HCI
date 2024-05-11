@@ -14,13 +14,13 @@ const store = useSprinklerStore();
                 <v-card-title class="pa-0 text-h8">{{ store.deviceName }}</v-card-title>
             </v-col>
             <v-col cols="2" class="d-flex justify-end pa-0">
-                <v-switch inset :model-value="store.pumpStatus" color="green" class="small-switch" @change="store.togglePumpStatus"></v-switch>
+                <v-switch inset :model-value="store.deviceStatus" color="green" class="small-switch" @change="store.toggleDeviceStatus"></v-switch>
             </v-col>
         </v-row>
         <v-col class="d-flex justify-center pa-0">
             <v-card-actions>
-                <v-btn icon="mdi-water"></v-btn>
-                <v-btn icon="mdi-water-off"></v-btn>
+                <v-btn icon="mdi-water" @click="store.startPump"></v-btn>
+                <v-btn icon="mdi-water-off" @click="store.stopPump"></v-btn>
             </v-card-actions>
         </v-col>
         <v-col class="d-flex justify-center pa-0">
