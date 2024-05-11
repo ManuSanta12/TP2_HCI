@@ -15,7 +15,7 @@ export default {
     return {
       device_grid: [
         [{type:'Sprinkler', id: 0, status: {device_name: "mi regadera", toggle_status: true, show_in_home: true, pump_status: "OFF"} }],
-        [{type:'Sprinkler', id: 1}],
+        [{type:'Speaker', id: 1}],
         [{type:'Sprinkler', id: 2}, {type:'Sprinkler', id: 3}]
       ]
     };

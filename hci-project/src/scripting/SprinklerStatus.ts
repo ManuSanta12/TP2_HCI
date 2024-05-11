@@ -2,8 +2,6 @@ import {Status, IStatus} from "./Status";
 
 // Definir una interfaz para el objeto de estado
 export interface ISprinklerStatus extends IStatus {
-    device_name: string;
-    toggle_status: boolean;
     pump_status: string;
 };
 
