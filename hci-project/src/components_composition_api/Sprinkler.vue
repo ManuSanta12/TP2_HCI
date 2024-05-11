@@ -1,37 +1,9 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUpdated } from 'vue';
-import SprinklerStatus from '@/scripting/SprinklerStatus.ts'
+import { useSprinklerStore }  from '@/Stores/SprinklerStore'
 
 // Recibir props utilizando `defineProps`
-const props = defineProps({
-    status: {
-        type: SprinklerStatus,
-        default: () => ({
-            device_name: "NO DATA",
-            toggle_status: false,
-            show_in_home: false,
-            pump_status: "NO DATA"}),
-        required: true
-    }
-});
-
-//  Usar ref() le dice a vue que es una variable reactiva y debe chequear y updatear su valor constantemente!
-const device_name = ref(props.status.device_name);
-const toggle_status = ref(props.status.toggle_status);
-const show_in_home = ref(props.status.show_in_home);
-const pump_status = ref(props.status.pump_status);
-
-function alternate_toggle_status(){
-    toggle_status.value = !toggle_status.value;
-}
-
-onMounted(() => {
-    console.log("COMPONENT MOUNTED | Sprinkler.vue - status: ", props.status);
-});
-
-onUpdated(() => {
-    console.log("COMPONENT UPDATED | Sprinkler.vue - status: ", props.status);
-});
+const store = useSprinklerStore();
 </script>
 
 
@@ -39,10 +11,10 @@ onUpdated(() => {
     <v-card class="pa-3" width="300"> 
         <v-row class="px-3">
             <v-col cols="10">
-                <v-card-title class="pa-0 text-h8">{{ device_name }}</v-card-title>
+                <v-card-title class="pa-0 text-h8">{{ store.deviceName }}</v-card-title>
             </v-col>
             <v-col cols="2" class="d-flex justify-end pa-0">
-                <v-switch inset :model-value="toggle_status" color="green" class="small-switch" @change="alternate_toggle_status"></v-switch>
+                <v-switch inset :model-value="store.pumpStatus" color="green" class="small-switch" @change="store.togglePumpStatus"></v-switch>
             </v-col>
         </v-row>
         <v-col class="d-flex justify-center pa-0">
@@ -53,7 +25,7 @@ onUpdated(() => {
         </v-col>
         <v-col class="d-flex justify-center pa-0">
             <v-icon>mdi-water-pump</v-icon>
-            <p>Current status: {{ pump_status }}</p>
+            <p>Current status: {{ store.pumpStatus }}</p>
         </v-col>
     <v-expansion-panels>
         <v-expansion-panel>

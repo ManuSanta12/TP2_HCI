@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       device_grid: [
-        [{type:'Sprinkler', id: 0, status: {device_name: "mi regadera", toggle_status: true, show_in_home: true, pump_status: "OFF"} }],
+        [{type:'Sprinkler', id: 0}],
         [{type:'Speaker', id: 1}],
         [{type:'Sprinkler', id: 2}, {type:'Sprinkler', id: 3}]
       ]
@@ -51,7 +51,7 @@ Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispo
         <!-- Itera sobre cada columna en devices -->
         <v-col v-for="(column, index) in device_grid" :key="'col-' + index">
           <!-- Itera sobre cada dispositivo en la columna -->
-          <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" :status="device.status" class="ma-2"></component>
+          <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" class="ma-2"></component>
         </v-col>
       </v-row>
       <button @click="addDevice({ type: 'Speaker'}, 0)">Add Speaker to First Column</button>
