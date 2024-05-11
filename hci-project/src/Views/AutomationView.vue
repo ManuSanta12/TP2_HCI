@@ -18,7 +18,7 @@
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
       <v-card>
-        <v-card-title>Edit automation</v-card-title>
+        <v-card-title>New automation</v-card-title>
         <v-text-field placeholder="Title" variant="outlined" class="px-3" ></v-text-field>
         <v-list-text class="mx-3">Starters</v-list-text>
         <v-container class="pa-0 px-3 scrollable-list-card">
