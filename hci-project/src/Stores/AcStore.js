@@ -1,34 +1,21 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-export const useAirConditionerStore = defineStore('airConditioner', {
-  state: () => ({
-    airConditioners: []
-  }),
-  getters: {
-    getItems: (state) => {return state.airConditioners},
-    findIndex(){
-      return (ac) => {
-        return this.airConditioners.findIndex(item => item.id == ac.id)
-      }
+export const useAirConditionerStore = defineStore('airConditioners', {
+    state: () => ({
+        airConditioners: []
+    }),
+    actions: {
+        addAirConditioner(airConditioner) {
+            this.airConditioners.push(airConditioner)
+        },
+        removeAirConditioner(id) {
+            this.airConditioners = this.airConditioners.filter(ac => ac.id !== id)
+        },
+        updateAirConditioner(id, updates) {
+            const index = this.airConditioners.findIndex(ac => ac.id === id)
+            if (index !== -1) {
+                this.airConditioners[index] = { ...this.airConditioners[index], ...updates }
+            }
+        }
     }
-  },
-  actions: {
-    addAirConditioner(ac) {
-      this.airConditioners.push(ac);
-    },
-    toggleAC(id) {
-        const ac = this.airConditioners.find(ac => ac.id === id);
-        console.log(this.airConditioners, 'acs')
-        ac.status = ac.status === 'off' ? 'on' : 'off';
-        console.log(ac, 'ac1')
-    },
-    setTemperature(id, temperature) {
-      const ac = this.airConditioners.find(ac => ac.id === id);
-      ac.temperature = temperature;
-    },
-    setName(id, name){
-        const ac = this.airConditioners.find(ac => ac.id === id);
-        ac.name = name;
-    }
-  }
 });

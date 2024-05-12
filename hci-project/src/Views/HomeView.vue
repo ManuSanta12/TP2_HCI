@@ -1,44 +1,13 @@
-<script>
-import Light from '@/components/Light.vue';
-import AirConditioner from '@/components/AirConditioner.vue'
-import Speaker from '@/components/Speaker.vue'
-import Sprinkler from '@/components/Sprinkler.vue'
-export default {
-  components: {
-    Light, AirConditioner, Speaker, Sprinkler
-  },
-  data() {
-    return {
-      lightDevice: {
-        id: 'light1',
-        name: 'Living Room Light',
-        brightness: 50
-      },
-      aircon: {
-        id: 'aircon1',
-        name: 'My Air Conditioner'
-      },
-      speaker: {
-        id:'speaker1',
-        name: 'My Speaker'
-      },
-      sprinkler :{
-        id: 'sprinkler1',
-        name: 'My Sprinkler'
-      }
-    };
-  }
-}
-</script>
 <template>
   <v-app-bar title="Home"  color='#DDEAF4'/>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
-        <Light :device="lightDevice"/>
-        <AirConditioner :device="aircon"/>
-        <Speaker :device="speaker"/> 
-        <Sprinkler :device="sprinkler"/>
+        <v-btn @click="addNewDevice">Add device</v-btn>
+        <div v-for="device in devices" :key="device.id">
+          <component :is="getComponent(device.type)" :device="device" />
+          <pre>{{ device }}</pre>
+        </div> 
       </v-row>
     </v-main>
   </v-layout>
@@ -52,3 +21,46 @@ export default {
 }
 </style>
 
+<script>
+import AirConditioner from '@/components/AirConditioner.vue';
+import Sprinkler from '@/components/Sprinkler.vue';
+import Speaker from '@/components/Speaker.vue';
+import Light from '@/components/Light.vue';
+import { useDeviceStore } from '@/Stores/DeviceStore'
+
+export default {
+  components: {
+    AirConditioner,
+    Light,
+    Speaker,
+    Sprinkler
+  },
+  setup() {
+    const store = useDeviceStore();
+    const devices = store.devices;
+
+    function addNewDevice() {
+      console.log('Current devices:', store.devices);
+      store.addDevice({
+        id: Date.now().toString(),
+        name: 'New Device',
+        type: 'light', // This would be dynamic based on user selection
+        brightness: 50 // Default setting for a light device
+      });
+      console.log('Updated devices:', store.devices);
+    } 
+
+    function getComponent(type) {
+      switch (type) {
+        case 'airConditioner': return 'AirConditioner';
+        case 'light': return 'Light';
+        case 'speaker': return 'Speaker';
+        case 'sprinkler': return 'Sprinkler';
+        default: return 'div'; // Default or unknown type handler
+      }
+    }
+
+    return { devices, getComponent, addNewDevice };
+  }
+}
+</script>
