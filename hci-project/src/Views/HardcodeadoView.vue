@@ -1,7 +1,7 @@
 <script>
-import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
+// import SpeakerDeviceCard from '@/components/Speaker.vue';
+// import AirConditionerDeviceCard from '@/components/Speaker.vue';
+// import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
 </script>
 <template>
 <v-app-bar title="Device"  color='#DDEAF4'/>
@@ -9,11 +9,11 @@ import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
     <v-main color='#DDEAF4'>
       <v-row class="scrollable cols=3" >
         <v-col>
-          <SpeakerDeviceCard class="ma-2"/>
-          <SpeakerDeviceCard class="ma-2"/>
+          <!-- <SpeakerDeviceCard class="ma-2"/>
+          <SpeakerDeviceCard class="ma-2"/> -->
         </v-col>
         <v-col>
-          <AirConditionerDeviceCard class="ma-2"/>
+          <!-- <AirConditionerDeviceCard class="ma-2"/> -->
         </v-col>
         <v-col>
           <AutomationsCard class="ma-2"/>

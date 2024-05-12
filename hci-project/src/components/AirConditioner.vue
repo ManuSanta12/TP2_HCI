@@ -181,14 +181,7 @@ export default {
     margin-bottom: 15px;
     margin-top: 10px;
   }
-.button-alignment{
-    display: flex;
-    padding: 0;
-}
-.list-item-font {
-    font-weight: medium;
-    
-}
+
 </style>
  
   

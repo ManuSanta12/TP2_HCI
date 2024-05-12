@@ -1,10 +1,11 @@
 <script>
-
 import Light from '@/components/Light.vue';
 import AirConditioner from '@/components/AirConditioner.vue'
+import Speaker from '@/components/Speaker.vue'
+import Sprinkler from '@/components/Sprinkler.vue'
 export default {
   components: {
-    Light, AirConditioner,
+    Light, AirConditioner, Speaker, Sprinkler
   },
   data() {
     return {
@@ -16,6 +17,14 @@ export default {
       aircon: {
         id: 'aircon1',
         name: 'My Air Conditioner'
+      },
+      speaker: {
+        id:'speaker1',
+        name: 'My Speaker'
+      },
+      sprinkler :{
+        id: 'sprinkler1',
+        name: 'My Sprinkler'
       }
     };
   }
@@ -28,6 +37,8 @@ export default {
       <v-row class="pa-6 scrollable" >
         <Light :device="lightDevice"/>
         <AirConditioner :device="aircon"/>
+        <Speaker :device="speaker"/> 
+        <Sprinkler :device="sprinkler"/>
       </v-row>
     </v-main>
   </v-layout>

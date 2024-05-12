@@ -1,15 +1,13 @@
 <script>
-import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
 import Sprinkler from '@/components_composition_api/Sprinkler.vue';
-import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import AirConditionerDeviceCard from '@/components/AirConditionerDeviceCard.vue';
+// import Speaker from '@/components/Speaker.vue';
+import AirConditioner from '@/components/AirConditioner.vue';
 
 export default {
   components: {
-    SprinklerDeviceCard,
     Sprinkler,
-    SpeakerDeviceCard,
-    AirConditionerDeviceCard
+    // Speaker,
+    AirConditioner
   }
 //   data() {
 //     return {
@@ -47,7 +45,7 @@ Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispo
   <v-layout class="rounded rounded-md">
     <v-main color="#DDEAF4">
       <v-row class="scrollable" cols="3">
-        <AirConditionerDeviceCard/>
+        <!-- <AirConditionerDeviceCard/> -->
         <!-- Itera sobre cada columna en devices -->
         
       </v-row>

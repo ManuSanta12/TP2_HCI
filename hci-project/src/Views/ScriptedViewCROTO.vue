@@ -1,13 +1,13 @@
 <script>
 import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
-import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import AirConditionerDeviceCard from '@/components/AirConditionerDeviceCard.vue';
+// import SpeakerDeviceCard from '@/components/Speaker.vue';
+// import AirConditionerDeviceCard from '@/components/AirConditionerDeviceCard.vue';
 
 export default {
   components: {
-    SprinklerDeviceCard,
-    SpeakerDeviceCard,
-    AirConditionerDeviceCard
+    SprinklerDeviceCard
+    // SpeakerDeviceCard,
+    // 
   },
   data() {
     return {
@@ -22,10 +22,10 @@ export default {
   //TODO podria hacer un mapa mas que un switch! gpt daun
   getComponent(type) {
     switch (type) {
-      case 'Speaker':
-        return SpeakerDeviceCard;
-      case 'AirConditioner':
-        return AirConditionerDeviceCard;
+      // case 'Speaker':
+      //   return SpeakerDeviceCard;
+      // case 'AirConditioner':
+      //   return AirConditionerDeviceCard;
       case 'Sprinkler':
         return SprinklerDeviceCard;
       default:
