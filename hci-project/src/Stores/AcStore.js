@@ -1,14 +1,20 @@
 import { defineStore } from 'pinia';
-import { AirConditioner } from '@/Stores/Models/AirConditioner';
 
 export const useAirConditionerStore = defineStore('airConditioner', {
   state: () => ({
     airConditioners: []
   }),
+  getters: {
+    getItems: (state) => {return state.airConditioners},
+    findIndex(){
+      return (ac) => {
+        return this.airConditioners.findIndex(item => item.id == ac.id)
+      }
+    }
+  },
   actions: {
-    addAirConditioner(id) {
-      const newAC = new AirConditioner(id);
-      this.airConditioners.push(newAC);
+    addAirConditioner(ac) {
+      this.airConditioners.push(ac);
     },
     toggleAC(id) {
         const ac = this.airConditioners.find(ac => ac.id === id);
