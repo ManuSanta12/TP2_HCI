@@ -25,7 +25,7 @@
                         label="Show in home"
                         class="my-4"
                     ></v-checkbox>
-                    <v-btn block prepend-icon="mdi-trash-can-outline">Delete</v-btn>
+                    <v-btn block prepend-icon="mdi-trash-can-outline" @click="deleteDevice">Delete</v-btn>
                 </v-expansion-panel-text>
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -34,24 +34,33 @@
     </div>
   </template>
   
-<script>
+  <script>
+  import { ref } from 'vue';
+  import { useDeviceStore } from '@/Stores/DeviceStore';
+  
   export default {
     props: {
       device: Object
     },
-    data() {
-      return {
-        isOn: false
-      };
-    },
-    methods: {
-      toggleDevice() {
-        this.isOn = !this.isOn;
-        this.$emit('toggle', this.isOn);
+    setup(props) {
+      const store = useDeviceStore();
+      const isOn = ref(false);
+      const deleteDevice = () => {
+        store.removeDevice(props.device.id)
+        console.log(store.devices, 'deleted devices') 
+        //esto funciona pero no se actualiza la pagina. seguro funcione con la api
       }
+      function toggleDevice() {
+        isOn.value = !isOn.value;
+      }
+      return {
+        isOn,
+        toggleDevice,
+        deleteDevice
+      };
     }
   }
-</script>
+  </script>
   
 <style scoped>
   .device-card {

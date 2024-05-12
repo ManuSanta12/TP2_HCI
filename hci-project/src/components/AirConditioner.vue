@@ -22,7 +22,7 @@
         <v-col class="d-flex justify-end align-center pa-0">
             <v-btn density="compact" icon="mdi-minus" @click="decrementVel"></v-btn>
             <div class="d-flex align-center justify-center" style="width: 50px;">
-                <v-list-item-title class="text-h7">{{ Vel }}%</v-list-item-title>
+                <v-list-item-title class="text-h7">{{Vel}}%</v-list-item-title>
             </div>
             <v-btn density="compact" icon="mdi-plus" @click="incrementVel"></v-btn>
         </v-col>
