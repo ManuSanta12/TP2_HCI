@@ -10,31 +10,30 @@ export default {
     Sprinkler,
     SpeakerDeviceCard,
     AirConditionerDeviceCard
-  },
-  data() {
-    return {
-      device_grid: [
-        [{type:'Sprinkler', id: 0}],
-        [{type:'Speaker', id: 1}],
-        [{type:'Sprinkler', id: 2}, {type:'Sprinkler', id: 3}]
-      ]
-    };
-  },
-  methods: {
-  getComponent(type) {
-    const componentMap = {
-      Speaker: SpeakerDeviceCard,
-      AirConditioner: AirConditionerDeviceCard,
-      SprinklerCard: SprinklerDeviceCard,
-      Sprinkler: Sprinkler
-    };
-
-    return componentMap[type] || 'div'; // Un componente por defecto o un mensaje de error
-  },
-  addDevice(device, columnIndex) {
-    this.device_grid[columnIndex].push(device);
   }
-}
+//   data() {
+//     return {
+//       device_grid: [
+//         [{type:'AirConditioner', id: 0}],
+//         [{type:'AirConditioner', id: 1}],
+//         [{type:'AirConditioner', id: 3}],
+//       ]
+//     };
+//   },
+//   methods: {
+//   getComponent(type) {
+//     const componentMap = {
+//       Speaker: SpeakerDeviceCard,
+//       AirConditioner: AirConditionerDeviceCard,
+//       SprinklerCard: SprinklerDeviceCard,
+//       Sprinkler: Sprinkler
+//     };
+//     return componentMap[type] || 'div'; // Un componente por defecto o un mensaje de error
+//   },
+//   addDevice(device, columnIndex) {
+//     this.device_grid[columnIndex].push(device);
+//   }
+// }
 };
 </script>
 
@@ -48,11 +47,9 @@ Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispo
   <v-layout class="rounded rounded-md">
     <v-main color="#DDEAF4">
       <v-row class="scrollable" cols="3">
+        <AirConditionerDeviceCard/>
         <!-- Itera sobre cada columna en devices -->
-        <v-col v-for="(column, index) in device_grid" :key="'col-' + index">
-          <!-- Itera sobre cada dispositivo en la columna -->
-          <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" class="ma-2"></component>
-        </v-col>
+        
       </v-row>
       <button @click="addDevice({ type: 'Speaker'}, 0)">Add Speaker to First Column</button>
     </v-main>

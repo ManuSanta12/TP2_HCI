@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia'
-import { useDeviceStore } from './DeviceStore'
 import { ref } from 'vue'
 
 export const useSprinklerStore = defineStore('sprinkler', () => {
     // Composicion con el deviceStore como base
-    const baseStore = useDeviceStore();
 
     //Definicion de campos y metodos propios
     const pumpStatus = ref("NO DATA");
