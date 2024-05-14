@@ -2,9 +2,9 @@
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
-        <div v-for="device in devices" :key="device.id">
-          <component :is="getComponent(device.type)" :device="device" />
-        </div> 
+          <v-col v-for="device in devices" :key="device.id" cols="12" sm="6" md="4" lg="3">
+            <component :is="getComponent(device.type)" :device="device" />
+          </v-col>
       </v-row>
     </v-main>
   </v-layout>
