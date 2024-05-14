@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/Views/HomeView.vue'
 import DeviceView from '@/Views/DeviceView.vue'
 import AutomationView from '@/Views/AutomationView'
-import NewDeviceView from '@/Views/NewDeviceView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,12 +24,7 @@ const router = createRouter({
         path: '/automations',
         name: 'automations',
         component:AutomationView
-      },
-      {
-        path: '/new-device',
-        name: 'new-device',
-        component:NewDeviceView
-      },
+      }
   ]
 })
 

@@ -1,11 +1,26 @@
+<!-- <div v-for="device in devices" :key="device.id">
+  <component :is="getComponent(device.type)" :device="device" />
+</div>  -->
 <template>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
-      <v-row class="pa-6 scrollable" >
-        <div v-for="device in devices" :key="device.id">
-          <component :is="getComponent(device.type)" :device="device" />
-        </div> 
-      </v-row>
+      <!-- El container hace que este todo centrado en la pagina -->
+      <v-container>
+        <v-row class="scrollable" no-gutters>
+          <v-col cols="4">
+            <p>COL 0</p>
+            <component v-for="device in devices.slice(0, Math.ceil(devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+          </v-col>
+          <v-col cols="4">
+            <p>COL 1</p>
+            <component v-for="device in devices.slice(Math.ceil(devices.length / 3), Math.ceil(2 * devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+          </v-col>
+          <v-col cols="4">
+            <p>COL 2</p>
+            <component v-for="device in devices.slice(Math.ceil(2 * devices.length / 3), devices.length)" :key="device.id" :is="getComponent(device.type)" :device="device" />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
   </v-layout>
   <v-dialog v-model="dialog" max-width="1300" scrollable>

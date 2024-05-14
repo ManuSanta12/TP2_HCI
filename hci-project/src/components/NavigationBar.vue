@@ -52,9 +52,7 @@
       const items = ref([
         { title: "Home", icon: "mdi-home", to:"/home"},
         { title: "Devices", icon: "mdi-monitor-cellphone-star", to:"/devices" },
-        { title: "Automations", icon: "mdi-creation", to:"/automations"},
-        { title: "NEW DEVICE", icon: "mdi-home-outline", to: "/new-device" },
-        { title: "Settings", icon: "mdi-cog-outline" }
+        { title: "Automations", icon: "mdi-creation", to:"/automations"}
       ]);
   
       return { items };
