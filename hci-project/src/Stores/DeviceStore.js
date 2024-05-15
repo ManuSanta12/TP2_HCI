@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useDeviceStore = defineStore('devices', {
     state: () => ({
-        devices: []
+        devices: [],
     }),
     actions: {
         addDevice(device) {
@@ -17,6 +17,6 @@ export const useDeviceStore = defineStore('devices', {
             if (index !== -1) {
                 this.devices[index] = {...this.devices[index], ...updates};
             }
-        }
+        },
     }
 });

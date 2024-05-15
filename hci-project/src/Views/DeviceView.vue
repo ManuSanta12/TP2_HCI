@@ -1,24 +1,40 @@
-<!-- <div v-for="device in devices" :key="device.id">
-  <component :is="getComponent(device.type)" :device="device" />
-</div>  -->
+<!--
+  ========= MANERA VIEJA ========= 
+  <div v-for="device in devices" :key="device.id">
+    <component :is="getComponent(device.type)" :device="device" />
+  </div>  
+-->
+<!-- 
+  ========= MANERA ACTUAL PERO CON LAS COLUMNAS HARDCODEADAS ========= 
+<v-col cols="4">
+  <p>COL 0</p>
+  <component v-for="device in devices.slice(0, Math.ceil(devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+</v-col>
+<v-col cols="4">
+  <p>COL 1</p>
+  <component v-for="device in devices.slice(Math.ceil(devices.length / 3), Math.ceil(2 * devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+</v-col>
+<v-col cols="4">
+  <p>COL 2</p>
+  <component v-for="device in devices.slice(Math.ceil(2 * devices.length / 3), devices.length)" :key="device.id" :is="getComponent(device.type)" :device="device" />
+</v-col> 
+-->
+
 <template>
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <!-- El container hace que este todo centrado en la pagina -->
       <v-container>
         <v-row class="scrollable" no-gutters>
-          <v-col cols="4">
-            <p>COL 0</p>
-            <component v-for="device in devices.slice(0, Math.ceil(devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+          <v-col v-for="col_index in 3" :key="col_index" cols="4">
+            <component
+              v-for="device in getDevicesForColumnEnhanced(col_index - 1)"
+              :key="device.id"
+              :is="getComponent(device.type)"
+              :device="device"
+            />
           </v-col>
-          <v-col cols="4">
-            <p>COL 1</p>
-            <component v-for="device in devices.slice(Math.ceil(devices.length / 3), Math.ceil(2 * devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
-          </v-col>
-          <v-col cols="4">
-            <p>COL 2</p>
-            <component v-for="device in devices.slice(Math.ceil(2 * devices.length / 3), devices.length)" :key="device.id" :is="getComponent(device.type)" :device="device" />
-          </v-col>
+          
         </v-row>
       </v-container>
     </v-main>
@@ -59,6 +75,8 @@
 
 <script>
 import { ref } from 'vue';
+import { computed } from 'vue';
+import { useDisplay } from 'vuetify/lib/framework';  // Importa el objeto breakpoint de Vuetify
 import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
@@ -83,7 +101,17 @@ export default {
   setup() {
     const store = useDeviceStore();
     const devices = store.devices;
+    const display = useDisplay();  // Obtiene el breakpoint actual (size de la pantalla segun resolucion)
     const dialog = ref(false);
+
+    const numColumns = computed(() => {
+      if (display.xl.value) return 5;
+      if (display.lg.value) return 4;
+      if (display.md.value) return 3;
+      if (display.sm.value) return 2;
+      if (display.xs.value) return 1;
+      return columnMap.xs;
+    });
 
     const newDevice = ref({
       id: '',
@@ -111,6 +139,18 @@ export default {
     function cancel() {
       dialog.value = false;
     }
+
+    function getDevicesForColumn(col_index) {
+      const columnOffset = Math.ceil(devices.length / 3);
+      const start = col_index * columnOffset;
+      const end = start + columnOffset;
+      return devices.slice(start, end);
+    }
+
+    function getDevicesForColumnEnhanced(col_index) {
+      return devices.filter((device, index) => index % 3 === col_index);
+    }
+
     return {
       devices,
       newDevice,
@@ -118,6 +158,9 @@ export default {
       openDialog,
       saveDevice,
       cancel,
+      getDevicesForColumn,
+      getDevicesForColumnEnhanced,
+      numColumns,
       getComponent(type) {
         switch (type) {
           case 'Air Conditioner': return AirConditioner;
