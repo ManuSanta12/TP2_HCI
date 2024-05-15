@@ -10,7 +10,8 @@ export const useDeviceStore = defineStore('devices', {
             this.devices.push(device);
         },
         removeDevice(id) {
-            this.devices = this.devices.filter(device => device.id !== id);
+            this.devices.pop(id)
+            //this.devices = this.devices.filter(device => device.id !== id);
         },
         updateDevice(id, updates) {
             const index = this.devices.findIndex(device => device.id === id);
