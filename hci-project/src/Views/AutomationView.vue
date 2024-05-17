@@ -3,7 +3,7 @@
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
         <div v-for="auto in automations" :key="auto.id">
-          <component :is="getComponent(device.type)" :device="device" />
+          <AutomationsCard :automation="auto" />
         </div> 
       </v-row>
     </v-main>
@@ -78,6 +78,9 @@
           <v-card-text class="py-2 px-3">
             <v-btn @click="addAction">Add Action</v-btn>
           </v-card-text>
+          <!-- <v-col cols="2" class="d-flex justify-end align-center"> 
+                <v-switch inset color="green" class="small-switch align-center mt-4" v-model="action.showInHome"></v-switch>
+              </v-col> -->
         <v-divider/>
         <v-card-actions>
               <v-btn prepend-icon="mdi-delete" variant="tonal" small color="error" dark @click="dialog = false">Delete</v-btn>
@@ -85,7 +88,6 @@
               <v-btn variant="tonal" color="secondary" dark @click="cancel">Cancel</v-btn>
               <v-btn variant="tonal" color="primary" dark @click="saveAutomation">Save</v-btn>
           </v-card-actions>
-          
       </v-card>
     </v-col>
     </v-row>
@@ -111,8 +113,12 @@
 <script>
 import { ref } from 'vue';
 import { useAutomationStore } from '@/Stores/AutomationStore';
+import AutomationsCard from '@/components/AutomationsCard.vue';
 
 export default {
+  components: {
+    AutomationsCard
+  },
   data() {
     return {
       dialog: false,
@@ -122,53 +128,73 @@ export default {
       actionOptions: ['Select Ac mode', 'Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'] 
     };
   },
-  methods: {
-    addStarter() {
-      this.starters.push({ day: '', time: '' });
-    },
-    addAction() {
-      this.actions.push({ option: '' });
-    },
-    cancel() {
-      this.dialog = false;
-      this.resetAutomation();
-    },
-    resetAutomation() {
-      this.starters = [{ day: '', time: '' }];
-      this.actions = [{ option: '' }];
-    },
-    saveAutomation() {
-      const automationStore = useAutomationStore();
-      automationStore.addAutomation({
-        id: Date.now().toString(),
-        name: this.newAutomation.name,
-        numberOfStarters: this.starters.length,
-        numberOfActions: this.actions.length,
-        starters: this.starters,
-        actions: this.actions
-      });
-      this.dialog = false;
-      this.resetAutomation();
-    }
-  },
   setup() {
+    const store = useAutomationStore();
+    const automations = store.automations;
     const dialog = ref(false);
     const newAutomation = ref({
+      id: '',
       name: '',
-      actions: '',
-      starters: ''
+      starters: [],
+      actions: [],
+      startersLength: 0,
+      actionsLength: 0
     });
+
     const openDialog = () => {
       newAutomation.value = {
         id: Date.now().toString(),
         name: '',
+        starters: [],
         actions: [],
-        starters: []
+        startersLength: 0,
+        actionsLength: 0
       };
       dialog.value = true;
     };
 
-    return { dialog, openDialog, newAutomation };
+    const saveAutomation = () => {
+      newAutomation.value.startersLength = newAutomation.value.starters.length;
+      newAutomation.value.actionsLength = newAutomation.value.actions.length;
+      store.addAutomation(newAutomation.value);
+      dialog.value = false;
+      resetAutomation();
+    };
+
+    const addStarter = () => {
+      newAutomation.value.starters.push({ day: '', time: '' });
+    };
+
+    const addAction = () => {
+      newAutomation.value.actions.push({ option: '' });
+    };
+
+    const resetAutomation = () => {
+      newAutomation.value = {
+        id: '',
+        name: '',
+        starters: [],
+        actions: [],
+        startersLength: 0,
+        actionsLength: 0
+      };
+    };
+
+    const cancel = () => {
+      dialog.value = false;
+      resetAutomation();
+    };
+
+    return {
+      dialog,
+      newAutomation,
+      openDialog,
+      saveAutomation,
+      cancel,
+      addAction,
+      addStarter,
+      automations
+    };
   }
 };
 </script>

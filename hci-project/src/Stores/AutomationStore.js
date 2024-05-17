@@ -8,6 +8,7 @@ export const useAutomationStore = defineStore('automations', {
     actions: {
         addAutomation(automation) {
             this.automations.push(automation);
+            console.log("automations: ", this.automations)
         },
         removeAutomation(id) {
             this.automations = this.automations.filter(automation => automation.id !== id);
