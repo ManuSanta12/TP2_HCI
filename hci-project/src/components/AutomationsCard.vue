@@ -14,6 +14,7 @@
         </v-row>
         <v-card-subtitle class="px-3">Not Scheduled</v-card-subtitle>
         <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
+        <v-btn @click="editAutomation">Edit Automation</v-btn>
       </v-card>
     </v-col>
   </v-row>
@@ -36,6 +37,9 @@ export default {
   setup(props){
     const store = useAutomationStore();
     const isOn = ref(false);
+    const editAutomation = () => {
+      store.openDialog('edit', props.automation);
+    };
     function togglePlay(){
       isOn.value = !isOn.value;
       this.icon = this.icon === 'mdi-pause' ? 'mdi-play' : 'mdi-pause';
@@ -43,8 +47,8 @@ export default {
     }
     return {
       isOn,
-      togglePlay
-
+      togglePlay,
+      editAutomation
     }
   }
 };

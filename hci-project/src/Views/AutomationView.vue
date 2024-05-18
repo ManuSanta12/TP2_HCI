@@ -155,7 +155,7 @@ export default {
 
     const saveAutomation = () => {
       newAutomation.value.startersLength = newAutomation.value.starters.length;
-      newAutomation.value.actionsLength = newAutomation.value.actions.length;
+      newAutomation.value.actionsLength = newAutomation.value.actions.length ;
       store.addAutomation(newAutomation.value);
       dialog.value = false;
       resetAutomation();
