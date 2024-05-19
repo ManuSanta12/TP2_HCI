@@ -14,7 +14,8 @@ export const useAutomationStore = defineStore('automations', {
             console.log("automations: ", this.automations)
         },
         removeAutomation(id) {
-            this.automations = this.automations.filter(automation => automation.id !== id);
+            //this.automations = this.automations.filter(automation => automation.id !== id);
+            this.automations.pop(id)
         },
         updateAutomation(id, updates) {
             const index = this.automations.findIndex(automation => automation.id === id);
@@ -32,6 +33,7 @@ export const useAutomationStore = defineStore('automations', {
             this.currentAutomation = null;
           },
           saveAutomation(data) {
+            
             if (this.dialogMode === 'add') {
               this.automations.push(data);
             } else {

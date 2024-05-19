@@ -17,8 +17,8 @@
         :visible="dialog"
         :automation=automationToUse()
         @update:visible="dialog = $event"
-        @save="saveAutomation"
-        @close="closeDialog"
+        @save="saveAutomation" 
+        @close="closeMyDialog"
       />
     </v-dialog>
   </v-layout>
@@ -35,13 +35,20 @@ const store = useAutomationStore();
 const { currentAutomation, openDialog, closeDialog, saveAutomation } = store;
 const automations = store.automations;
 
-const openAddDialog = () => {
-  openDialog('add');
+const openEditDialog = (data) => {
   dialog.value = true;
 };
+
+const closeMyDialog = () =>{
+  dialog.value = false;
+};
+
+
 
 const automationToUse = () => {
   // Use currentAutomation if it exists, otherwise create a new object with default values
   return currentAutomation || { name: '', starters: [], actions: [] };
 };
+
+
 </script>

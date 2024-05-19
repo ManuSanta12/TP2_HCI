@@ -12,44 +12,34 @@
             </v-btn>
           </v-col>
         </v-row>
+        <!--Aca hay que cambiar para que se imprima bien-->
         <v-card-subtitle class="px-3">Not Scheduled</v-card-subtitle>
         <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
-        <v-btn @click="editAutomation">Edit Automation</v-btn>
+        <v-btn @click="openEditDialog">Edit Automation</v-btn>
       </v-card>
     </v-col>
   </v-row>
 </template>
 
-<script>
-import {ref} from 'vue'
+<script setup>
+import { ref } from 'vue';
 import { useAutomationStore } from '@/Stores/AutomationStore';
+//import { openEditDialog } from '@/Views/AutomationView2.vue'; 
 
-export default {
-  props: {
-    automation: Object
-  },
-  data() {
-    return {
-      icon: 'mdi-pause',
-      iconColor: 'red',
-    };
-  },
-  setup(props){
-    const store = useAutomationStore();
-    const isOn = ref(false);
-    const editAutomation = () => {
-      store.openDialog('edit', props.automation);
-    };
-    function togglePlay(){
-      isOn.value = !isOn.value;
-      this.icon = this.icon === 'mdi-pause' ? 'mdi-play' : 'mdi-pause';
-      this.iconColor = this.icon == 'mdi-pause' ? 'green' : 'red';
-    }
-    return {
-      isOn,
-      togglePlay,
-      editAutomation
-    }
-  }
+const { openDialog } = useAutomationStore();
+
+const props = defineProps({
+  automation: Object
+});
+
+const isOn = ref(false);
+let icon = 'mdi-pause';
+let iconColor = 'red';
+
+
+const togglePlay = () => {
+  isOn.value = !isOn.value;
+  icon = icon === 'mdi-pause' ? 'mdi-play' : 'mdi-pause';
+  iconColor = icon === 'mdi-pause' ? 'red' : 'green';
 };
 </script>
