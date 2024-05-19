@@ -20,7 +20,7 @@
         <v-subheader>Actions</v-subheader>
         <v-row v-for="(action, index) in automation.actions" :key="index">
           <v-col cols="12">
-            <v-select :items="actionOptions" v-model="action.type" label="Action Type" outlined dense />
+            <v-select :items="actions" v-model="action.type" label="Action Type" outlined dense />
           </v-col>
         </v-row>
         <v-btn small @click="addAction">Add Action</v-btn>
@@ -34,36 +34,36 @@
   </template>
   
   <script setup>
-  import { defineProps, defineEmits } from 'vue';
+  import { defineProps, defineEmits, ref } from 'vue';
   
   const props = defineProps({
-    visible: Boolean,
-    automation: {
-      type: Object,
-      default: () => ({ name: 'name', starters: [], actions: [] })
-    },
-    days: {
-      type: Array,
-      default: () => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    },
-    actionOptions: {
-      type: Array,
-      default: () => ['Turn On', 'Turn Off', 'Adjust']
-    }
-  });
-  
+      visible: Boolean,
+      // Define default automation object
+      defaultAutomation: {
+          type: Object,
+          default: () => ({ name: '', starters: [], actions: [] })
+        },
+    });
+    
+  const days= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'];
+
+  const actions = ['action 1', 'action2', 'action3'];
+
   const emit = defineEmits(['save', 'close']);
   
+  // Use ref to store the current automation object
+  const automation = ref(props.defaultAutomation);
+  
   const handleSave = () => {
-    emit('save', props.automation);
+    emit('save', automation.value);
   };
   
   const addStarter = () => {
-    props.automation.starters.push({ day: '', time: '' });
+    automation.value.starters.push({ day: '', time: '' });
   };
   
   const addAction = () => {
-    props.automation.actions.push({ type: '' });
+    automation.value.actions.push({ type: '' });
   };
   </script>
   

@@ -2,7 +2,7 @@
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable">
-        <div v-for="auto in automations" :key="auto.id">
+        <div class="pa-6" v-for="auto in automations" :key="auto.id">
           <AutomationsCard :automation="auto" />
         </div>
       </v-row>
@@ -10,12 +10,12 @@
     <v-dialog v-model="dialog" max-width="1300" scrollable>
       <template v-slot:activator="{ props: addNew }">
         <v-app-bar title="Automations" color='#DDEAF4'>
-          <v-btn rounded prepend-icon="mdi-plus" variant="tonal" @click="openDialog" v-bind="addNew">Add new</v-btn>
+          <v-btn rounded prepend-icon="mdi-plus" variant="tonal" @click="openAddDialog" v-bind="addNew">Add new</v-btn>
         </v-app-bar>
       </template>
       <DialogComponent
         :visible="dialog"
-        :automation="automationToUse"
+        :automation=automationToUse()
         @update:visible="dialog = $event"
         @save="saveAutomation"
         @close="closeDialog"
@@ -42,6 +42,6 @@ const openAddDialog = () => {
 
 const automationToUse = () => {
   // Use currentAutomation if it exists, otherwise create a new object with default values
-  return currentAutomation || { name: 'Default Name', starters: [], actions: [] };
+  return currentAutomation || { name: '', starters: [], actions: [] };
 };
 </script>
