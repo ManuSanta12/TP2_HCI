@@ -15,7 +15,7 @@
             <v-text-field v-model="starter.time" label="Time" outlined dense />
           </v-col>
         </v-row>
-        <v-btn small @click="addStarter">Add Starter</v-btn>
+        <v-btn class="ml-3" small @click="addStarter">Add Starter</v-btn>
         <v-divider class="my-4" />
         <v-subheader>Actions</v-subheader>
         <v-row v-for="(action, index) in automation.actions" :key="index">
@@ -23,7 +23,7 @@
             <v-select :items="actions" v-model="action.type" label="Action Type" outlined dense />
           </v-col>
         </v-row>
-        <v-btn small @click="addAction">Add Action</v-btn>
+        <v-btn small  @click="addAction">Add Action</v-btn>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
