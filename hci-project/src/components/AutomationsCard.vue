@@ -16,7 +16,7 @@
         <v-card-subtitle class="px-3">Not Scheduled</v-card-subtitle>
         <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
         <v-btn min-width="200" @click="handleEdit">Edit Automation</v-btn>
-        <v-btn class="mt-3" variant="tonal" color="error" min-width="200" @click="removeAutomation">Delete Automation</v-btn>
+        <v-btn class="mt-3" variant="tonal" color="error" min-width="200" @click="deleteAuto">Delete Automation</v-btn>
 
       </v-card>
     </v-col>
@@ -35,6 +35,11 @@ const emit = defineEmits(['edit']);
 const props = defineProps({
   automation: Object
 });
+
+const deleteAuto = () =>{
+  console.log(props.automation.id);
+  removeAutomation(props.automation.id);
+}
 
 const handleEdit = () => {
     emit('edit', props.automation);
