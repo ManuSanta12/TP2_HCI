@@ -20,16 +20,14 @@
             <v-expansion-panel-content>
                 <v-expansion-panel-text>
                     <v-row no-gutters>
-                      <v-col >
-                        <v-sheet class="px-2 ma-2">
-                          <v-btn  variant="tonal" color="error" min-width="100" @click="deleteAuto(automation.id)">Delete</v-btn>
-                        </v-sheet>
-                      </v-col>
                       <v-checkbox
-                                    v-model="automation.showInHome"
-                                    label="Show in home"
-                                    class="my-4"
-                        ></v-checkbox>
+                      v-model="automation.showInHome"
+                      label="Show in home"
+                      class="my-4"
+                      ></v-checkbox>
+                      <v-col >
+                          <v-btn block variant="tonal" color="error" prepend-icon="mdi-trash-can-outline" @click="deleteAuto(automation.id)">Delete</v-btn>
+                      </v-col>
                     </v-row>
                   </v-expansion-panel-text>
                 </v-expansion-panel-content>

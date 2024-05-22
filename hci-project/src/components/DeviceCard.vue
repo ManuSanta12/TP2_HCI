@@ -25,7 +25,7 @@
                         label="Show in home"
                         class="my-4"
                     ></v-checkbox>
-                    <v-btn block prepend-icon="mdi-trash-can-outline" @click="deleteDevice">Delete</v-btn>
+                    <v-btn block variant="tonal" color="error" prepend-icon="mdi-trash-can-outline" @click="deleteDevice">Delete</v-btn>
                 </v-expansion-panel-text>
             </v-expansion-panel-content>
           </v-expansion-panel>
