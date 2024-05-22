@@ -13,7 +13,6 @@
               <AutomationsCard
                 v-else
                 :automation="item"
-                @edit="handleEdit"
               />
           </div>
         </div> 

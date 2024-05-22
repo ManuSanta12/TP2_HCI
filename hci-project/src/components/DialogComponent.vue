@@ -1,7 +1,7 @@
 <template>
     <v-card v-if="visible">
       <v-card-title>
-        {{ automation && automation.id ? 'Edit Automation' : 'Add Automation' }}
+        Add Automation
       </v-card-title>
       <v-divider/>
       <v-card-text>

@@ -5,7 +5,6 @@
         <div class="pa-6" v-for="auto in automations" :key="auto.id">
           <AutomationsCard 
           :automation="auto" 
-          @edit="handleEdit"
           />
         </div>
       </v-row>
@@ -49,11 +48,6 @@ const saveAutomationHander = (automation) => {
   closeMyDialog();
 };
 
-const handleEdit = (automation) => {
-  automationToUse.value = {...automation}; // Load the selected automation into the dialog
-  console.log('estoy editandoOOO:', automationToUse);
-  dialog.value = true; // Open the dialog
-};
 
 const closeMyDialog = () =>{
   dialog.value = false;

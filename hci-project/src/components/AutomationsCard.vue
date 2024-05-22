@@ -20,11 +20,6 @@
             <v-expansion-panel-content>
                 <v-expansion-panel-text>
                     <v-row no-gutters>
-                      <v-col>
-                        <v-sheet  class="px-2 ma-2">
-                          <v-btn min-width="100" @click="handleEdit">Edit</v-btn>
-                        </v-sheet>
-                      </v-col>
                       <v-col >
                         <v-sheet class="px-2 ma-2">
                           <v-btn  variant="tonal" color="error" min-width="100" @click="deleteAuto(automation.id)">Delete</v-btn>
@@ -52,7 +47,6 @@ import { useAutomationStore } from '@/Stores/AutomationStore';
 
 const { removeAutomation} = useAutomationStore();
 
-const emit = defineEmits(['edit']);
 
 const props = defineProps({
   automation: Object
@@ -63,10 +57,6 @@ const deleteAuto = (id) =>{
   removeAutomation(id);
 }
 
-const handleEdit = () => {
-    console.log("estoy editando");
-    emit('edit', props.automation);
-  };
 
 const isOn = ref(false);
 let icon = 'mdi-pause';

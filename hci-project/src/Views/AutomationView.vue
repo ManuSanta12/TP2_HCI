@@ -14,7 +14,6 @@
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal" @click="openDialog" v-bind ="addNew">Add new</v-btn>
       </v-app-bar>
     </template>
-    <!-- <EditAutomationCard class="ma-2"/> -->
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
       <v-card>
