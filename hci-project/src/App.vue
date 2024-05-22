@@ -29,7 +29,7 @@ function addDevice(){
     </v-app>
 </template>
 
-<script setup>
+<script >
 import NavigationBar from './components/NavigationBar.vue';
 </script> 
 
