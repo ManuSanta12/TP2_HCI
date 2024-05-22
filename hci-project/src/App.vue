@@ -13,14 +13,14 @@ function addDevice(){
 }
 
 </script>
-
+<!--
 <template>
     <v-btn @click="addDevice"> Add device</v-btn>
     <span>#Devices: {{ store.devices.length }}</span>
 </template>
+-->
 
-
-<!-- <template>
+<template>
     <v-app>
       <NavigationBar/>
       <v-main color='#DDEAF4'>
@@ -31,6 +31,6 @@ function addDevice(){
 
 <script>
 import NavigationBar from './components/NavigationBar.vue';
-</script> -->
+</script> 
 
 

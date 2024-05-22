@@ -12,35 +12,26 @@
     </v-main>
   </v-layout>
 </template>
-<script>
+
+
+<script setup>
+import { computed } from 'vue';
 import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
-import { useDeviceStore } from '@/Stores/DeviceStore'
+import { useDeviceStore } from '@/Stores/DeviceStore';
 
-export default {
-  components: {
-    AirConditioner,
-    Light,
-    Speaker,
-    Sprinkler
-  },
-  setup() {
-    const store = useDeviceStore();
-    const devices = store.devices;
-  
-    function getComponent(type) {
-      switch (type) {
-        case 'Air Conditioner': return 'AirConditioner';
-        case 'Light Panel': return 'Light';
-        case 'Speaker': return 'Speaker';
-        case 'Sprinkler': return 'Sprinkler';
-        default: return 'div'; // Default or unknown type handler
-      }
-    }
+const store = useDeviceStore();
+const devices = computed(() => store.devices);
 
-    return { devices, getComponent};
+function getComponent(type) {
+  switch (type) {
+    case 'Air Conditioner': return AirConditioner;
+    case 'Light Panel': return Light;
+    case 'Speaker': return Speaker;
+    case 'Sprinkler': return Sprinkler;
+    default: return 'div'; // Default or unknown type handler
   }
 }
 </script>
