@@ -4,7 +4,7 @@
       <v-card class="pa-2" width="300">
         <v-row class="px-3 pt-3">
           <v-col cols="10">
-            <v-card-title class="pa-0 text-h8">{{automation.name}}</v-card-title>
+            <v-card-title class="pa-0 text-h8">{{automation.name }}</v-card-title>
           </v-col>
           <v-col cols="2" class="d-flex justify-end pa-0">
             <v-btn icon :color="iconColor" @click="togglePlay" v-model="isOn">
@@ -12,12 +12,20 @@
             </v-btn>
           </v-col>
         </v-row>
-        <!--Aca hay que cambiar para que se imprima bien-->
-        <v-card-subtitle class="px-3">Not Scheduled</v-card-subtitle>
+        <v-card-subtitle class="px-3">{{automation.startersLength ? "Scheduled" : "Not Scheduled"}}</v-card-subtitle>
         <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
-        <v-btn min-width="200" @click="handleEdit">Edit Automation</v-btn>
-        <v-btn class="mt-3" variant="tonal" color="error" min-width="200" @click="deleteAuto">Delete Automation</v-btn>
-
+        <v-row no-gutters>
+          <v-col>
+            <v-sheet  class="px-2 ma-2">
+              <v-btn min-width="100" @click="handleEdit">Edit</v-btn>
+            </v-sheet>
+          </v-col>
+          <v-col >
+            <v-sheet class="px-2 ma-2">
+              <v-btn  variant="tonal" color="error" min-width="100" @click="deleteAuto(automation.id)">Delete</v-btn>
+            </v-sheet>
+          </v-col>
+        </v-row>
       </v-card>
     </v-col>
   </v-row>
@@ -28,7 +36,7 @@ import { defineEmits, ref } from 'vue';
 import { useAutomationStore } from '@/Stores/AutomationStore';
 //import { openEditDialog } from '@/Views/AutomationView2.vue'; 
 
-const { openDialog, removeAutomation} = useAutomationStore();
+const { removeAutomation} = useAutomationStore();
 
 const emit = defineEmits(['edit']);
 
@@ -36,12 +44,13 @@ const props = defineProps({
   automation: Object
 });
 
-const deleteAuto = () =>{
-  console.log(props.automation.id);
-  removeAutomation(props.automation.id);
+const deleteAuto = (id) =>{
+  console.log('auto id', id);
+  removeAutomation(id);
 }
 
 const handleEdit = () => {
+    console.log("estoy editando");
     emit('edit', props.automation);
   };
 

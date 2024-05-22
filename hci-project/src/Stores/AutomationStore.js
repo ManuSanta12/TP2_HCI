@@ -9,12 +9,23 @@ export const useAutomationStore = defineStore('automations', {
         currentAutomation: null
     }),
     actions: {
-        addAutomation(automation) {
-          this.automations.push(automation);
-           // console.log("automations: ", this.automations)
-        },
+      saveAutomation(data) {
+        if (this.dialogMode === 'add') {
+          data.id = Date.now().toString();
+          this.automations.push(data);
+          console.log("automation store:", this.automations);
+        } else {
+          const index = this.automations.findIndex(a => a.id === data.id);
+          if (index !== -1) {
+            this.automations[index] = data;
+          }
+        }
+        this.closeDialog();
+      },
         removeAutomation(id) {
-            this.automations.pop(id)
+            console.log('id:', id);
+            this.automations = this.automations.filter(auto => auto.id !== id);
+            // this.automations.pop(id)
         },
         updateAutomation(id, updates) {
             const index = this.automations.findIndex(automation => automation.id === id);
@@ -22,26 +33,10 @@ export const useAutomationStore = defineStore('automations', {
                 this.automations[index] = {...this.automations[index], ...updates};
             }
         },
-        openDialog(mode, automation = {}) {
-            this.dialog = true;
-            this.dialogMode = mode;
-            this.currentAutomation = mode === 'edit' ? automation : { id: Date.now().toString(), name: '', starters: [], actions: [], startersLength: 0, actionsLength: 0 };
-          },
           closeDialog() {
             this.dialog = false;
             this.currentAutomation = null;
-          },
-          saveAutomation(data) {
-            
-            if (this.dialogMode === 'add') {
-              this.automations.push(data);
-            } else {
-              const index = this.automations.findIndex(a => a.id === data.id);
-              if (index !== -1) {
-                this.automations[index] = data;
-              }
-            }
-            this.closeDialog();
           }
+          
     }
 });
