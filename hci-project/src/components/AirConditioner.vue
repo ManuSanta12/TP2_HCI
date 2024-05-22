@@ -55,124 +55,105 @@
 </DeviceCard>
 </template>
 
-<script>
-import DeviceCard from './DeviceCard.vue';
+
+<script setup>
 import { ref, computed } from 'vue';
+import DeviceCard from './DeviceCard.vue';
 
-export default {
-  components: {
-    DeviceCard
-  },
-  props: {
-    device: Object
-  },
-  setup() {
-    // Handle toggle states and logging
-    const handleToggle = (isOn) => {
-      console.log(`Light is now ${isOn ? 'on' : 'off'}.`);
-    };
+// Props
+const props = defineProps({
+  device: Object
+});
 
-    const deleteDevice = (id) => {
-      console.log(`Deleting device with id: ${id}`);
-    };
+// Handle toggle states and logging
+const handleToggle = (isOn) => {
+  console.log(`Light is now ${isOn ? 'on' : 'off'}.`);
+};
 
-    // VBlades setup
-    const validVBlades = [1, 22, 45, 67, 90];
-    const VBlade = ref(45);
+const deleteDevice = (id) => {
+  console.log(`Deleting device with id: ${id}`);
+};
 
-    const incrementVBlade = () => {
-      const currentIndex = validVBlades.indexOf(VBlade.value);
-      if (currentIndex < validVBlades.length - 1) {
-        VBlade.value = validVBlades[currentIndex + 1];
-      }
-    };
+// VBlades setup
+const validVBlades = [1, 22, 45, 67, 90];
+const VBlade = ref(45);
 
-    const decrementVBlade = () => {
-      const currentIndex = validVBlades.indexOf(VBlade.value);
-      if (currentIndex > 0) {
-        VBlade.value = validVBlades[currentIndex - 1];
-      }
-    };
-
-    const displayVBlade = computed(() => {
-      return VBlade.value === 1 ? 'auto' : `${VBlade.value}°`;
-    });
-
-    // HBlades setup
-    const validHBlades = [1, -90, -45, 0, 45, 90];
-    const HBlade = ref(0);
-
-    const incrementHBlade = () => {
-      const currentIndex = validHBlades.indexOf(HBlade.value);
-      if (currentIndex < validHBlades.length - 1) {
-        HBlade.value = validHBlades[currentIndex + 1];
-      }
-    };
-
-    const decrementHBlade = () => {
-      const currentIndex = validHBlades.indexOf(HBlade.value);
-      if (currentIndex > 0) {
-        HBlade.value = validHBlades[currentIndex - 1];
-      }
-    };
-
-    const displayHBlade = computed(() => {
-      return HBlade.value === 1 ? 'auto' : `${HBlade.value}°`;
-    });
-
-    // Velocity setup
-    const validVelocity = [25, 50, 75, 100];
-    const Vel = ref(25);
-
-    const incrementVel = () => {
-      const currentIndex = validVelocity.indexOf(Vel.value);
-      if (currentIndex < validVelocity.length - 1) {
-        Vel.value = validVelocity[currentIndex + 1];
-      }
-    };
-
-    const decrementVel = () => {
-      const currentIndex = validVelocity.indexOf(Vel.value);
-      if (currentIndex > 0) {
-        Vel.value = validVelocity[currentIndex - 1];
-      }
-    };
-
-    // Temperature setup
-    const minTemp = 18;
-    const maxTemp = 38;
-    const Temp = ref(18);
-
-    const incrementTemp = () => {
-      if (Temp.value < maxTemp) {
-        Temp.value++;
-      }
-    };
-
-    const decrementTemp = () => {
-      if (Temp.value > minTemp) {
-        Temp.value--;
-      }
-    };
-
-    return {
-      handleToggle,
-      deleteDevice,
-      incrementVBlade,
-      decrementVBlade,
-      displayVBlade,
-      incrementHBlade,
-      decrementHBlade,
-      displayHBlade,
-      incrementVel,
-      decrementVel,
-      incrementTemp,
-      decrementTemp,
-      Temp, 
-    };
+const incrementVBlade = () => {
+  const currentIndex = validVBlades.indexOf(VBlade.value);
+  if (currentIndex < validVBlades.length - 1) {
+    VBlade.value = validVBlades[currentIndex + 1];
   }
-}
+};
+
+const decrementVBlade = () => {
+  const currentIndex = validVBlades.indexOf(VBlade.value);
+  if (currentIndex > 0) {
+    VBlade.value = validVBlades[currentIndex - 1];
+  }
+};
+
+const displayVBlade = computed(() => {
+  return VBlade.value === 1 ? 'auto' : `${VBlade.value}°`;
+});
+
+// HBlades setup
+const validHBlades = [1, -90, -45, 0, 45, 90];
+const HBlade = ref(0);
+
+const incrementHBlade = () => {
+  const currentIndex = validHBlades.indexOf(HBlade.value);
+  if (currentIndex < validHBlades.length - 1) {
+    HBlade.value = validHBlades[currentIndex + 1];
+  }
+};
+
+const decrementHBlade = () => {
+  const currentIndex = validHBlades.indexOf(HBlade.value);
+  if (currentIndex > 0) {
+    HBlade.value = validHBlades[currentIndex - 1];
+  }
+};
+
+const displayHBlade = computed(() => {
+  return HBlade.value === 1 ? 'auto' : `${HBlade.value}°`;
+});
+
+// Velocity setup
+const validVelocity = [25, 50, 75, 100];
+const Vel = ref(25);
+
+const incrementVel = () => {
+  const currentIndex = validVelocity.indexOf(Vel.value);
+  if (currentIndex < validVelocity.length - 1) {
+    Vel.value = validVelocity[currentIndex + 1];
+  }
+};
+
+const decrementVel = () => {
+  const currentIndex = validVelocity.indexOf(Vel.value);
+  if (currentIndex > 0) {
+    Vel.value = validVelocity[currentIndex - 1];
+  }
+};
+
+// Temperature setup
+const minTemp = 18;
+const maxTemp = 38;
+const Temp = ref(18);
+
+const incrementTemp = () => {
+  if (Temp.value < maxTemp) {
+    Temp.value++;
+  }
+};
+
+const decrementTemp = () => {
+  if (Temp.value > minTemp) {
+    Temp.value--;
+  }
+};
 </script>
+
 
 <style>
 .button-container-row {

@@ -43,20 +43,14 @@
   </v-navigation-drawer>
 </template>
 
-<script>
-  import { ref } from 'vue';
-  
-  export default {
-    name: 'Sidebar',
-    setup() {
-      const items = ref([
-        { title: "Home", icon: "mdi-home", to:"/home"},
-        { title: "Devices", icon: "mdi-monitor-cellphone-star", to:"/devices" },
-        { title: "Automations", icon: "mdi-creation", to:"/automations"}
-      ]);
-  
-      return { items };
-    },
-  };
-  </script>
+<script setup>
+import { ref } from 'vue';
+
+const items = ref([
+  { title: "Home", icon: "mdi-home", to: "/home" },
+  { title: "Devices", icon: "mdi-monitor-cellphone-star", to: "/devices" },
+  { title: "Automations", icon: "mdi-creation", to: "/automations" }
+]);
+</script>
+
   

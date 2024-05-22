@@ -73,104 +73,80 @@
     </v-dialog>
 </template>
 
-<script>
-import { ref } from 'vue';
-import { computed } from 'vue';
+<script setup>
+import { ref, computed } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework';  // Importa el objeto breakpoint de Vuetify
 import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
-import { useDeviceStore } from '@/Stores/DeviceStore'
+import { useDeviceStore } from '@/Stores/DeviceStore';
 
-export default {
-  components: {
-    AirConditioner,
-    Light,
-    Speaker,
-    Sprinkler
-  },
-  data() {
-    return {
-      dialog: false,
-      deviceTypes: [
-        'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
-      ]
-    };
-  },
-  setup() {
-    const store = useDeviceStore();
-    const devices = store.devices;
-    const display = useDisplay();  // Obtiene el breakpoint actual (size de la pantalla segun resolucion)
-    const dialog = ref(false);
+// Data
+const store = useDeviceStore();
+const devices = store.devices;
+const display = useDisplay();  // Obtiene el breakpoint actual (size de la pantalla segun resolucion)
+const dialog = ref(false);
+const deviceTypes = [
+  'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
+];
 
-    const numColumns = computed(() => {
-      if (display.xl.value) return 5;
-      if (display.lg.value) return 4;
-      if (display.md.value) return 3;
-      if (display.sm.value) return 2;
-      if (display.xs.value) return 1;
-      return columnMap.xs;
-    });
+// Computed
+const numColumns = computed(() => {
+  if (display.xl.value) return 5;
+  if (display.lg.value) return 4;
+  if (display.md.value) return 3;
+  if (display.sm.value) return 2;
+  if (display.xs.value) return 1;
+  return columnMap.xs;
+});
 
-    const newDevice = ref({
-      id: '',
-      name: '',
-      type: '',
-      showInHome: false
-    });
+// Methods
+const newDevice = ref({
+  id: '',
+  name: '',
+  type: '',
+  showInHome: false
+});
 
-    function openDialog() {
-      newDevice.value = {
-        id: Date.now().toString(),
-        name: '',
-        type: '',
-        showInHome: false
-      };
-      dialog.value = true;
-    }
+const openDialog = () => {
+  newDevice.value = {
+    id: Date.now().toString(),
+    name: '',
+    type: '',
+    showInHome: false
+  };
+  dialog.value = true;
+};
 
-    function saveDevice() {
-      store.addDevice(newDevice.value);
-      console.log(store.devices, 'devices')
-      dialog.value = false;
-    }
+const saveDevice = () => {
+  store.addDevice(newDevice.value);
+  console.log(store.devices, 'devices');
+  dialog.value = false;
+};
 
-    function cancel() {
-      dialog.value = false;
-    }
+const cancel = () => {
+  dialog.value = false;
+};
 
-    function getDevicesForColumn(col_index) {
-      const columnOffset = Math.ceil(devices.length / 3);
-      const start = col_index * columnOffset;
-      const end = start + columnOffset;
-      return devices.slice(start, end);
-    }
+const getDevicesForColumn = (col_index) => {
+  const columnOffset = Math.ceil(devices.length / 3);
+  const start = col_index * columnOffset;
+  const end = start + columnOffset;
+  return devices.slice(start, end);
+};
 
-    function getDevicesForColumnEnhanced(col_index) {
-      return devices.filter((device, index) => index % 3 === col_index);
-    }
+const getDevicesForColumnEnhanced = (col_index) => {
+  return devices.filter((device, index) => index % 3 === col_index);
+};
 
-    return {
-      devices,
-      newDevice,
-      dialog,
-      openDialog,
-      saveDevice,
-      cancel,
-      getDevicesForColumn,
-      getDevicesForColumnEnhanced,
-      numColumns,
-      getComponent(type) {
-        switch (type) {
-          case 'Air Conditioner': return AirConditioner;
-          case 'Light Panel': return Light;
-          case 'Speaker': return Speaker;
-          case 'Sprinkler': return Sprinkler;
-          default: return 'div';
-        }
-      }
-    };
+const getComponent = (type) => {
+  switch (type) {
+    case 'Air Conditioner': return AirConditioner;
+    case 'Light Panel': return Light;
+    case 'Speaker': return Speaker;
+    case 'Sprinkler': return Sprinkler;
+    default: return 'div';
   }
 };
 </script>

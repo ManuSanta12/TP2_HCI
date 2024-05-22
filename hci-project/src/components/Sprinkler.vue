@@ -20,28 +20,22 @@
 </DeviceCard>
 </template>
 
-<script>
+<script setup>
+import { ref, toRefs } from 'vue';
 import DeviceCard from './DeviceCard.vue';
-export default {
-    components: {
-        DeviceCard
-    },
-    props: {
-        device: Object,
-        initialData: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  data() {
-    return {
-      device_name: this.initialData.device_name || "NO DATA",
-      toggle_status: this.initialData.toggle_status || false,
-      pump_status: this.initialData.pump_status || "NO DATA"
-    };
+
+// Props
+const props = defineProps({
+  device: Object,
+  initialData: {
+    type: Object,
+    default: () => ({})
   }
-};
+});
+//revisar
+
 </script>
+
 
 
   

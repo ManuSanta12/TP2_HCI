@@ -25,15 +25,12 @@
      </template>
  </DeviceCard>
  </template>
- <script>
- import DeviceCard from './DeviceCard.vue';
- 
- export default {
- components: {
-     DeviceCard
- },
- props: {
-     device: Object
- }
- }
- </script>
+
+<script setup>
+import DeviceCard from './DeviceCard.vue';
+
+// Props
+const props = defineProps({
+  device: Object
+});
+</script>

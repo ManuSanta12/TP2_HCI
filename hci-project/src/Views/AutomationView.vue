@@ -110,6 +110,75 @@
   max-height: 150px; min-height:75px; min-width: 300px; overflow-y: auto;
 }
 </style>
+<script setup>
+import { ref } from 'vue';
+import { useAutomationStore } from '@/Stores/AutomationStore';
+import AutomationsCard from '@/components/AutomationsCard.vue';
+
+// Data
+const dialog = ref(false);
+const starters = ref([{ day: '', time: '' }]);
+const actions = ref([{ option: '' }]);
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'];
+const actionOptions = ['Select Ac mode', 'Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'];
+
+// Methods
+const store = useAutomationStore();
+const automations = store.automations;
+const newAutomation = ref({
+  id: '',
+  name: '',
+  starters: [],
+  actions: [],
+  startersLength: 0,
+  actionsLength: 0
+});
+
+const openDialog = () => {
+  newAutomation.value = {
+    id: Date.now().toString(),
+    name: '',
+    starters: [],
+    actions: [],
+    startersLength: 0,
+    actionsLength: 0
+  };
+  dialog.value = true;
+};
+
+const saveAutomation = () => {
+  newAutomation.value.startersLength = newAutomation.value.starters.length;
+  newAutomation.value.actionsLength = newAutomation.value.actions.length;
+  store.addAutomation(newAutomation.value);
+  dialog.value = false;
+  resetAutomation();
+};
+
+const addStarter = () => {
+  starters.value.push({ day: '', time: '' });
+};
+
+const addAction = () => {
+  actions.value.push({ option: '' });
+};
+
+const resetAutomation = () => {
+  newAutomation.value = {
+    id: '',
+    name: '',
+    starters: [],
+    actions: [],
+    startersLength: 0,
+    actionsLength: 0
+  };
+};
+
+const cancel = () => {
+  dialog.value = false;
+  resetAutomation();
+};
+</script>
+
 <script>
 import { ref } from 'vue';
 import { useAutomationStore } from '@/Stores/AutomationStore';
@@ -119,75 +188,13 @@ export default {
   components: {
     AutomationsCard
   },
-  data() {
-    return {
-      dialog: false,
-      starters: [{ day: '', time: '' }],
-      actions: [{ option: '' }],
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'],
-      actionOptions: ['Select Ac mode', 'Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'] 
-    };
-  },
   setup() {
-    const store = useAutomationStore();
-    const automations = store.automations;
-    const dialog = ref(false);
-    const newAutomation = ref({
-      id: '',
-      name: '',
-      starters: [],
-      actions: [],
-      startersLength: 0,
-      actionsLength: 0
-    });
-
-    const openDialog = () => {
-      newAutomation.value = {
-        id: Date.now().toString(),
-        name: '',
-        starters: [],
-        actions: [],
-        startersLength: 0,
-        actionsLength: 0
-      };
-      dialog.value = true;
-    };
-
-    const saveAutomation = () => {
-      newAutomation.value.startersLength = newAutomation.value.starters.length;
-      newAutomation.value.actionsLength = newAutomation.value.actions.length ;
-      store.addAutomation(newAutomation.value);
-      dialog.value = false;
-      resetAutomation();
-    };
-
-    const addStarter = () => {
-      newAutomation.value.starters.push({ day: '', time: '' });
-    };
-
-    const addAction = () => {
-      newAutomation.value.actions.push({ option: '' });
-    };
-
-    const resetAutomation = () => {
-      newAutomation.value = {
-        id: '',
-        name: '',
-        starters: [],
-        actions: [],
-        startersLength: 0,
-        actionsLength: 0
-      };
-    };
-
-    const cancel = () => {
-      dialog.value = false;
-      resetAutomation();
-    };
-
     return {
       dialog,
-      newAutomation,
+      starters,
+      actions,
+      days,
+      actionOptions,
       openDialog,
       saveAutomation,
       cancel,

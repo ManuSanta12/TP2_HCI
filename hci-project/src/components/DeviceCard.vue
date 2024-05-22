@@ -34,34 +34,29 @@
     </div>
   </template>
   
-  <script>
-  import { ref } from 'vue';
-  import { useDeviceStore } from '@/Stores/DeviceStore';
-  
-  export default {
-    props: {
-      device: Object
-    },
-    setup(props) {
-      const store = useDeviceStore();
-      const isOn = ref(false);
-      const deleteDevice = () => {
-        store.removeDevice(props.device.id)
-        console.log(store.devices, 'deleted devices') 
-        
-        //esto funciona pero no se actualiza la pagina. seguro funcione con la api
-      }
-      function toggleDevice() {
-        isOn.value = !isOn.value;
-      }
-      return {
-        isOn,
-        toggleDevice,
-        deleteDevice
-      };
-    }
-  }
-  </script>
+  <script setup>
+import { ref } from 'vue';
+import { useDeviceStore } from '@/Stores/DeviceStore';
+
+// Props
+const props = defineProps({
+  device: Object
+});
+
+const store = useDeviceStore();
+const isOn = ref(false);
+
+const deleteDevice = () => {
+  store.removeDevice(props.device.id);
+  console.log(store.devices, 'deleted devices');
+  //esto funciona pero no se actualiza la pagina. seguro funcione con la api
+};
+
+const toggleDevice = () => {
+  isOn.value = !isOn.value;
+};
+</script>
+
   
 <style scoped>
   .device-card {

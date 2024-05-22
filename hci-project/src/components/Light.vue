@@ -18,20 +18,16 @@
 </DeviceCard>
 </template>
 
-<script>
+<script setup>
 import DeviceCard from './DeviceCard.vue';
 
-export default {
-components: {
-    DeviceCard
-},
-props: {
-    device: Object
-},
-methods: {
-    deleteDevice(id) {
-    console.log(`Deleting device with id: ${id}`);
-    }
-}
-}
+// Props
+const props = defineProps({
+  device: Object
+});
+
+// Métodos
+const deleteDevice = (id) => {
+  console.log(`Deleting device with id: ${id}`);
+};
 </script>
