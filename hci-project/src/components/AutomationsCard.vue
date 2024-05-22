@@ -14,20 +14,34 @@
         </v-row>
         <v-card-subtitle class="px-3">{{automation.startersLength ? "Scheduled" : "Not Scheduled"}}</v-card-subtitle>
         <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
-        <v-row no-gutters>
-          <v-col>
-            <v-sheet  class="px-2 ma-2">
-              <v-btn min-width="100" @click="handleEdit">Edit</v-btn>
-            </v-sheet>
-          </v-col>
-          <v-col >
-            <v-sheet class="px-2 ma-2">
-              <v-btn  variant="tonal" color="error" min-width="100" @click="deleteAuto(automation.id)">Delete</v-btn>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-col>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-title>More</v-expansion-panel-title>
+            <v-expansion-panel-content>
+                <v-expansion-panel-text>
+                    <v-row no-gutters>
+                      <v-col>
+                        <v-sheet  class="px-2 ma-2">
+                          <v-btn min-width="100" @click="handleEdit">Edit</v-btn>
+                        </v-sheet>
+                      </v-col>
+                      <v-col >
+                        <v-sheet class="px-2 ma-2">
+                          <v-btn  variant="tonal" color="error" min-width="100" @click="deleteAuto(automation.id)">Delete</v-btn>
+                        </v-sheet>
+                      </v-col>
+                      <v-checkbox
+                                    v-model="automation.showInHome"
+                                    label="Show in home"
+                                    class="my-4"
+                        ></v-checkbox>
+                    </v-row>
+                  </v-expansion-panel-text>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-card>
+        </v-col>
   </v-row>
 </template>
 

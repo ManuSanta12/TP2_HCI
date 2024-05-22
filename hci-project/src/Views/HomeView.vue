@@ -5,7 +5,7 @@
       <v-row class="pa-6 scrollable" >
         <div v-for="item in filteredItems" :key="item.id">
           <div >
-                      <component
+                <component
                 :is="getComponent(item.type)"
                 v-if="isDevice(item)"
                 :device="item"
