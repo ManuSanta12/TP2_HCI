@@ -28,10 +28,10 @@ import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
-// import { useDeviceStore } from '@/Stores/DeviceStore';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { useAutomationStore } from '@/Stores/AutomationStore';
 
-// const deviceStore = useDeviceStore();
+const deviceStore = useDeviceStoreApi();
 const automationStore = useAutomationStore();
 const devices = computed(() => deviceStore.devices);
 const automations = computed(() => automationStore.automations);

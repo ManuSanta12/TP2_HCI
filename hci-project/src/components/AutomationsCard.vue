@@ -16,7 +16,7 @@
         <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
         <v-expansion-panels>
           <v-expansion-panel>
-            <v-expansion-panel-title>More</v-expansion-panel-title>
+            <v-expansion-panel-title >More</v-expansion-panel-title>
             <v-expansion-panel-content>
                 <v-expansion-panel-text>
                     <v-row no-gutters>
