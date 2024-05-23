@@ -40,6 +40,10 @@
     <template v-slot:activator="{ props: addNew }">
       <v-app-bar title="Devices"  color="#E4DCD1">
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
+        <v-text-field placeholder="id" v-model="inputId"></v-text-field>
+        <v-text-field placeholder="action name" v-model="inputAction"></v-text-field>
+        <v-text-field placeholder="data" v-model="inputData"></v-text-field>
+        <v-btn @click="executeAction(inputId, inputAction, inputData)">Execute Action</v-btn>
       </v-app-bar>
     </template>
     <v-row justify="center">
@@ -80,6 +84,9 @@ import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { Device } from '@/Api/DeviceApi';
 // Data
 const store = useDeviceStoreApi();
+const inputId = ref('')
+const inputAction = ref('')
+const inputData = ref('')
 const result = ref(null)
 const dialog = ref(false);
 const controller = ref(null)
@@ -126,6 +133,11 @@ const getComponent = (type) => {
     default: return 'div';
   }
 };
+
+function executeAction(id, actionName, data) {
+  console.log(id, actionName, data)
+  store.executeAction(id, actionName, data)
+}
 
 function setResult(r){
   result.value = JSON.stringify(r, null, 2)
