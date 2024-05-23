@@ -24,6 +24,12 @@ class DeviceApi {
   static async getAll(controller) {
     return await Api.get(DeviceApi.getUrl(), controller)
   }
+
+  static async executeAction(id, actionName, controller) {
+    //slug es el path de la API, en este caso es el id del dispositivo y el nombre de la accion
+    const slug = `${id}/${actionName}`
+    return await Api.put(DeviceApi.getUrl(slug), controller)
+  }
 }
 
 class Device {
