@@ -35,22 +35,31 @@
   </template>
   
   <script setup>
-import { ref } from 'vue';
-import { useDeviceStore } from '@/Stores/DeviceStore';
-
+import { ref, onMounted } from 'vue';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 // Props
 const props = defineProps({
   device: Object
 });
-
-const store = useDeviceStore();
+const store = useDeviceStoreApi();
 const isOn = ref(false);
+const result = ref(null)
 
-const deleteDevice = () => {
-  store.removeDevice(props.device.id);
-  console.log(store.devices, 'deleted devices');
-};
-
+function setResult(r){
+  result.value = JSON.stringify(r, null, 2)
+}
+async function deleteDevice() {
+  try {
+    const _result = await store.removeDevice(props.device.id)
+        setResult(_result)
+        props.device = null
+    } catch (e) {
+        setResult(e)
+    }
+}
+onMounted(async () => {
+  await store.getAll()
+})
 const toggleDevice = () => {
   isOn.value = !isOn.value;
 };

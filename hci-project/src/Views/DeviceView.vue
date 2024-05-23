@@ -26,14 +26,12 @@
       <!-- El container hace que este todo centrado en la pagina -->
       <v-container>
         <v-row class="scrollable" no-gutters>
-          <v-col cols="4">
             <component
               v-for="device in store.devices"
               :key="device.id"
               :is="getComponent(device.type.id)"
               :device="device"
             />
-          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -84,12 +82,12 @@ import { Device } from '@/Api/DeviceApi';
 const store = useDeviceStoreApi();
 const result = ref(null)
 const dialog = ref(false);
+const controller = ref(null)
 const deviceTypes = [
   'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
 ];
 
 getAllDevices()
-
 
 const newDevice = ref({
   name: '',
@@ -134,9 +132,9 @@ function setResult(r){
 }
 async function getAllDevices() {
     try {
-        // controller.value = new AbortController()
-        const devices = await store.getAll()
-        // controller.value = null
+        controller.value = new AbortController()
+        const devices = await store.getAll(controller)
+        controller.value = null
         setResult(devices)
     } catch (e) {
       setResult(e)

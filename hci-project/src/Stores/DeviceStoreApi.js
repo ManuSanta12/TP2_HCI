@@ -26,12 +26,11 @@ export const useDeviceStoreApi = defineStore('device', () => {
         await getAll()
         return Object.assign(new Device(), result)
     }
-    async function getAll() {
-        let response = await DeviceApi.getAll();
-        console.log("API getAll response:", response); 
-        let result = response.result.map(device => Object.assign(new Device(), device));
-        devices.value = result;
-        return result;
+    async function getAll(controller = null) {
+        let result = await DeviceApi.getAll(controller);
+        result = result.map((device) => Object.assign(new Device(), device));
+        devices.value = result
+        return result
     }
     return {devices, addDevice, modify, get, removeDevice, getAll}
 });

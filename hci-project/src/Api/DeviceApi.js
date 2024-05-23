@@ -5,24 +5,24 @@ class DeviceApi {
     return `${Api.baseUrl}/devices${ slug ? `/${slug}` : ""}`;
   }
 
-  static async add(device) {
-    return await Api.post(DeviceApi.getUrl(),device);
+  static async add(device, controller) {
+    return await Api.post(DeviceApi.getUrl(),device, controller);
   }
 
-  static async modify(device) {
-    return await Api.put(DeviceApi.getUrl(device.id), device);
+  static async modify(device, controller) {
+    return await Api.put(DeviceApi.getUrl(device.id), device, controller);
   }
 
-  static async delete(id) {
-    return await Api.delete(DeviceApi.getUrl(id));
+  static async remove(id, controller) {
+    return await Api.delete(DeviceApi.getUrl(id, controller));
   }
 
-  static async get(id) {
-    return await Api.get(DeviceApi.getUrl(id));
+  static async get(id, controller) {
+    return await Api.get(DeviceApi.getUrl(id, controller));
   }
 
-  static async getAll() {
-    return await Api.get(DeviceApi.getUrl())
+  static async getAll(controller) {
+    return await Api.get(DeviceApi.getUrl(), controller)
   }
 }
 
@@ -34,9 +34,7 @@ class Device {
     this.meta = meta;
     // this.state = state;
   }
-  // getType(){
-  //   return this.type;
-  // }
+  
   toString(){
     return JSON.stringtify(this, null, 2)
   }

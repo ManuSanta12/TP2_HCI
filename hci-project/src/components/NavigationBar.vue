@@ -30,6 +30,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item v-for="item in items" :key="item.title" class="drawer-item">
+        
         <router-link :to="item.to" class="d-flex align-center" style="text-decoration: none; color: inherit; width: 100%;"> 
             <v-list-item-icon class="mr-4" style="opacity: 0.75;">
               <v-icon>{{ item.icon }}</v-icon>

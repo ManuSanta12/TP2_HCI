@@ -60,7 +60,7 @@
   </template>
   
   <script setup>
-  import { useDeviceStore } from '@/Stores/DeviceStore';
+  // import { useDeviceStore } from '@/Stores/DeviceStore';
   import { defineProps, defineEmits, ref, computed} from 'vue';
   
   const props = defineProps({
