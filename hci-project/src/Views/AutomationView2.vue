@@ -11,7 +11,7 @@
     </v-main>
     <v-dialog v-model="dialog" max-width="1300" scrollable>
       <template v-slot:activator="{ props: addNew }">
-        <v-app-bar title="Automations" color='#DDEAF4'>
+        <v-app-bar title="Automations"color="#E4DCD1">
           <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind="addNew" @click="handleAddNew">Add new</v-btn>
         </v-app-bar>
       </template>

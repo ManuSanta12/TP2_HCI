@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar title="Home"  color='#DDEAF4'/>
-  <v-layout class="rounded rounded-md">
-    <v-main color='#DDEAF4'>
+  <v-app-bar title="Home"  color="#E4DCD1"/>
+  <v-layout color='#E5E8DD' class="rounded rounded-md">
+    <v-main color='#E5E8DD'>
       <v-row class="pa-6 scrollable" >
         <div v-for="item in filteredItems" :key="item.id">
           <div >
@@ -20,7 +20,6 @@
     </v-main>
   </v-layout>
 </template>
-
 
 <script setup>
 

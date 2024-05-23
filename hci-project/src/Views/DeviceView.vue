@@ -22,7 +22,7 @@
 
 <template>
   <v-layout class="rounded rounded-md">
-    <v-main color='#DDEAF4'>
+    <v-main>
       <!-- El container hace que este todo centrado en la pagina -->
       <v-container>
         <v-row class="scrollable" no-gutters>
@@ -38,7 +38,7 @@
   </v-layout>
   <v-dialog v-model="dialog" max-width="1300" scrollable>
     <template v-slot:activator="{ props: addNew }">
-      <v-app-bar title="Devices"  color='#DDEAF4'>
+      <v-app-bar title="Devices"  color="#E4DCD1">
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
       </v-app-bar>
     </template>

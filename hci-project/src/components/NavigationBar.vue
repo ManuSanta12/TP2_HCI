@@ -20,9 +20,10 @@
     </v-list>      
   </v-navigation-drawer>
 </template> -->
-
+<!-- color="#51564E" -->
+<!--#1B1617  -->
 <template>
-  <v-navigation-drawer color="#D8D7D7" permanent width="194">
+  <v-navigation-drawer color="#37120A" permanent width="194">
     <v-list>
       <v-list-item class="my-2">
         <v-list-item-content>

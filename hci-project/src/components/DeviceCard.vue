@@ -1,6 +1,6 @@
 <template>
-    <div class="device-card">
-      <v-card class="pa-3" width="300"> 
+    <div class="device-card" >
+      <v-card class="pa-3" width="300" color='#E1E3E2' > 
         <v-row dense>
           <v-col>
             <v-row class="px-3">
@@ -14,10 +14,10 @@
           </v-col>
         </v-row>
         <slot name="details"></slot>
-        <v-expansion-panels>
-          <v-expansion-panel>
+        <v-expansion-panels >
+          <v-expansion-panel >
             <v-expansion-panel-title>More</v-expansion-panel-title>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content >
                 <v-expansion-panel-text>
                     <slot name="expansion-panel"></slot>
                     <v-checkbox
