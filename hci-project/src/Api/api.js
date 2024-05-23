@@ -11,6 +11,8 @@ class Api {
   }
 
   static async fetch(url, init = {}) {
+    console.log('Request URL:', url);
+    console.log('Request Init:', init);
     const controller = new AbortController()
     init.signal = controller.signal;
     const timer = setTimeout(() => controller.abort(), Api.timeout);
@@ -41,9 +43,9 @@ class Api {
   static async post(url, data) {
     return await Api.fetch(url, {
       method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json; charset=utf-8"
-      // },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
       body: JSON.stringify(data)
     });
   }
@@ -51,9 +53,9 @@ class Api {
   static async put(url, data) {
     return await Api.fetch(url,{
       method: "PUT",
-      // headers: {
-      //   "Content-Type": "application/json; charset=utf-8"
-      // },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
       body: JSON.stringify(data)
     });
   }

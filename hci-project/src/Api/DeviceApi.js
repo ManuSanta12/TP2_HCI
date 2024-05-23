@@ -6,7 +6,7 @@ class DeviceApi {
   }
 
   static async add(device) {
-    return await Api.post(DeviceApi.getUrl(), 'go46xmbqeomjrsjr',device);
+    return await Api.post(DeviceApi.getUrl(),device);
   }
 
   static async modify(device) {
@@ -27,14 +27,16 @@ class DeviceApi {
 }
 
 class Device {
-  constructor(id, name, meta, type) {
-    if (id) {
-      this.id = id;
-    }
-    this.type = type;
+  constructor(id, name, type, meta) {
+    this.id = id;
     this.name = name;
+    this.type = type;
     this.meta = meta;
+    // this.state = state;
   }
+  // getType(){
+  //   return this.type;
+  // }
   toString(){
     return JSON.stringtify(this, null, 2)
   }

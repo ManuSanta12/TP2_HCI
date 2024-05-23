@@ -49,7 +49,6 @@ const isOn = ref(false);
 const deleteDevice = () => {
   store.removeDevice(props.device.id);
   console.log(store.devices, 'deleted devices');
-  //esto funciona pero no se actualiza la pagina. seguro funcione con la api
 };
 
 const toggleDevice = () => {

@@ -26,15 +26,14 @@
       <!-- El container hace que este todo centrado en la pagina -->
       <v-container>
         <v-row class="scrollable" no-gutters>
-          <v-col v-for="col_index in 3" :key="col_index" cols="4">
+          <v-col cols="4">
             <component
-              v-for="device in getDevicesForColumnEnhanced(col_index - 1)"
+              v-for="device in store.devices"
               :key="device.id"
-              :is="getComponent(device.type)"
+              :is="getComponent(device.type.id)"
               :device="device"
             />
           </v-col>
-          
         </v-row>
       </v-container>
     </v-main>
@@ -42,7 +41,7 @@
   <v-dialog v-model="dialog" max-width="1300" scrollable>
     <template v-slot:activator="{ props: addNew }">
       <v-app-bar title="Devices"  color='#DDEAF4'>
-        <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew" @click="openDialog">Add new</v-btn>
+        <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
       </v-app-bar>
     </template>
     <v-row justify="center">
@@ -74,54 +73,45 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useDisplay } from 'vuetify/lib/framework';  // Importa el objeto breakpoint de Vuetify
+import { ref, onMounted } from 'vue';
 import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
-import { useDeviceStore } from '@/Stores/DeviceStore';
-
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { Device } from '@/Api/DeviceApi';
 // Data
-const store = useDeviceStore();
-const devices = store.devices;
-const display = useDisplay();  // Obtiene el breakpoint actual (size de la pantalla segun resolucion)
+const store = useDeviceStoreApi();
+const result = ref(null)
 const dialog = ref(false);
 const deviceTypes = [
   'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
 ];
 
-// Computed
-const numColumns = computed(() => {
-  if (display.xl.value) return 5;
-  if (display.lg.value) return 4;
-  if (display.md.value) return 3;
-  if (display.sm.value) return 2;
-  if (display.xs.value) return 1;
-  return columnMap.xs;
-});
+getAllDevices()
 
-// Methods
+
 const newDevice = ref({
-  id: '',
   name: '',
   type: '',
   showInHome: false
 });
 
-const openDialog = () => {
-  newDevice.value = {
-    id: Date.now().toString(),
-    name: '',
-    type: '',
-    showInHome: false
-  };
-  dialog.value = true;
+const typeIdMap = {
+  'Speaker': 'c89b94e8581855bc',
+  'Sprinkler': 'dbrlsh7o5sn8ur4i',
+  'Light Panel': 'go46xmbqeomjrsjr',
+  'Air Conditioner': 'li6cbv5sdlatti0j'
 };
 
+const getDevId = (type) => typeIdMap[type] || null;
+
 const saveDevice = () => {
-  store.addDevice(newDevice.value);
-  console.log(store.devices, 'devices');
+  const name = newDevice.value.name;
+  const deviceType = newDevice.value.type;
+  const typeId = getDevId(deviceType);
+  const deviceA = new Device(undefined, name, {id: typeId}, {});
+  store.addDevice(deviceA)
   dialog.value = false;
 };
 
@@ -129,24 +119,31 @@ const cancel = () => {
   dialog.value = false;
 };
 
-const getDevicesForColumn = (col_index) => {
-  const columnOffset = Math.ceil(devices.length / 3);
-  const start = col_index * columnOffset;
-  const end = start + columnOffset;
-  return devices.slice(start, end);
-};
-
-const getDevicesForColumnEnhanced = (col_index) => {
-  return devices.filter((device, index) => index % 3 === col_index);
-};
-
 const getComponent = (type) => {
   switch (type) {
-    case 'Air Conditioner': return AirConditioner;
-    case 'Light Panel': return Light;
-    case 'Speaker': return Speaker;
-    case 'Sprinkler': return Sprinkler;
+    case 'li6cbv5sdlatti0j': return AirConditioner;
+    case 'go46xmbqeomjrsjr': return Light;
+    case 'c89b94e8581855bc': return Speaker;
+    case 'dbrlsh7o5sn8ur4i': return Sprinkler;
     default: return 'div';
   }
 };
+
+function setResult(r){
+  result.value = JSON.stringify(r, null, 2)
+}
+async function getAllDevices() {
+    try {
+        // controller.value = new AbortController()
+        const devices = await store.getAll()
+        // controller.value = null
+        setResult(devices)
+    } catch (e) {
+      setResult(e)
+    }
+}
+
+onMounted(async () => {
+  await store.getAll()
+})
 </script>
