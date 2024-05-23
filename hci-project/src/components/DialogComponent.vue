@@ -1,5 +1,5 @@
 <template>
-    <v-card v-if="visible">
+    <v-card v-if="visible" width="1300">
       <v-card-title>
         Add Automation
       </v-card-title>
@@ -53,14 +53,14 @@
       <v-divider/>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red lighten-1" text @click="emit('close')">Cancel</v-btn>
-        <v-btn color="green lighten-1" text @click="handleSave">Save</v-btn>
+        <v-btn variant="tonal" color="error" text @click="emit('close')">Cancel</v-btn>
+        <v-btn variant="tonal" color="primary" text @click="handleSave">Save</v-btn>
       </v-card-actions>
     </v-card>
   </template>
   
   <script setup>
-  // import { useDeviceStore } from '@/Stores/DeviceStore';
+  import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
   import { defineProps, defineEmits, ref, computed} from 'vue';
   
   const props = defineProps({
@@ -103,7 +103,7 @@
   const deleteAction = (index) => {
     automation.value.actions.splice(index, 1);
   };
-  const deviceStore = useDeviceStore();
+  const deviceStore = useDeviceStoreApi();
   const devices = deviceStore.devices;
   // Computed property to format devices for v-select
   const selectableDevices = computed(() => {

@@ -36,7 +36,7 @@
       </v-container>
     </v-main>
   </v-layout>
-  <v-dialog v-model="dialog" max-width="1300" scrollable>
+  <v-dialog v-model="dialog" width="1300" scrollable>
     <template v-slot:activator="{ props: addNew }">
       <v-app-bar title="Devices"  color="#E4DCD1">
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
@@ -61,7 +61,7 @@
               <v-divider/>
               <v-card-actions>
               <v-spacer></v-spacer> 
-              <v-btn variant="tonal" color="secondary" dark @click="cancel">Cancel</v-btn>
+              <v-btn variant="tonal" color="error" dark @click="cancel">Cancel</v-btn>
               <v-btn variant="tonal" color="primary" dark @click="saveDevice">Save</v-btn>
           </v-card-actions>
       </v-card>
