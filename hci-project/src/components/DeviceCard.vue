@@ -67,15 +67,11 @@ onMounted(async () => {
 
 async function toggleDevice() {
   const action = switchStatus.value ? 'turnOff' : 'turnOn';
-  let response = await DeviceApi.runActionNoParams(props.device["id"], action);
-  // response == true si se pudo cambiar el estado del dispositivo
-  if(response){
-    console.log("entre al if, se llamo a ", action, ", el estado del dispositivo es: ", props.device["state"]["status"], " y el switchStatus es: ", switchStatus.value)
-    switchStatus.value = !(switchStatus.value);
-    props.device["state"]["status"] = switchStatus.value ? "on" : "off";
-    console.log("el estado del dispositivo es: ", props.device["state"]["status"], " y el switchStatus es: ", switchStatus.value)
-  } else {
-    console.log("NO SE PUDO MODIFICAR EL ESTADO DEL DISPOSITIVO");
+  try{
+    let response = await DeviceApi.runActionNoParams(props.device["id"], action);
+  } catch(error){
+    switchStatus.value = !switchStatus.value;
+    console.log("Error al cambiar el estado del dispositivo: ", error)
   }
 };
 </script>

@@ -10,12 +10,16 @@ class Api {
     return 60 * 1000;
   }
 
+  //TODO moidifique esta funcion para que lance exception si no es codigo entre 200 - 299
   static async fetch(url, init = {}, controller) {
     controller = controller || new AbortController()
     init.signal = controller.signal
     const timer = setTimeout(() => controller.abort(), Api.timeout)
     try {
       const response = await fetch(url, init)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const text = await response.text()
       const json = text ? JSON.parse(text) : {}
       if (json.error) throw json.error
@@ -47,12 +51,13 @@ class Api {
   }
 
   static async putNoBody(url, controller) {
-    return await Api.fetch(url, {
+    const response = await Api.fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }
     }, controller);
+    return response;
   }
 
   static async put(url, data, controller) {
