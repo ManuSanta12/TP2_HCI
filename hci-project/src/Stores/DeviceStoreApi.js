@@ -43,5 +43,5 @@ export const useDeviceStoreApi = defineStore('device', () => {
         await getAll()
         return Object.assign(new Device(), result)
     }
-    return {devices, typeIdMap, deviceActionsMap, addDevice, modify, get, removeDevice, getAll, runAction}
+    return {devices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction}
 });
