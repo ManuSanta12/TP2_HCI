@@ -45,7 +45,7 @@ const props = defineProps({
 });
 const store = useDeviceStoreApi();
 const result = ref(null)
-const switchStatus = "off";
+let switchStatus = "isOff";
 
 
 function setResult(r){
@@ -71,7 +71,8 @@ async function toggleDevice () {
   console.log(action)
   let response = await DeviceApi.runActionNoParams(props.device["id"], "turnOn");
   if(response){
-    switchStatus = switchStatus == "on" ? "off" : "on";
+    props.device["state"]["status"] = props.device["state"]["status"] == "on" ? "off":"on";
+    switchStatus = props.device["state"]["status"] == "on" ? "isOn":"isOff";
   } else {
     console.log("NO SE PUDO MODIFICAR EL ESTADO DEL DISPOSITIVO");
   }
