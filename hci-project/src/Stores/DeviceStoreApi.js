@@ -1,11 +1,17 @@
 // stores/devices.js
 import { defineStore } from 'pinia'
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import {Device, DeviceApi} from '@/Api/DeviceApi'
 
 export const useDeviceStoreApi = defineStore('device', () => {
-    const devices = ref([])
-     
+    const devices = ref([]);
+    const typeIdMap = {
+        'Speaker': "c89b94e8581855bc",
+        'Sprinkler': "dbrlsh7o5sn8ur4i",
+        'Light Panel': "go46xmbqeomjrsjr",
+        'Air Conditioner': "li6cbv5sdlatti0j"
+      };
+
     async function addDevice(device) {
         const result = await DeviceApi.add(device)
         await getAll()
@@ -32,5 +38,10 @@ export const useDeviceStoreApi = defineStore('device', () => {
         devices.value = result
         return result
     }
-    return {devices, addDevice, modify, get, removeDevice, getAll}
+    async function runAction(id, actionName, data = null) {
+        const result = await DeviceApi.runAction(id, actionName, data)
+        await getAll()
+        return Object.assign(new Device(), result)
+    }
+    return {devices, typeIdMap, deviceActionsMap, addDevice, modify, get, removeDevice, getAll, runAction}
 });

@@ -40,6 +40,10 @@
     <template v-slot:activator="{ props: addNew }">
       <v-app-bar title="Devices"  color="#E4DCD1">
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
+        <v-text-field placeholder="id" v-model="inputId"></v-text-field>
+        <v-text-field placeholder="action name" v-model="inputAction"></v-text-field>
+        <v-text-field placeholder="data" v-model="inputData"></v-text-field>
+        <v-btn @click="runAction(inputId, inputAction, inputData)">Execute Action</v-btn>
       </v-app-bar>
     </template>
     <v-row justify="center">
@@ -78,14 +82,20 @@ import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { Device } from '@/Api/DeviceApi';
+
 // Data
 const store = useDeviceStoreApi();
+
+const inputId = ref('')
+const inputAction = ref('')
+const inputData = ref('')
 const result = ref(null)
 const dialog = ref(false);
 const controller = ref(null)
 const deviceTypes = [
   'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
 ];
+const typeIdMap = store.typeIdMap;
 
 getAllDevices()
 
@@ -94,13 +104,6 @@ const newDevice = ref({
   type: '',
   showInHome: false
 });
-
-const typeIdMap = {
-  'Speaker': 'c89b94e8581855bc',
-  'Sprinkler': 'dbrlsh7o5sn8ur4i',
-  'Light Panel': 'go46xmbqeomjrsjr',
-  'Air Conditioner': 'li6cbv5sdlatti0j'
-};
 
 const getDevId = (type) => typeIdMap[type] || null;
 
@@ -117,7 +120,7 @@ const cancel = () => {
   dialog.value = false;
 };
 
-const getComponent = (type) => {
+function getComponent(type){
   switch (type) {
     case 'li6cbv5sdlatti0j': return AirConditioner;
     case 'go46xmbqeomjrsjr': return Light;
@@ -125,7 +128,12 @@ const getComponent = (type) => {
     case 'dbrlsh7o5sn8ur4i': return Sprinkler;
     default: return 'div';
   }
-};
+}
+
+function runAction(id, actionName, data) {
+  console.log(id, actionName, data)
+  store.runAction(id, actionName, data)
+}
 
 function setResult(r){
   result.value = JSON.stringify(r, null, 2)

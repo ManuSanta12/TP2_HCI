@@ -47,12 +47,13 @@ class Api {
   }
 
   static async put(url, data, controller) {
+    let dataArray = [data]
     return await Api.fetch(url,{
       method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(dataArray)
     }, controller);
   }
 

@@ -1,5 +1,5 @@
 import { Api } from "./api.js";
-
+//  TODO algunos metodos le pasan id y controller a getUrl en lugar de al metodo de api put/post/get.etc
 class DeviceApi {
   static getUrl(slug) {
     return `${Api.baseUrl}/devices${ slug ? `/${slug}` : ""}`;
@@ -23,6 +23,16 @@ class DeviceApi {
 
   static async getAll(controller) {
     return await Api.get(DeviceApi.getUrl(), controller)
+  }
+
+  static async getDeviceTypes(deviceTypeId, controller) {
+    return await Api.get(`${Api.baseUrl}/devicetypes/${deviceTypeId}`, controller)
+  }
+
+  static async runAction(id, actionName, data, controller) {
+    //slug es el path de la API, en este caso es el id del dispositivo y el nombre de la accion
+    const slug = `${id}/${actionName}`
+    return await Api.put(DeviceApi.getUrl(slug), data, controller)
   }
 }
 
