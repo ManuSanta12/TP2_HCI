@@ -1,5 +1,5 @@
 import { Api } from "./api.js";
-
+//  TODO algunos metodos le pasan id y controller a getUrl en lugar de al metodo de api put/post/get.etc
 class DeviceApi {
   static getUrl(slug) {
     return `${Api.baseUrl}/devices${ slug ? `/${slug}` : ""}`;

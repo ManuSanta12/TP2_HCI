@@ -65,6 +65,21 @@ const props = defineProps({
   device: Object
 });
 
+const validVBlades = [1, 22, 45, 67, 90];
+const VBlade = ref(45);
+
+const validHBlades = [1, -90, -45, 0, 45, 90];
+const HBlade = ref(0);
+
+const validVelocity = [25, 50, 75, 100];
+const Vel = ref(25);
+
+const minTemp = 18;
+const maxTemp = 38;
+const Temp = ref(18);
+
+function 
+
 // Handle toggle states and logging
 const handleToggle = (isOn) => {
   console.log(`Light is now ${isOn ? 'on' : 'off'}.`);
@@ -74,9 +89,6 @@ const deleteDevice = (id) => {
   console.log(`Deleting device with id: ${id}`);
 };
 
-// VBlades setup
-const validVBlades = [1, 22, 45, 67, 90];
-const VBlade = ref(45);
 
 const incrementVBlade = () => {
   const currentIndex = validVBlades.indexOf(VBlade.value);
@@ -96,9 +108,7 @@ const displayVBlade = computed(() => {
   return VBlade.value === 1 ? 'auto' : `${VBlade.value}°`;
 });
 
-// HBlades setup
-const validHBlades = [1, -90, -45, 0, 45, 90];
-const HBlade = ref(0);
+
 
 const incrementHBlade = () => {
   const currentIndex = validHBlades.indexOf(HBlade.value);
@@ -118,9 +128,7 @@ const displayHBlade = computed(() => {
   return HBlade.value === 1 ? 'auto' : `${HBlade.value}°`;
 });
 
-// Velocity setup
-const validVelocity = [25, 50, 75, 100];
-const Vel = ref(25);
+
 
 const incrementVel = () => {
   const currentIndex = validVelocity.indexOf(Vel.value);
@@ -136,10 +144,6 @@ const decrementVel = () => {
   }
 };
 
-// Temperature setup
-const minTemp = 18;
-const maxTemp = 38;
-const Temp = ref(18);
 
 const incrementTemp = () => {
   if (Temp.value < maxTemp) {
