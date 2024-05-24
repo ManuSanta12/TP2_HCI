@@ -47,7 +47,6 @@ class Api {
   }
 
   static async put(url, data, controller) {
-    console.log(url,data, controller)
     let dataArray = [data]
     return await Api.fetch(url,{
       method: "PUT",

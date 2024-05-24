@@ -82,8 +82,10 @@ import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { Device } from '@/Api/DeviceApi';
+
 // Data
 const store = useDeviceStoreApi();
+
 const inputId = ref('')
 const inputAction = ref('')
 const inputData = ref('')
@@ -93,6 +95,7 @@ const controller = ref(null)
 const deviceTypes = [
   'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
 ];
+const typeIdMap = store.typeIdMap;
 
 getAllDevices()
 
@@ -101,13 +104,6 @@ const newDevice = ref({
   type: '',
   showInHome: false
 });
-
-const typeIdMap = {
-  'Speaker': 'c89b94e8581855bc',
-  'Sprinkler': 'dbrlsh7o5sn8ur4i',
-  'Light Panel': 'go46xmbqeomjrsjr',
-  'Air Conditioner': 'li6cbv5sdlatti0j'
-};
 
 const getDevId = (type) => typeIdMap[type] || null;
 
@@ -124,7 +120,7 @@ const cancel = () => {
   dialog.value = false;
 };
 
-const getComponent = (type) => {
+function getComponent(type){
   switch (type) {
     case 'li6cbv5sdlatti0j': return AirConditioner;
     case 'go46xmbqeomjrsjr': return Light;
@@ -132,7 +128,7 @@ const getComponent = (type) => {
     case 'dbrlsh7o5sn8ur4i': return Sprinkler;
     default: return 'div';
   }
-};
+}
 
 function runAction(id, actionName, data) {
   console.log(id, actionName, data)

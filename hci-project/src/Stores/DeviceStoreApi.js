@@ -1,11 +1,38 @@
 // stores/devices.js
 import { defineStore } from 'pinia'
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import {Device, DeviceApi} from '@/Api/DeviceApi'
 
 export const useDeviceStoreApi = defineStore('device', () => {
-    const devices = ref([])
-     
+    const devices = ref([]);
+    const typeIdMap = {
+        'Speaker': "c89b94e8581855bc",
+        'Sprinkler': "dbrlsh7o5sn8ur4i",
+        'Light Panel': "go46xmbqeomjrsjr",
+        'Air Conditioner': "li6cbv5sdlatti0j"
+      };
+
+    // TODO PONERLE NOMBRE APROPIADO A DEVICEACTIONSMAP
+    const deviceActionsMap = {
+        'Speaker': null,
+        'Sprinkler': null,
+        'Light Panel': null,
+        'Air Conditioner': null
+    }
+    // const deviceActionsMap = {
+    //     'Speaker': DeviceApi.getDeviceTypes("c89b94e8581855bc"),
+    //     'Sprinkler': DeviceApi.getDeviceTypes("dbrlsh7o5sn8ur4i"),
+    //     'Light Panel': DeviceApi.getDeviceTypes("go46xmbqeomjrsjr"),
+    //     'Air Conditioner': DeviceApi.getDeviceTypes("li6cbv5sdlatti0j")
+    // }
+
+    async function getDeviceActions(){
+        for (const key in deviceActionsMap) {
+            deviceActionsMap[key] = await DeviceApi.getDeviceTypes(typeIdMap[key])
+        }
+    }
+    onMounted(getDeviceActions)
+
     async function addDevice(device) {
         const result = await DeviceApi.add(device)
         await getAll()
@@ -37,5 +64,5 @@ export const useDeviceStoreApi = defineStore('device', () => {
         await getAll()
         return Object.assign(new Device(), result)
     }
-    return {devices, addDevice, modify, get, removeDevice, getAll, runAction}
+    return {devices, typeIdMap, deviceActionsMap, addDevice, modify, get, removeDevice, getAll, runAction}
 });
