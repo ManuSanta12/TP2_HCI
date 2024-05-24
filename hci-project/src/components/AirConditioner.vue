@@ -4,7 +4,7 @@
         <v-col class="d-flex justify-center pa-0">
             <v-card-actions class="pa-0">
                 <v-btn density="compact" icon="mdi-minus" @click="decrementTemp"></v-btn>
-                <v-card-text class="text-h6">{{Temp}}°C</v-card-text>
+                <v-card-text class="text-h6">{{ device["state"]["temperature"] }}°C</v-card-text>
                 <v-btn density="compact" icon="mdi-plus" @click="incrementTemp"></v-btn>
             </v-card-actions>
         </v-col>
@@ -59,36 +59,34 @@
 <script setup>
 import { ref, computed } from 'vue';
 import DeviceCard from './DeviceCard.vue';
+import { DeviceApi } from '@/Api/DeviceApi';
 
 // Props
 const props = defineProps({
   device: Object
 });
 
-const validVBlades = [1, 22, 45, 67, 90];
-const VBlade = ref(45);
-
-const validHBlades = [1, -90, -45, 0, 45, 90];
-const HBlade = ref(0);
-
-const validVelocity = [25, 50, 75, 100];
-const Vel = ref(25);
-
 const minTemp = 18;
 const maxTemp = 38;
-const Temp = ref(18);
 
 
+async function incrementTemp() {
+  // Usamos [] ya que la propiedad "state" no esta declarada explicitamente en el codigo (llega de la api!!!)
+  let currentTemp = props.device["state"]["temperature"];
+  if (currentTemp < maxTemp) {
+    let response = await DeviceApi.runAction(props.device["id"], "setTemperature", currentTemp++);
+    props.device["state"]["temperature"] = response ? currentTemp++: currentTemp;
+    if(!response){
+      console.log("NO SE PUDO ACTUALIZAR LA TEMPERATURA");
+    }
+  }
+}
 
-// Handle toggle states and logging
-const handleToggle = (isOn) => {
-  console.log(`Light is now ${isOn ? 'on' : 'off'}.`);
+const decrementTemp = () => {
+  if (Temp.value > minTemp) {
+    Temp.value--;
+  }
 };
-
-const deleteDevice = (id) => {
-  console.log(`Deleting device with id: ${id}`);
-};
-
 
 const incrementVBlade = () => {
   const currentIndex = validVBlades.indexOf(VBlade.value);
@@ -109,7 +107,6 @@ const displayVBlade = computed(() => {
 });
 
 
-
 const incrementHBlade = () => {
   const currentIndex = validHBlades.indexOf(HBlade.value);
   if (currentIndex < validHBlades.length - 1) {
@@ -128,8 +125,6 @@ const displayHBlade = computed(() => {
   return HBlade.value === 1 ? 'auto' : `${HBlade.value}°`;
 });
 
-
-
 const incrementVel = () => {
   const currentIndex = validVelocity.indexOf(Vel.value);
   if (currentIndex < validVelocity.length - 1) {
@@ -144,18 +139,6 @@ const decrementVel = () => {
   }
 };
 
-
-const incrementTemp = () => {
-  if (Temp.value < maxTemp) {
-    Temp.value++;
-  }
-};
-
-const decrementTemp = () => {
-  if (Temp.value > minTemp) {
-    Temp.value--;
-  }
-};
 </script>
 
 
