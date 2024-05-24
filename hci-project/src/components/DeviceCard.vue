@@ -43,6 +43,7 @@ import { DeviceApi } from '@/Api/DeviceApi';
 const props = defineProps({
   device: Object
 });
+
 const store = useDeviceStoreApi();
 const result = ref(null)
 let switchStatus = "isOff";
