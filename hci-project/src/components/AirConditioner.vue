@@ -56,8 +56,11 @@
     </template>
 </DeviceCard>
 
-<v-snackbar v-model="snackbar" >
-    {{ snackbarText }}
+<v-snackbar v-model="snackbar" vertical color="error" variant="tonal">
+  <div class="text-subtitle-1 pb-2">Action failed</div>
+
+  <p>please try again</p>
+
 </v-snackbar>
 </template>
 
@@ -73,8 +76,6 @@ const props = defineProps({
 });
 
 const snackbar = ref(false);
-const snackbarText = ref("Action failed. Please try again");
-
 
 const validHSwings = ["auto", "-90", "-45", "0", "45", "90"];
 const validFanSpeeds = ["auto", "25", "50", "75", "100"];
@@ -174,7 +175,7 @@ async function decrementHSwing(){
 }
 
 function handleError(response){
-  if(!response){
+  if(response){
       console.log("NO SE PUDO ACTUALIZAR LA VELOCIDAD DEL VENTILADOR");
       snackbar.value= true;
     }
