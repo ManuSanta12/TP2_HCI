@@ -12,27 +12,6 @@ export const useDeviceStoreApi = defineStore('device', () => {
         'Air Conditioner': "li6cbv5sdlatti0j"
       };
 
-    // TODO PONERLE NOMBRE APROPIADO A DEVICEACTIONSMAP
-    const deviceActionsMap = {
-        'Speaker': null,
-        'Sprinkler': null,
-        'Light Panel': null,
-        'Air Conditioner': null
-    }
-    // const deviceActionsMap = {
-    //     'Speaker': DeviceApi.getDeviceTypes("c89b94e8581855bc"),
-    //     'Sprinkler': DeviceApi.getDeviceTypes("dbrlsh7o5sn8ur4i"),
-    //     'Light Panel': DeviceApi.getDeviceTypes("go46xmbqeomjrsjr"),
-    //     'Air Conditioner': DeviceApi.getDeviceTypes("li6cbv5sdlatti0j")
-    // }
-
-    async function getDeviceActions(){
-        for (const key in deviceActionsMap) {
-            deviceActionsMap[key] = await DeviceApi.getDeviceTypes(typeIdMap[key])
-        }
-    }
-    onMounted(getDeviceActions)
-
     async function addDevice(device) {
         const result = await DeviceApi.add(device)
         await getAll()
