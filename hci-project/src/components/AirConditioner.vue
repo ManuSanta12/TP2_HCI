@@ -59,10 +59,9 @@
 
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import DeviceCard from './DeviceCard.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
-import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 
 // Props
 const props = defineProps({

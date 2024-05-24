@@ -28,10 +28,17 @@ class DeviceApi {
   static async getDeviceTypes(deviceTypeId, controller) {
     return await Api.get(`${Api.baseUrl}/devicetypes/${deviceTypeId}`, controller)
   }
-
-  static async runAction(id, actionName, data, controller) {
-    //slug es el path de la API, en este caso es el id del dispositivo y el nombre de la accion
+  
+  static async runActionNoParams(id, actionName, controller) {
     const slug = `${id}/${actionName}`
+    return await DeviceApi.putNoBody(DeviceApi.getUrl(slug), controller) 
+  }
+  
+  static async runAction(id, actionName, data = null, controller) {
+    const slug = `${id}/${actionName}`
+    // if (actionName == "turnOn" || actionName === "turnOff"){
+    //   return await Api.put(DeviceApi.getUrl(slug), controller) 
+    // }
     return await Api.put(DeviceApi.getUrl(slug), data, controller)
   }
 }

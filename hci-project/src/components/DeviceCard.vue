@@ -8,7 +8,7 @@
                 <v-card-title class="pa-0 text-h8">{{ device.name }}</v-card-title>
               </v-col>
               <v-col cols="2" class="d-flex justify-end pa-0">
-                <v-switch inset color="green" class="small-switch" v-model="isOn" @click="toggleDevice"></v-switch>
+                <v-switch inset color="green" class="small-switch" v-model="switchStatus" @click="toggleDevice"></v-switch>
               </v-col>
             </v-row>
           </v-col>
@@ -35,19 +35,23 @@
   </template>
   
   <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { DeviceApi } from '@/Api/DeviceApi';
+
 // Props
 const props = defineProps({
   device: Object
 });
 const store = useDeviceStoreApi();
-const isOn = ref(false);
 const result = ref(null)
+const switchStatus = "off";
+
 
 function setResult(r){
   result.value = JSON.stringify(r, null, 2)
 }
+
 async function deleteDevice() {
   try {
     const _result = await store.removeDevice(props.device.id)
@@ -57,11 +61,20 @@ async function deleteDevice() {
         setResult(e)
     }
 }
+
 onMounted(async () => {
   await store.getAll()
 })
-const toggleDevice = () => {
-  isOn.value = !isOn.value;
+
+async function toggleDevice () {
+  const action = props.device["state"]["status"] == "on" ? "turnOff" : "turnOn";
+  console.log(action)
+  let response = await DeviceApi.runActionNoParams(props.device["id"], "turnOn");
+  if(response){
+    switchStatus = switchStatus == "on" ? "off" : "on";
+  } else {
+    console.log("NO SE PUDO MODIFICAR EL ESTADO DEL DISPOSITIVO");
+  }
 };
 </script>
 
