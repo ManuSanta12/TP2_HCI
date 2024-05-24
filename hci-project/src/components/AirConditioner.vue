@@ -55,6 +55,10 @@
     </v-row>
     </template>
 </DeviceCard>
+
+<v-snackbar v-model="snackbar" >
+    {{ snackbarText }}
+</v-snackbar>
 </template>
 
 
@@ -67,6 +71,10 @@ import { DeviceApi } from '@/Api/DeviceApi';
 const props = defineProps({
   device: Object
 });
+
+const snackbar = ref(false);
+const snackbarText = ref("Action failed. Please try again");
+
 
 const validHSwings = ["auto", "-90", "-45", "0", "45", "90"];
 const validFanSpeeds = ["auto", "25", "50", "75", "100"];
@@ -168,6 +176,7 @@ async function decrementHSwing(){
 function handleError(response){
   if(!response){
       console.log("NO SE PUDO ACTUALIZAR LA VELOCIDAD DEL VENTILADOR");
+      snackbar.value= true;
     }
 }
 </script>
