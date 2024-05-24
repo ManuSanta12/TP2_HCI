@@ -66,15 +66,26 @@ const props = defineProps({
   device: Object
 });
 
+const validHBlades = [1, -90, -45, 0, 45, 90];
+const HBlade = ref(0);
+const validVelocity = [25, 50, 75, 100];
+const Vel = ref(25);
 const minTemp = 18;
 const maxTemp = 38;
+const Temp = ref(18);
+const validVBlades = [1, 22, 45, 67, 90];
+const VBlade = ref(45);
 
 
 async function incrementTemp() {
   // Usamos [] ya que la propiedad "state" no esta declarada explicitamente en el codigo (llega de la api!!!)
   let currentTemp = props.device["state"]["temperature"];
+  console.log(props.device["id"])
+  console.log(props.device["state"]["temperature"])
+  console.log(currentTemp);
   if (currentTemp < maxTemp) {
     let response = await DeviceApi.runAction(props.device["id"], "setTemperature", currentTemp++);
+    console.log(response)
     props.device["state"]["temperature"] = response ? currentTemp++: currentTemp;
     if(!response){
       console.log("NO SE PUDO ACTUALIZAR LA TEMPERATURA");
