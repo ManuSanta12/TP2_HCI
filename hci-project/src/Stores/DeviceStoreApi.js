@@ -32,10 +32,10 @@ export const useDeviceStoreApi = defineStore('device', () => {
         devices.value = result
         return result
     }
-    async function executeAction(id, actionName, data = null) {
-        const result = await DeviceApi.executeAction(id, actionName, data)
+    async function runAction(id, actionName, data = null) {
+        const result = await DeviceApi.runAction(id, actionName, data)
         await getAll()
         return Object.assign(new Device(), result)
     }
-    return {devices, addDevice, modify, get, removeDevice, getAll, executeAction}
+    return {devices, addDevice, modify, get, removeDevice, getAll, runAction}
 });

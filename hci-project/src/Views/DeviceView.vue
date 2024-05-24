@@ -43,7 +43,7 @@
         <v-text-field placeholder="id" v-model="inputId"></v-text-field>
         <v-text-field placeholder="action name" v-model="inputAction"></v-text-field>
         <v-text-field placeholder="data" v-model="inputData"></v-text-field>
-        <v-btn @click="executeAction(inputId, inputAction, inputData)">Execute Action</v-btn>
+        <v-btn @click="runAction(inputId, inputAction, inputData)">Execute Action</v-btn>
       </v-app-bar>
     </template>
     <v-row justify="center">
@@ -134,9 +134,9 @@ const getComponent = (type) => {
   }
 };
 
-function executeAction(id, actionName, data) {
+function runAction(id, actionName, data) {
   console.log(id, actionName, data)
-  store.executeAction(id, actionName, data)
+  store.runAction(id, actionName, data)
 }
 
 function setResult(r){

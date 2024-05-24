@@ -78,7 +78,7 @@ const minTemp = 18;
 const maxTemp = 38;
 const Temp = ref(18);
 
-function 
+
 
 // Handle toggle states and logging
 const handleToggle = (isOn) => {

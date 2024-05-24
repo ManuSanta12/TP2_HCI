@@ -25,7 +25,7 @@ class DeviceApi {
     return await Api.get(DeviceApi.getUrl(), controller)
   }
 
-  static async executeAction(id, actionName, data, controller) {
+  static async runAction(id, actionName, data, controller) {
     //slug es el path de la API, en este caso es el id del dispositivo y el nombre de la accion
     const slug = `${id}/${actionName}`
     return await Api.put(DeviceApi.getUrl(slug), data, controller)
