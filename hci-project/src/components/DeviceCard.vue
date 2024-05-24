@@ -45,8 +45,7 @@ const props = defineProps({
 });
 const store = useDeviceStoreApi();
 const result = ref(null)
-let switchStatus = "isOff";
-
+const switchStatus = ref(props.device["state"]["status"] == "on");
 
 function setResult(r){
   result.value = JSON.stringify(r, null, 2)
@@ -66,13 +65,15 @@ onMounted(async () => {
   await store.getAll()
 })
 
-async function toggleDevice () {
-  const action = props.device["state"]["status"] == "on" ? "turnOff" : "turnOn";
-  console.log(action)
-  let response = await DeviceApi.runActionNoParams(props.device["id"], "turnOn");
+async function toggleDevice() {
+  const action = switchStatus.value ? 'turnOff' : 'turnOn';
+  let response = await DeviceApi.runActionNoParams(props.device["id"], action);
+  // response == true si se pudo cambiar el estado del dispositivo
   if(response){
-    props.device["state"]["status"] = props.device["state"]["status"] == "on" ? "off":"on";
-    switchStatus = props.device["state"]["status"] == "on" ? "isOn":"isOff";
+    console.log("entre al if, se llamo a ", action, ", el estado del dispositivo es: ", props.device["state"]["status"], " y el switchStatus es: ", switchStatus.value)
+    switchStatus.value = !(switchStatus.value);
+    props.device["state"]["status"] = switchStatus.value ? "on" : "off";
+    console.log("el estado del dispositivo es: ", props.device["state"]["status"], " y el switchStatus es: ", switchStatus.value)
   } else {
     console.log("NO SE PUDO MODIFICAR EL ESTADO DEL DISPOSITIVO");
   }
