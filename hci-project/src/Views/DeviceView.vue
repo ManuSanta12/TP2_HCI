@@ -66,7 +66,7 @@
               <v-card-actions>
               <v-spacer></v-spacer> 
               <v-btn variant="tonal" color="error" dark @click="cancel">Cancel</v-btn>
-              <v-btn variant="tonal" color="primary" dark @click="saveDevice">Save</v-btn>
+              <v-btn variant="tonal" color="primary" dark @click="saveDevice" :disabled="isDisabled">Save</v-btn>
           </v-card-actions>
       </v-card>
     </v-col>
@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
@@ -106,6 +106,8 @@ const newDevice = ref({
 });
 
 const getDevId = (type) => typeIdMap[type] || null;
+
+const isDisabled = computed(() => newDevice.value.name.length < 3)
 
 const saveDevice = () => {
   const name = newDevice.value.name;
