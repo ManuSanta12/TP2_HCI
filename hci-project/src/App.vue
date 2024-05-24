@@ -1,4 +1,4 @@
-<template>\
+<template>
     <v-app>
       <NavigationBar/>
       <v-main color='#DDEAF4'>
@@ -7,10 +7,8 @@
     </v-app>
 </template>
 
-<script>
-
+<script >
 import NavigationBar from './components/NavigationBar.vue';
-
-</script>
+</script> 
 
 

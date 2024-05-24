@@ -1,6 +1,6 @@
-<script>
+<!-- <script>
 import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
-import Sprinkler from '@/components/Sprinkler.vue';
+import Sprinkler from '@/components_composition_api/Sprinkler.vue';
 import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
 import AirConditionerDeviceCard from '@/components/AirConditionerDeviceCard.vue';
 
@@ -14,10 +14,9 @@ export default {
   data() {
     return {
       device_grid: [
-        [{type:'Sprinkler', id: 0, initial_data: { device_name: 'mi regadera', toggle_status: true, pump_status: 'puto el que lee' }},
-        {type:'Sprinkler', id: 0}],
-        [{type:'Sprinkler', id: 1, initial_data: { device_name: 'mi otra regadera', toggle_status: false, pump_status: 'puto '}}],
-        [{type:'Sprinkler', id: 2, initial_data: { device_name: 'mi regadera favorita', toggle_status: true, pump_status: '<3'}}]
+        [{type:'Sprinkler', id: 0}],
+        [{type:'Speaker', id: 1}],
+        [{type:'Sprinkler', id: 2}, {type:'Sprinkler', id: 3}]
       ]
     };
   },
@@ -37,25 +36,27 @@ export default {
   }
 }
 };
-</script>
+</script> -->
 
 <!-- Clave de Columna: :key="'col-' + index" proporciona una clave única para cada columna basada en su posición en el arreglo. Esto es crucial para ayudar a Vue a identificar y gestionar eficientemente cada columna durante las actualizaciones.
 Clave de Dispositivo: :key="device.id" se usa para cada dispositivo dentro de la columna, permitiendo que Vue rastree individualmente cada dispositivo, lo cual es esencial si los dispositivos son agregados, eliminados o reordenados dentro de la columna. -->
 <!-- Eficiencia de Renderizado: Al utilizar claves únicas tanto para columnas como para dispositivos, Vue puede manejar de manera más eficiente las actualizaciones a la interfaz sin necesidad de re-renderizar todo el contenido innecesariamente.
 Escalabilidad: Este enfoque escala bien a medida que agregas más tipos de dispositivos o cambias la estructura de los datos, manteniendo la capacidad de Vue de gestionar estos cambios sin pérdida de rendimiento. -->
 
-<template>
-  <v-app-bar title="Home" color="#DDEAF4" />
+<template> hola </template>
+
+<!-- <template>
+  <v-app-bar title="Home -- SCRIPTED" color="#DDEAF4" />
   <v-layout class="rounded rounded-md">
     <v-main color="#DDEAF4">
       <v-row class="scrollable" cols="3">
-        <!-- Itera sobre cada columna en devices -->
+        Itera sobre cada columna en devices
         <v-col v-for="(column, index) in device_grid" :key="'col-' + index">
-          <!-- Itera sobre cada dispositivo en la columna -->
-          <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" :initial-data="device.initial_data" class="ma-2"></component>
+          Itera sobre cada dispositivo en la columna
+          <component v-for="device in column" :is="getComponent(device.type)" :key="device.id" class="ma-2"></component>
         </v-col>
       </v-row>
       <button @click="addDevice({ type: 'Speaker'}, 0)">Add Speaker to First Column</button>
     </v-main>
   </v-layout>
-</template>
+</template> -->

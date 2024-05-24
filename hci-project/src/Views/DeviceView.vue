@@ -1,19 +1,49 @@
+<!--
+  ========= MANERA VIEJA ========= 
+  <div v-for="device in devices" :key="device.id">
+    <component :is="getComponent(device.type)" :device="device" />
+  </div>  
+-->
+<!-- 
+  ========= MANERA ACTUAL PERO CON LAS COLUMNAS HARDCODEADAS ========= 
+<v-col cols="4">
+  <p>COL 0</p>
+  <component v-for="device in devices.slice(0, Math.ceil(devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+</v-col>
+<v-col cols="4">
+  <p>COL 1</p>
+  <component v-for="device in devices.slice(Math.ceil(devices.length / 3), Math.ceil(2 * devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
+</v-col>
+<v-col cols="4">
+  <p>COL 2</p>
+  <component v-for="device in devices.slice(Math.ceil(2 * devices.length / 3), devices.length)" :key="device.id" :is="getComponent(device.type)" :device="device" />
+</v-col> 
+-->
 
 <template>
   <v-layout class="rounded rounded-md">
-    <v-main color='#DDEAF4'>
-      <v-row class="pa-6 scrollable" >
-        <SpeakerDeviceCard class="ma-2"/>
-        <LightDeviceCard class="ma-2"/>
-        <AirConditionerDeviceCard class="ma-2"/>
-        <SprinklerDeviceCard class="ma-2"/>
-      </v-row>
+    <v-main>
+      <!-- El container hace que este todo centrado en la pagina -->
+      <v-container>
+        <v-row class="scrollable" no-gutters>
+            <component
+              v-for="device in store.devices"
+              :key="device.id"
+              :is="getComponent(device.type.id)"
+              :device="device"
+            />
+        </v-row>
+      </v-container>
     </v-main>
   </v-layout>
-  <v-dialog v-model="dialog" max-width="1300" scrollable>
+  <v-dialog v-model="dialog" width="1300" scrollable>
     <template v-slot:activator="{ props: addNew }">
-      <v-app-bar title="Devices"  color='#DDEAF4'>
+      <v-app-bar title="Devices"  color="#E4DCD1">
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
+        <v-text-field placeholder="id" v-model="inputId"></v-text-field>
+        <v-text-field placeholder="action name" v-model="inputAction"></v-text-field>
+        <v-text-field placeholder="data" v-model="inputData"></v-text-field>
+        <v-btn @click="runAction(inputId, inputAction, inputData)">Execute Action</v-btn>
       </v-app-bar>
     </template>
     <v-row justify="center">
@@ -21,54 +51,105 @@
       <v-card>
         <v-card-title>Add a new device</v-card-title>
         <v-divider/>
-        <v-text-field placeholder="Title"  class="pa-3" ></v-text-field>
-        <v-select :items="deviceTypes"  label="Type"class="pa-3"
+        <v-text-field placeholder="Title" v-model="newDevice.name" class="pa-3" ></v-text-field>
+        <v-select :items="deviceTypes"  v-model="newDevice.type" label="Type"class="pa-3"
         ></v-select>
         <v-row class="px-3 align-center"> 
               <v-col cols="10" class="d-flex align-center"> 
                 <v-list-item class="pa-0 text-subtitle-1">Show in home</v-list-item>
               </v-col>
               <v-col cols="2" class="d-flex justify-end align-center"> 
-                <v-switch inset color="green" class="small-switch align-center mt-4"></v-switch>
+                <v-switch inset color="green" class="small-switch align-center mt-4" v-model="newDevice.showInHome"></v-switch>
               </v-col>
         </v-row>
               <v-divider/>
               <v-card-actions>
               <v-spacer></v-spacer> 
-              <v-btn variant="tonal" color="secondary" dark @click="cancel">Cancel</v-btn>
-              <v-btn variant="tonal" color="primary" dark @click="dialog = false">Save</v-btn>
+              <v-btn variant="tonal" color="error" dark @click="cancel">Cancel</v-btn>
+              <v-btn variant="tonal" color="primary" dark @click="saveDevice">Save</v-btn>
           </v-card-actions>
       </v-card>
     </v-col>
     </v-row>
     </v-dialog>
 </template>
-<style>
-.background{
-    background-color: var(--v-background-base) !important;
-}
-.navigation-drawer-background{
-    background-color:'#D8D7D7' !important;
-}
-</style>
 
-<script>
-import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import SprinklerDeviceCard from '@/components/SprinklerDeviceCard.vue';
-export default {
-  data() {
-    return {
-      dialog: false,
-      deviceTypes: [
-        'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
-      ]
-    };
-  },
-  methods: {
-    cancel() {
-      this.dialog = false;
-    }
-  }
+<script setup>
+import { ref, onMounted } from 'vue';
+import AirConditioner from '@/components/AirConditioner.vue';
+import Sprinkler from '@/components/Sprinkler.vue';
+import Speaker from '@/components/Speaker.vue';
+import Light from '@/components/Light.vue';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { Device } from '@/Api/DeviceApi';
+
+// Data
+const store = useDeviceStoreApi();
+
+const inputId = ref('')
+const inputAction = ref('')
+const inputData = ref('')
+const result = ref(null)
+const dialog = ref(false);
+const controller = ref(null)
+const deviceTypes = [
+  'Light Panel', 'Sprinkler', 'Air Conditioner', 'Speaker'
+];
+const typeIdMap = store.typeIdMap;
+
+getAllDevices()
+
+const newDevice = ref({
+  name: '',
+  type: '',
+  showInHome: false
+});
+
+const getDevId = (type) => typeIdMap[type] || null;
+
+const saveDevice = () => {
+  const name = newDevice.value.name;
+  const deviceType = newDevice.value.type;
+  const typeId = getDevId(deviceType);
+  const deviceA = new Device(undefined, name, {id: typeId}, {});
+  store.addDevice(deviceA)
+  dialog.value = false;
 };
+
+const cancel = () => {
+  dialog.value = false;
+};
+
+function getComponent(type){
+  switch (type) {
+    case 'li6cbv5sdlatti0j': return AirConditioner;
+    case 'go46xmbqeomjrsjr': return Light;
+    case 'c89b94e8581855bc': return Speaker;
+    case 'dbrlsh7o5sn8ur4i': return Sprinkler;
+    default: return 'div';
+  }
+}
+
+function runAction(id, actionName, data) {
+  console.log(id, actionName, data)
+  store.runAction(id, actionName, data)
+}
+
+function setResult(r){
+  result.value = JSON.stringify(r, null, 2)
+}
+async function getAllDevices() {
+    try {
+        controller.value = new AbortController()
+        const devices = await store.getAll(controller)
+        controller.value = null
+        setResult(devices)
+    } catch (e) {
+      setResult(e)
+    }
+}
+
+onMounted(async () => {
+  await store.getAll()
+})
 </script>

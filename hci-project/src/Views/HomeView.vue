@@ -1,27 +1,57 @@
-<script>
-import AutomationsCard from '@/components/AutomationsCard.vue';
-import SpeakerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-import AirConditionerDeviceCard from '@/components/SpeakerDeviceCard.vue';
-</script>
 <template>
-  <v-app-bar title="Home"  color='#DDEAF4'/>
-  <v-layout class="rounded rounded-md" >
-    <v-main>
+  <v-app-bar title="Home"  color="#E4DCD1"/>
+  <v-layout color='#E5E8DD' class="rounded rounded-md">
+    <v-main color='#E5E8DD'>
       <v-row class="pa-6 scrollable" >
-        <SpeakerDeviceCard class="ma-2"/>
-        <LightDeviceCard class="ma-2"/>
-        <AirConditionerDeviceCard class="ma-2"/>
-        <AutomationsCard class="ma-2"/>
+        <div v-for="item in filteredItems" :key="item.id">
+          <div >
+                <component
+                :is="getComponent(item.type)"
+                v-if="isDevice(item)"
+                :device="item"
+              />
+              <AutomationsCard
+                v-else
+                :automation="item"
+              />
+          </div>
+        </div> 
       </v-row>
     </v-main>
   </v-layout>
 </template>
-<style>
-.custom-background{
-    background-color: '#F2F6FF';
-}
-.navigation-drawer-background{
-    background-color:'#D8D7D7' !important;
-}
-</style>
 
+<script setup>
+
+import { computed } from 'vue';
+import AirConditioner from '@/components/AirConditioner.vue';
+import Sprinkler from '@/components/Sprinkler.vue';
+import Speaker from '@/components/Speaker.vue';
+import Light from '@/components/Light.vue';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { useAutomationStore } from '@/Stores/AutomationStore';
+
+const deviceStore = useDeviceStoreApi();
+const automationStore = useAutomationStore();
+const devices = computed(() => deviceStore.devices);
+const automations = computed(() => automationStore.automations);
+
+function getComponent(type) {
+  switch (type) {
+    case 'Air Conditioner': return AirConditioner;
+    case 'Light Panel': return Light;
+    case 'Speaker': return Speaker;
+    case 'Sprinkler': return Sprinkler;
+    default: return 'div'; // Default or unknown type handler
+  }
+}
+const isDevice = (item) => {
+  return item && (item.type === 'Air Conditioner' || item.type === 'Light Panel' || item.type === 'Speaker' || item.type === 'Sprinkler');
+}
+
+const filteredItems = computed(() => {
+  const filteredDevices = devices.value.filter(device => device.showInHome);
+  const filteredAutomations = automations.value.filter(automation => automation.showInHome);
+  return [...filteredDevices, ...filteredAutomations];
+});
+</script>

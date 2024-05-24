@@ -2,24 +2,23 @@
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable" >
-        <AutomationsCard class="ma-2"/>
-        <AutomationsCard class="ma-2"/>
-        <AutomationsCard class="ma-2"/>
+        <div v-for="auto in automations" :key="auto.id">
+          <AutomationsCard :automation="auto" />
+        </div> 
       </v-row>
     </v-main>
   </v-layout>
   <v-dialog v-model="dialog" max-width="1300" scrollable>
     <template v-slot:activator="{ props: addNew }">
       <v-app-bar title="Automations"  color='#DDEAF4'>
-        <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
+        <v-btn rounded prepend-icon="mdi-plus" variant="tonal" @click="openDialog" v-bind ="addNew">Add new</v-btn>
       </v-app-bar>
     </template>
-    <!-- <EditAutomationCard class="ma-2"/> -->
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
       <v-card>
         <v-card-title>New automation</v-card-title>
-        <v-text-field placeholder="Title" variant="outlined" class="px-3" ></v-text-field>
+        <v-text-field placeholder="Title" variant="outlined" class="px-3" v-model="newAutomation.name"></v-text-field>
         <v-list-text class="mx-3">Starters</v-list-text>
         <v-container class="pa-0 px-3 scrollable-list-card">
           <!-- Display existing starters -->
@@ -78,14 +77,16 @@
           <v-card-text class="py-2 px-3">
             <v-btn @click="addAction">Add Action</v-btn>
           </v-card-text>
+          <!-- <v-col cols="2" class="d-flex justify-end align-center"> 
+                <v-switch inset color="green" class="small-switch align-center mt-4" v-model="action.showInHome"></v-switch>
+              </v-col> -->
         <v-divider/>
         <v-card-actions>
               <v-btn prepend-icon="mdi-delete" variant="tonal" small color="error" dark @click="dialog = false">Delete</v-btn>
               <v-spacer></v-spacer> 
               <v-btn variant="tonal" color="secondary" dark @click="cancel">Cancel</v-btn>
-              <v-btn variant="tonal" color="primary" dark @click="dialog = false">Save</v-btn>
+              <v-btn variant="tonal" color="primary" dark @click="saveAutomation">Save</v-btn>
           </v-card-actions>
-          
       </v-card>
     </v-col>
     </v-row>
@@ -108,42 +109,98 @@
   max-height: 150px; min-height:75px; min-width: 300px; overflow-y: auto;
 }
 </style>
+<script setup>
+import { ref } from 'vue';
+import { useAutomationStore } from '@/Stores/AutomationStore';
+import AutomationsCard from '@/components/AutomationsCard.vue';
+
+// Data
+const dialog = ref(false);
+const starters = ref([{ day: '', time: '' }]);
+const actions = ref([{ option: '' }]);
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'];
+const actionOptions = ['Select Ac mode', 'Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'];
+
+// Methods
+const store = useAutomationStore();
+const automations = store.automations;
+const newAutomation = ref({
+  id: '',
+  name: '',
+  starters: [],
+  actions: [],
+  startersLength: 0,
+  actionsLength: 0
+});
+
+const openDialog = () => {
+  newAutomation.value = {
+    id: Date.now().toString(),
+    name: '',
+    starters: [],
+    actions: [],
+    startersLength: 0,
+    actionsLength: 0
+  };
+  dialog.value = true;
+};
+
+const saveAutomation = () => {
+  newAutomation.value.startersLength = newAutomation.value.starters.length;
+  newAutomation.value.actionsLength = newAutomation.value.actions.length;
+  store.addAutomation(newAutomation.value);
+  dialog.value = false;
+  resetAutomation();
+};
+
+const addStarter = () => {
+  starters.value.push({ day: '', time: '' });
+};
+
+const addAction = () => {
+  actions.value.push({ option: '' });
+};
+
+const resetAutomation = () => {
+  newAutomation.value = {
+    id: '',
+    name: '',
+    starters: [],
+    actions: [],
+    startersLength: 0,
+    actionsLength: 0
+  };
+};
+
+const cancel = () => {
+  dialog.value = false;
+  resetAutomation();
+};
+</script>
 
 <script>
+import { ref } from 'vue';
+import { useAutomationStore } from '@/Stores/AutomationStore';
 import AutomationsCard from '@/components/AutomationsCard.vue';
-// import EditAutomationCard from '@/components/EditAutomationCard.vue';
-export default {
-  data() {
-    return {
-      dialog: false,
-      starters: [
-        // Initial starter
-        { day: '', time: '' }
-      ],
-      actions: [
-        { option: ''}
-      ],
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'],
-      actionOptions: ['Select Ac mode','Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'] 
-    };
-  },
-  methods: {
-    addStarter() {
-      // Add a new starter with empty values
-      this.starters.push({ day: '', time: '' });
-    },
-    addAction() {
-      // Add a new action with default values
-      this.actions.push({ option: ''});
-    },
-    cancel() {
-      // Clear the starters array
-      this.starters = [{ day: '', time: '' }];
-      this.actions = [{option: ''}]
-      // Close the dialog
-      this.dialog = false;
-    }
-  }
 
+export default {
+  components: {
+    AutomationsCard
+  },
+  setup() {
+    return {
+      dialog,
+      starters,
+      actions,
+      days,
+      actionOptions,
+      openDialog,
+      saveAutomation,
+      cancel,
+      addAction,
+      addStarter,
+      automations
+    };
   }
+};
 </script>

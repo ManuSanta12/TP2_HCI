@@ -4,138 +4,66 @@
       <v-card class="pa-2" width="300">
         <v-row class="px-3 pt-3">
           <v-col cols="10">
-            <v-card-title class="pa-0 text-h8">Close Curtains</v-card-title>
+            <v-card-title class="pa-0 text-h8">{{automation.name }}</v-card-title>
           </v-col>
           <v-col cols="2" class="d-flex justify-end pa-0">
-            <v-btn icon :color="iconColor" @click="togglePlay">
+            <v-btn icon :color="iconColor" @click="togglePlay" v-model="isOn">
               <v-icon>{{ icon }}</v-icon>
             </v-btn>
           </v-col>
         </v-row>
-        <v-card-subtitle class="px-3">Not Scheduled</v-card-subtitle>
-        <v-card-text class="px-3 pb-3">Includes x actions</v-card-text>
-
+        <v-card-subtitle class="px-3">{{automation.startersLength ? "Scheduled" : "Not Scheduled"}}</v-card-subtitle>
+        <v-card-text class="px-3 pb-3">Includes {{ automation.actionsLength }} actions</v-card-text>
         <v-expansion-panels>
-                <v-expansion-panel>
-                        <v-expansion-panel-title>More</v-expansion-panel-title>
-                        <v-expansion-panel-text>
-                            <v-expansion-panel-content>
-
-                                <v-col class="d-flex justify-center pa-1">
-                                <v-checkbox density="compact" label="Show in home"></v-checkbox>
-                                </v-col>
-                                <v-btn block id="Edit-btn" >Edit Automation</v-btn>
-                                <v-btn class="mt-3"block prepend-icon="mdi-trash-can-outline">Delete</v-btn>
-                        </v-expansion-panel-content>
-                    </v-expansion-panel-text>
-                </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-title >More</v-expansion-panel-title>
+            <v-expansion-panel-content>
+                <v-expansion-panel-text>
+                    <v-row no-gutters>
+                      <v-checkbox
+                      v-model="automation.showInHome"
+                      label="Show in home"
+                      class="my-4"
+                      ></v-checkbox>
+                      <v-col >
+                          <v-btn block variant="tonal" color="error" prepend-icon="mdi-trash-can-outline" @click="deleteAuto(automation.id)">Delete</v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-text>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
             </v-expansion-panels>
-
-            
-            <v-dialog activator="#Edit-btn"  max-width="1300" scrollable>
-              <v-row justify="center">
-                <v-col cols="12" sm="10" md="8" lg="6">
-                <v-card>
-                  <v-card-title>Edit automation</v-card-title>
-                  <v-text-field placeholder="Title" variant="outlined" class="px-3" ></v-text-field>
-                  <v-list-text class="mx-3">Starters</v-list-text>
-                  <v-container class="pa-0 px-3 scrollable-list-card">
-                    <!-- Display existing starters -->
-                        <div v-for="(starter, index) in starters" :key="index">
-                          <v-row>
-                            <v-col >
-                              <v-select v-model="starter.day" :items="days"  label="Day"></v-select>
-                            </v-col>
-                            <v-col >
-                              <v-text-field  v-model="starter.time"  label="Time"  ></v-text-field>
-                            </v-col>
-                          </v-row>
-                        </div>
-                      </v-container>
-                      <v-card-text class="py-2 px-3">
-                      <v-btn @click="addStarter" class="justify-center">Add Starter</v-btn>
-                    </v-card-text>
-                  <v-list-text class="mx-3">Actions</v-list-text>
-                  <v-container class="pa-0 px-3 scrollable-list-card  ">
-                    <div v-for="(action, index) in actions" :key="'action-' + index">
-                          <v-row>
-                            <v-col>
-                              <v-select v-model="action.option" :items="actionOptions" label="Option"></v-select>
-                            </v-col>
-                            <v-col v-if="action.option === 'Select Ac mode'">
-                              <div class="button-container-row ">
-                                  <v-btn>Cool</v-btn>
-                                  <v-btn>Fan</v-btn>
-                                  <v-btn>Heat</v-btn>
-                              </div>
-                            </v-col>
-                            <v-col v-if="action.option === 'Select Ac Temperature'">
-                              <v-card-actions class="pa-0">
-                                  <v-btn density="compact" icon="mdi-minus"></v-btn>
-                                  <v-card-text class="text-h6">24°C</v-card-text>
-                                  <v-btn density="compact" icon="mdi-plus"></v-btn>
-                              </v-card-actions>
-                            </v-col>
-                            <v-col v-if="action.option === 'Select Light color'">
-                                <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0"></v-color-picker>
-                            </v-col>
-                            <v-col v-if="action.option === 'Select Light Brightness'">
-                              <v-list-item-title class="pa-0">Brightness</v-list-item-title>
-                              <v-slider dense :max="100" :min="0" thumb-label></v-slider>
-                            </v-col>
-                            <v-col v-if="action.option === 'Select Speaker Volume'">
-                              <v-list-item-title class="pa-0">Volume</v-list-item-title>
-                              <v-slider dense :max="100" :min="0" thumb-label></v-slider>
-                            </v-col>
-                            <v-col v-if="action.option === 'Select Sprinkler Pump'">
-                              <v-text-field class="my-0" label="Quantity in ml."></v-text-field>
-                            </v-col>
-                          </v-row>
-                        </div>
-                    </v-container>
-                    <v-card-text class="py-2 px-3">
-                      <v-btn @click="addAction">Add Action</v-btn>
-                    </v-card-text>
-                  <v-divider/>
-                  <v-card-actions>
-                        <v-btn prepend-icon="mdi-delete" variant="tonal" small color="error" dark @click="dialog = false">Delete</v-btn>
-                        <v-spacer></v-spacer> 
-                        <v-btn variant="tonal" color="secondary" dark @click="cancel">Cancel</v-btn>
-                        <v-btn variant="tonal" color="primary" dark @click="dialog = false">Save</v-btn>
-                    </v-card-actions>
-                    
-                </v-card>
-              </v-col>
-              </v-row>
-            </v-dialog>
-      </v-card>
-    </v-col>
+          </v-card>
+        </v-col>
   </v-row>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      icon: 'mdi-pause',
-      iconColor: 'red',
-      dialog: false,
-      starters: [
-        // Initial starter
-        { day: '', time: '' }
-      ],
-      actions: [
-        { option: ''}
-      ],
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'],
-      actionOptions: ['Select Ac mode','Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump']    
-    };
-  },
-  methods: {
-    togglePlay() {
-      this.icon = this.icon === 'mdi-pause' ? 'mdi-play' : 'mdi-pause';
-      this.iconColor = this.icon == 'mdi-pause' ? 'red' : 'green';
-    },
-  },
+<script setup>
+import { defineEmits, ref } from 'vue'; 
+import { useAutomationStore } from '@/Stores/AutomationStore';
+//import { openEditDialog } from '@/Views/AutomationView2.vue'; 
+
+const { removeAutomation} = useAutomationStore();
+
+
+const props = defineProps({
+  automation: Object
+});
+
+const deleteAuto = (id) =>{
+  console.log('auto id', id);
+  removeAutomation(id);
+}
+
+
+const isOn = ref(false);
+let icon = 'mdi-pause';
+let iconColor = 'red';
+
+
+const togglePlay = () => {
+  isOn.value = !isOn.value;
+  icon = icon === 'mdi-pause' ? 'mdi-play' : 'mdi-pause';
+  iconColor = icon === 'mdi-pause' ? 'red' : 'green';
 };
 </script>
