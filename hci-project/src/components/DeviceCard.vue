@@ -38,6 +38,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { DeviceApi } from '@/Api/DeviceApi';
+import { useErrorStore } from '@/Stores/ErrorStore';
 
 // Props
 const props = defineProps({
@@ -46,6 +47,7 @@ const props = defineProps({
 const store = useDeviceStoreApi();
 const result = ref(null)
 const switchStatus = ref(props.device["state"]["status"] == "on");
+const errorStore = useErrorStore();
 
 function setResult(r){
   result.value = JSON.stringify(r, null, 2)
@@ -71,7 +73,7 @@ async function toggleDevice() {
     let response = await DeviceApi.runActionNoParams(props.device["id"], action);
   } catch(error){
     switchStatus.value = !switchStatus.value;
-    console.log("Error al cambiar el estado del dispositivo: ", error)
+    errorStore.showError("Couldn't change device status", "Please try again.")
   }
 };
 </script>
