@@ -10,7 +10,7 @@
              </v-card-actions>
          </v-col>
          <v-card-subtitle class="ma-2 d-flex justify-center">
-            Now Playing: {{device["state"]["song"]["title"]}}
+            Now Playing: {{ currentSong }}
         </v-card-subtitle> 
      </template>
      <template #expansion-panel>
@@ -46,6 +46,7 @@ const props = defineProps({
 const genres = ['classical', 'country', 'dance', 'latina', 'pop', 'rock']
 const selectedGenre = ref('')
 let isPaused = ref(false)
+const currentSong = ref(props.device["state"]?.["song"]?.["title"] || 'NOT PLAYING');
 
 async function setGenre() {
   const genreSelected = selectedGenre.value

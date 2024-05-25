@@ -34,7 +34,7 @@
     </div>
   </template>
   
-  <script setup>
+<script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { DeviceApi } from '@/Api/DeviceApi';
