@@ -74,16 +74,20 @@ const validFanSpeeds = ["auto", "25", "50", "75", "100"];
 const minTemp = 18;
 const maxTemp = 38;
 const validVSwings = ["auto", "22", "45", "67", "90"];
-const selectedMode = ref("cool")
+const selectedMode = ref("cool");
 const errorStore = useErrorStore();
 
-function handleError(title, body){
-  errorStore.showError(title, body);
-}
-
 async function setMode(){
-  let response = await DeviceApi.runAction(props.device["id"], "setMode", selectedMode.value )
-  handleError(response)
+  try{
+    let response = await DeviceApi.runAction(props.device["id"], "setMode", selectedMode.value )
+    if(response){
+      props.device["state"]["mode"] = response ? selectedMode.value : props.device["state"]["mode"];
+      selectedMode.value = props.device["state"]["mode"];
+    }
+  } catch(error) {
+    errorStore.showError("Couldn't change mode", "Please try again.")
+    selectedMode.value = props.device["state"]["mode"];
+  }
 }
 
 async function incrementTemp() {
@@ -107,7 +111,7 @@ async function decrementTemp(){
       props.device["state"]["temperature"] = response ? currentTemp: response;
     }
   } catch(error){
-    handleError("Couldn't decrease temperature", "Please try again.");
+    errorStore.showError("Couldn't decrease temperature", "Please try again.");
   }
 }
 
@@ -120,7 +124,7 @@ async function incrementFanSpeed(){
       let response = await DeviceApi.runAction(props.device["id"], "setFanSpeed", newFanSpeed);
       props.device["state"]["fanSpeed"] = response ? newFanSpeed: response;
     } catch(error){
-      handleError("Couldn't increase fan speed", "Please try again.")
+      errorStore.showError("Couldn't increase fan speed", "Please try again.")
     }
   }
 }
@@ -134,7 +138,7 @@ async function decrementFanSpeed(){
       let response = await DeviceApi.runAction(props.device["id"], "setFanSpeed", newFanSpeed);
       props.device["state"]["fanSpeed"] = response ? newFanSpeed: response;
     } catch(error){
-      handleError("Couldn't decrease fan speed", "Please try again.")
+      errorStore.showError("Couldn't decrease fan speed", "Please try again.")
     }
   }
 }
@@ -148,7 +152,7 @@ async function incrementVSwing(){
       let response = await DeviceApi.runAction(props.device["id"],"setVerticalSwing", newVSwing);
       props.device["state"]["verticalSwing"] = response ? newVSwing: response;
     } catch(error){
-      handleError("Couldn't increase vertical swing", "Please try again.")
+      errorStore.showError("Couldn't increase vertical swing", "Please try again.")
     }
   }
 }
@@ -162,7 +166,7 @@ async function decrementVSwing(){
       let response = await DeviceApi.runAction(props.device["id"],"setVerticalSwing", newVSwing);
       props.device["state"]["verticalSwing"] = response ? newVSwing: response;
     } catch(error){
-      handleError("Couldn't decrease vertical swing", "Please try again.")
+      errorStore.showError("Couldn't decrease vertical swing", "Please try again.")
     }
   }
 }
@@ -176,7 +180,7 @@ async function incrementHSwing(){
       let response = await DeviceApi.runAction(props.device["id"],"setHorizontalSwing", newHSwing);
       props.device["state"]["horizontalSwing"] = response ? newHSwing: response;
     } catch(error){
-      handleError("Couldn't increase horizontal swing", "Please try again.")
+      errorStore.showError("Couldn't increase horizontal swing", "Please try again.")
     }
   }
 }
@@ -190,11 +194,10 @@ async function decrementHSwing(){
       let response = await DeviceApi.runAction(props.device["id"],"setHorizontalSwing", newHSwing);
       props.device["state"]["horizontalSwing"] = response ? newHSwing: response;
     } catch(error){
-      handleError("Couldn't decrease horizontal swing", "Please try again.")
+      errorStore.showError("Couldn't decrease horizontal swing", "Please try again.")
     }
   }
 }
-
 
 </script>
 
