@@ -45,20 +45,23 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import DeviceCard from './DeviceCard.vue';
-import { DeviceApi } from '@/Api/DeviceApi';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { useErrorStore } from '@/Stores/ErrorStore';
 
 // Props
 const props = defineProps({
   device: Object
 });
 
+const deviceStore = useDeviceStoreApi();
+const errorStore = useErrorStore();
+
 const genres = ['classical', 'country', 'dance', 'latina', 'pop', 'rock'];
 const selectedGenre = ref('');
-let isPaused = ref(false);
-const currentSong = ref(props.device["state"]?.["song"]?.["title"] || 'NOT PLAYING');
 
-const showStopButton = computed(() => props.device.state.status !== 'stopped');
-const isStoppedOrPaused = computed(() => props.device.state.status === 'stopped' || props.device.state.status === 'paused');
+
+const currentSong = ref(props.device["state"]?.["song"]?.["title"] || 'NOT PLAYING');
+const isStoppedOrPaused = computed(() => props.device["state"]["status"] === 'stopped' || props.device["state"]["status"] === 'paused');
 
 const nowPlayingText = computed(() => {
   if (props.device.state.status === 'stopped') {
@@ -70,6 +73,14 @@ const nowPlayingText = computed(() => {
   }
   return 'NOT PLAYING';
 });
+
+async function play(){
+  try {
+    let response = await deviceStore.runActionNoParams(props.device["id"], "play");
+  } catch (error) {
+    errorStore.showError("Couldn't resume playback", "Please try again");
+  }
+}
 
 async function setGenre() {
   const genreSelected = selectedGenre.value;
@@ -105,20 +116,6 @@ async function pause(){
     handleError(response);
   } catch (error) {
     console.error("Error pausing the device", error);
-  }
-}
-
-async function play(){
-  const currentStatus = props.device["state"]["status"];
-  try {
-    let response = await DeviceApi.runActionNoParams(props.device["id"], "play");
-    if (response) {
-      props.device["state"]["status"] = 'playing';
-      isPaused.value = false;
-    }
-    handleError(response);
-  } catch (error) {
-    console.error("Error playing the device", error);
   }
 }
 

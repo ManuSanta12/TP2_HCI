@@ -39,12 +39,12 @@ class DeviceApi {
     const slug = `${id}/${actionName}`
     return await Api.putNoBody(DeviceApi.getUrl(slug), controller) 
   }
-  
+  static async runActionArray(id, actionName, data, controller) {
+    const slug = `${id}/${actionName}`
+    return await Api.putArray(DeviceApi.getUrl(slug), data, controller)
+  }
   static async runAction(id, actionName, data = null, controller) {
     const slug = `${id}/${actionName}`
-    // if (actionName == "turnOn" || actionName === "turnOff"){
-    //   return await Api.put(DeviceApi.getUrl(slug), controller) 
-    // }
     return await Api.put(DeviceApi.getUrl(slug), data, controller)
   }
 }

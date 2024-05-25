@@ -40,15 +40,22 @@ export const useDeviceStoreApi = defineStore('device', () => {
     }
     async function runAction(id, actionName, data = null) {
         const result = await DeviceApi.runAction(id, actionName, data)
+        console.log("se ejecuto la accion", actionName, "con data", data, "y resultado", result)
+        await getAll()
+        return Object.assign(new Device(), result)
+    }
+    async function runActionArray(id, actionName, data) {
+        const result = await DeviceApi.runActionArray(id, actionName, data)
         await getAll()
         return Object.assign(new Device(), result)
     }
     async function runActionNoParams(id, actionName) {
         const result = await DeviceApi.runActionNoParams(id, actionName)
+        console.log("se ejecuto la accion", actionName, "con resultado", result)
         await getAll()
         return Object.assign(new Device(), result)
     }
-    return {devices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction, runActionNoParams}
+    return {devices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction, runActionNoParams, runActionArray}
 });
 
 // // stores/devices.js

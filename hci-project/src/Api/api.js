@@ -71,6 +71,16 @@ class Api {
     }, controller);
   }
 
+  static async putArray(url, data, controller) {
+    return await Api.fetch(url,{
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    }, controller);
+  }
+
   static async delete(url, controller) {
     return await Api.fetch(url, {
       method: "DELETE",

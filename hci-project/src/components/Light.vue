@@ -23,6 +23,7 @@
 import DeviceCard from './DeviceCard.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
 import { useErrorStore } from '@/Stores/ErrorStore';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 
 // Props
 const props = defineProps({
@@ -30,21 +31,22 @@ const props = defineProps({
 });
 
 const errorStore = useErrorStore();
+const deviceStore = useDeviceStoreApi();
 
 async function setColor(){
-  console.log(props.device.state.color)
-  const currentColor = props.device.state.color.slice(1)
+  console.log(props.device["state"]["color"])
+  const currentColor = props.device["state"]["color"].slice(1)
   try {
-    let response = await DeviceApi.runAction(props.device["id"], "setColor", currentColor)
+    let response = await deviceStore.runAction(props.device["id"], "setColor", currentColor)
   } catch(error) {
     errorStore.showError("Couldn't set color", "Please try again")
   }
 }
 
 async function setBrightness (){
-  const currentBrightness = props.device.state.brightness
+  const currentBrightness = props.device["state"]["brightness"]
   try{
-    let response = await DeviceApi.runAction(props.device["id"], "setBrightness", currentBrightness)
+    let response = await deviceStore.runAction(props.device["id"], "setBrightness", currentBrightness)
   } catch(error){
     errorStore.showError("Couldn't set brightness", "Please try again")
   }
