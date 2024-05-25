@@ -35,23 +35,19 @@
                 outlined
                 dense
                 return-object
-                @change="getDevices()"
+                @input="getActionsForDevice(action.deviceId)"
               />
         </v-col>
         <v-col cols="5">
-           <!-- <v-select
-            :items="actionsId"
-            v-model="action.type"
-            label="Action Type"
-            item-text="name"
-            item-value="type"
-            outlined
-            dense
-            return-object
-            @change="getActionsFromId(action.deviceId)"
-          />  -->
+          <v-select :items="actionsId" label="Action Type" v-model="action.actionName" @change="getActionsForDevice(action.deviceId)" /> 
         </v-col>
-        
+        <v-col v-if="action.actionName === 'Select Light color'">
+            <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0"></v-color-picker>
+          </v-col>
+          <v-col v-if="action.actionName === 'Select Light Brightness'">
+            <v-list-item-title class="pa-0">Brightness</v-list-item-title>
+            <v-slider dense :max="100" :min="0" thumb-label></v-slider>
+          </v-col>
         </v-row>
         <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
         <v-divider class="my-4" />
@@ -79,7 +75,6 @@
 import { ref, onMounted } from 'vue';
 import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import AutomationsCard from '@/components/AutomationsCard.vue';
-import DialogComponent from '@/components/DialogComponent.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 
@@ -89,9 +84,11 @@ const automations = store.automations;
 let devices
 const deviceStore = useDeviceStoreApi();
 
+const actions = ['Select Light Color', 'Select Light Brightness']
+
 const automation = ref({
     name: '',
-    actions: [ {deviceId: '', actionName: '', params: []}],
+    actions: [ {device: {}, actionName: '', params: []}],
     showInHome: false
  })
 
@@ -109,35 +106,22 @@ const addAction = () => {
     automation.value.actions.splice(index, 1);
   };
 
-  function getDevices(){
-    devices = deviceStore.devices;
-    console.log('devices availables:', devices)
+  const actionsByDevice = {
+    'go46xmbqeomjrsjr': ['Select Light Color', 'Select Light Brightness'],
+    'c89b94e8581855bc': ['Speaker'],
+    'dbrlsh7o5sn8ur4i': ['Sprinkler'],
+    'li6cbv5sdlatti0j': ['AC']
   }
-  let actionsId 
-  function getActionsFromId(id){
-    console.log('ID', id)
-    switch (id){
-      case "go46xmbqeomjrsjr": 
-        actionsId = ['Select Light color', 'Select Light Brightness'];
-        break;
-    }
-    
+  let actionsId = []
+  function getActionsForDevice(deviceID){
+    console.log(deviceID)
+    deviceID = deviceStore.get(deviceID).type.id
+    actionsId = actionsByDevice.value[deviceID]
   }
-  function test() {
-    const test = deviceStore.devices.map(device => ({
-      id: device.id,
-      name: device.name
-    }));
-    console.log('actions', automation.actions)
-  }
-  // Data model for selected device
-  onMounted(() => {
-    getDevices()
-    test()
+  onMounted(async () => {
+    await deviceStore.getAll()
+    devices = deviceStore.devices
   })
-  // onMounted(async () => {
-  //   await deviceStore.getAll()
-  // })
 
 </script>
 
