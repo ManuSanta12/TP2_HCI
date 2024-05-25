@@ -9,12 +9,6 @@ class DeviceApi {
     return await Api.post(DeviceApi.getUrl(),device, controller);
   }
 
-  static async modify(device, controller) {
-    return await Api.put(DeviceApi.getUrl(device.id), device, controller);
-    //Nose si se usa pero, le pasas el id del mismo device que pasas para reemplazar los datos y sería uno nuevo
-    //revisar
-  }
-
   static async remove(id, controller) {
     return await Api.delete(DeviceApi.getUrl(id, controller));
   }
@@ -35,14 +29,23 @@ class DeviceApi {
     return await Api.get(`${Api.baseUrl}/devicetypes/${deviceTypeId}`, controller)
   }
   
+  // Actualiza el dispositivo (se sobreescriben los campos que se envian, los que no se envian no se modifican)
+  // data es una string en formato json perfectito con los campos a modificar
+  // ojo pq manda directo lo que recibe en data!!
+  static async update(id, data, controller) {
+    return await Api.putNoFormat(DeviceApi.getUrl(id), data, controller);
+  }
+
   static async runActionNoParams(id, actionName, controller) {
     const slug = `${id}/${actionName}`
     return await Api.putNoBody(DeviceApi.getUrl(slug), controller) 
   }
+  
   static async runActionArray(id, actionName, data, controller) {
     const slug = `${id}/${actionName}`
     return await Api.putArray(DeviceApi.getUrl(slug), data, controller)
   }
+
   static async runAction(id, actionName, data = null, controller) {
     const slug = `${id}/${actionName}`
     return await Api.put(DeviceApi.getUrl(slug), data, controller)

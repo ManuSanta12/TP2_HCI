@@ -55,7 +55,12 @@ export const useDeviceStoreApi = defineStore('device', () => {
         await getAll()
         return result
     }
-    return {devices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction, runActionNoParams, runActionArray}
+    async function setShowInHome(id, name, showInHome) {
+        const result = await DeviceApi.update(id, `{ "name": "${name}", "meta": {"showInHome": ${showInHome}} }`)
+        await getAll()
+        return result
+    }
+    return {devices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction, runActionNoParams, runActionArray, setShowInHome}
 });
 
 // // stores/devices.js

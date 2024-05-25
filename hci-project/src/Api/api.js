@@ -50,16 +50,18 @@ class Api {
     }, controller);
   }
 
-  static async putNoBody(url, controller) {
-    const response = await Api.fetch(url, {
+  //Hace un post mandando la data tal cual llega por parametro
+  static async putNoFormat(url, data, controller) {
+    return await Api.fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
-      }
+      },
+      body: data
     }, controller);
-    return response;
   }
 
+  //Hace un put mandando data dentro de un array
   static async put(url, data, controller) {
     let dataArray = [data]
     return await Api.fetch(url,{
@@ -71,6 +73,18 @@ class Api {
     }, controller);
   }
 
+  //Hace un put sin mandar data
+  static async putNoBody(url, controller) {
+    const response = await Api.fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    }, controller);
+    return response;
+  }
+
+  //Hace un put mandando la data contenida en un array
   static async putArray(url, data, controller) {
     return await Api.fetch(url,{
       method: "PUT",

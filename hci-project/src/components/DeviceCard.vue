@@ -19,7 +19,8 @@
             <v-expansion-panel-text>
               <slot name="expansion-panel"></slot>
               <v-checkbox
-                v-model="device.showInHome"
+                v-model="showInHome"
+                @click="toggleShowInHome"
                 label="Show in home"
                 class="my-4"
               ></v-checkbox>
@@ -35,7 +36,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
-import { DeviceApi } from '@/Api/DeviceApi';
 import { useErrorStore } from '@/Stores/ErrorStore';
 
 // Props
@@ -45,12 +45,22 @@ const props = defineProps({
 
 onMounted(async () => {
   console.log(props.device);
+  await deviceStore.setShowInHome(props.device["id"], props.device["name"], false);
 });
 
 const deviceStore = useDeviceStoreApi();
 const errorStore = useErrorStore();
 const deviceName = computed(() => props.device["name"] || 'Unknown Device')
+const showInHome = computed(() => props.device["meta"]["showInHome"]);
 
+async function toggleShowInHome() {
+  const newValue = !props.device["meta"]["showInHome"];
+  try {
+    const response = await deviceStore.setShowInHome(props.device["id"], props.device["name"], newValue);
+  } catch (error) {
+    errorStore.showError("Couldn't update device", "Please try again.");
+  }
+}
 
 async function deleteDevice() {
   try {
