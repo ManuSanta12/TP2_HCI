@@ -17,7 +17,7 @@
                 <v-text-field class="my-0" label="Quantity" v-model="pumpQuantity"></v-text-field>
             </v-col>
             <v-col cols="5" class="px-0">
-                <v-select label="unit":items="units" v-model="pumpUnit"></v-select>
+                <v-select label="unit" :items="units" v-model="pumpUnit"></v-select>
             </v-col>
         </v-row>
             <div class="my-0 button-container-row justify-center">
