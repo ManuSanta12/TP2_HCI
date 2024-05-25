@@ -38,6 +38,7 @@ export const useDeviceStoreApi = defineStore('device', () => {
         devices.value = result
         return result
     }
+    
     async function runAction(id, actionName, data = null) {
         const result = await DeviceApi.runAction(id, actionName, data)
         await getAll()

@@ -40,10 +40,6 @@
     <template v-slot:activator="{ props: addNew }">
       <v-app-bar title="Devices"  color="#E4DCD1">
         <v-btn rounded prepend-icon="mdi-plus" variant="tonal"  v-bind ="addNew">Add new</v-btn>
-        <v-text-field placeholder="id" v-model="inputId"></v-text-field>
-        <v-text-field placeholder="action name" v-model="inputAction"></v-text-field>
-        <v-text-field placeholder="data" v-model="inputData"></v-text-field>
-        <v-btn @click="runAction(inputId, inputAction, inputData)">Execute Action</v-btn>
       </v-app-bar>
     </template>
     <v-row justify="center">

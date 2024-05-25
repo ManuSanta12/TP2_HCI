@@ -11,44 +11,31 @@
         <v-row v-for="(action, index) in automation.actions" :key="index">
           <v-col>
               <v-select
-            :items="devices"
-            label="Device"
-            item-text="name"
-            item-value="id"
-            v-model="action.deviceId"
-            outlined
-            dense
-            @change="getDevices()"
-          />
+                :items="devices"
+                label="Device"
+                item-title="name"
+                item-value="id"
+                v-model="action.deviceId"
+                outlined
+                dense
+                return-object
+                @change="getDevices()"
+              />
         </v-col>
         <v-col cols="5">
-          <!-- <v-select
-            :items="action.availableActions"
+           <!-- <v-select
+            :items="actionsId"
             v-model="action.type"
             label="Action Type"
             item-text="name"
-            item-value="name"
+            item-value="type"
             outlined
             dense
-          /> -->
+            return-object
+            @change="getActionsFromId(action.deviceId)"
+          />  -->
         </v-col>
-          <!-- <v-col cols="4">
-            <v-select :items="devices" label="Device" item-text="name" item-value="id" v-model="selectedDevice" outlined dense />
-          </v-col> -->
-          <!-- light -->
-          <!-- <v-col v-if="selectedDevice.type.id == 'go46xmbqeomjrsjr'"> 
-            <v-select :items="LightActions" v-model="actionType" label="Action Type" outlined dense></v-select>
-          </v-col>
-          <v-col v-if="action.option == 'Select Light Color'">
-            <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0"></v-color-picker>
-          </v-col>
-          <v-col v-if="action.option === 'Select Light Brightness'">
-            <v-list-item-title class="pa-0">Brightness</v-list-item-title>
-            <v-slider dense :max="100" :min="0" thumb-label></v-slider>
-          </v-col>
-          <v-col cols="2" class="d-flex align-baseline justify-center"> 
-           <v-btn icon="mdi-trash-can-outline" color="red lighten-1" @click="deleteAction(index)"></v-btn>
-        </v-col> -->
+        
         </v-row>
         <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
         <v-divider class="my-4" />
@@ -76,70 +63,75 @@
   import { defineProps, defineEmits, ref, computed, onMounted} from 'vue';
   import { DeviceApi } from '@/Api/DeviceApi';
   import { de } from 'vuetify/locale';
-
-  // const devices =  await deviceStore.getAll();
+  let devices;
   const props = defineProps({
       visible: Boolean,
       // Define default automation object
-      defaultAutomation: {
+      automation: {
           type: Object,
-          default: () => ({name: '', actions: [{ }], showInHome: false })
+          default: () => ({name: '', actions: [{  }], showInHome: false })
         },
     });
-
-  const LightActions = ['Select Light color', 'Select Light Brightness']
+ const automation = ref({
+    name: '',
+    actions: [ {deviceId: '', actionName: '', params: []}],
+    showInHome: false
+ })
+    
   const actions = ['Select Ac mode', 'Select Ac Temperature',  'Select Speaker Volume', 'Select Sprinkler Pump'] ;
   const emit = defineEmits(['save', 'close']);
   
   // Use ref to store the current automation object
   const automation = ref(props.defaultAutomation);
-  
+ 
   const handleSave = () => {
     const name = automation.value.name;
     const actions = automation.value.actions;
-    emit('save',  new Automation(automation.value.id, name, actions));
   };
   
   const addAction = () => {
-    console.log(selectedDevice.value);
-    console.log(props.action);
+    // console.log(selectedDevice.value);
+    // console.log(props.action);
   
-    automation.value.actions.push(new Action(selectedDevice.value, props.action.type, params,meta));
+    automation.value.actions.push(new Automation(automation.name, automation.actions, params,meta));
   };
 
   const deleteAction = (index) => {
     automation.value.actions.splice(index, 1);
   };
   const deviceStore = useDeviceStoreApi()
-  console.log('devices availables:', deviceStore.devices)
-    // console.log(deviceStore.devices[0].name)
-  // Computed property to format devices for v-select
-  const selectableDevices = computed(() => {
-    return devices.value.map(device => ({
-      id: device.id,  // Assuming each device has an 'id' and 'name'
-      name: device.name
-    }));
-  });
-  let devices;
+
   function getDevices(){
     devices = deviceStore.devices;
+    console.log('devices availables:', devices)
+  }
+  let actionsId 
+  function getActionsFromId(id){
+    console.log('ID', id)
+    switch (id){
+      case "go46xmbqeomjrsjr": 
+        actionsId = ['Select Light color', 'Select Light Brightness'];
+        break;
+    }
+    // actionsId = deviceStore.devices.map(device => ({
+
+    // }))
+    
+  }
+  function test() {
+    const test = deviceStore.devices.map(device => ({
+    id: device.id,
+    name: device.name
+    }));
+    console.log('actions', automation.actions)
   }
   // Data model for selected device
   onMounted(() => {
     getDevices()
+    test()
   })
   const selectedDevice = ref(null);
   // Log the formatted devices for selection once they are computed and whenever they change
 
 </script>
-<style>
-.time-input {
-  font-size: 1.4em; /* Larger text size */
-  padding: 10px 20px; /* Larger padding for better touch interaction */
-  border: 2px solid #ccc; 
-  border-radius: 5px; /* Rounded corners for aesthetic */
-  width: 100%; /* Full width of the column, adjust as needed */
-  max-width: 200px; /* Maximum width, adjust based on your layout */
-  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
-}
-</style>
+
