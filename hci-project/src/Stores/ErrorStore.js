@@ -7,9 +7,9 @@ export const useErrorStore = defineStore('automations', () => {
     const errorBody = ref('Please try again');
 
     function showError(title, body) {
-        snackbar.value = true;
         errorTitle.value = title;
         errorBody.value = body;
+        snackbar.value = true;
     }
-    return {showError, snackbar}
+    return {showError, snackbar, errorTitle, errorBody}
 });

@@ -55,11 +55,6 @@
     </v-row>
     </template>
 </DeviceCard>
-
-<v-snackbar v-model="snackbar" vertical color="error" variant="tonal">
-  <div class="text-subtitle-1 pb-2">{{ errorTitle }}</div>
-  <p>{{ errorMessage }}</p>
-</v-snackbar>
 </template>
 
 
@@ -67,13 +62,12 @@
 import { ref } from 'vue';
 import DeviceCard from './DeviceCard.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
+import { useErrorStore } from '@/Stores/ErrorStore';
 
 // Props
 const props = defineProps({
   device: Object
 });
-
-const snackbar = ref(false);
 
 const validHSwings = ["auto", "-90", "-45", "0", "45", "90"];
 const validFanSpeeds = ["auto", "25", "50", "75", "100"];
@@ -81,13 +75,10 @@ const minTemp = 18;
 const maxTemp = 38;
 const validVSwings = ["auto", "22", "45", "67", "90"];
 const selectedMode = ref("cool")
-const errorTitle = ref("Error");
-const errorMessage = ref("Please try again.");
+const errorStore = useErrorStore();
 
 function handleError(title, body){
-  errorTitle.value = title;
-  errorMessage.value = body;
-  snackbar.value = true;
+  errorStore.showError(title, body);
 }
 
 async function setMode(){
@@ -103,7 +94,7 @@ async function incrementTemp() {
       let response = await DeviceApi.runAction(props.device["id"], "setTemperature", ++currentTemp);
       props.device["state"]["temperature"] = response ? currentTemp: response;
     } catch(error){
-      handleError("Couldn't increase temperature", "Please try again.")
+      errorStore.showError("Couldn't increase temperature", "Please try again.")
     } 
   }
 }

@@ -4,8 +4,8 @@
       <v-main color='#DDEAF4'>
         <RouterView/>
         <v-snackbar v-model="snackbar" vertical color="error" variant="tonal">
-          <div class="text-subtitle-1 pb-2">ERROR</div>
-          <p> try again </p>
+          <div class="text-subtitle-1 pb-2">{{ errorTitle }}</div>
+          <p> {{ errorBody }} </p> 
         </v-snackbar>
         <v-btn @click="showWarning">SHOW WARNING</v-btn>
       </v-main>
@@ -24,6 +24,9 @@ const snackbar = computed({
   get: () => errorStore.snackbar,
   set: (value) => { errorStore.snackbar = value; }
 });
+
+const errorTitle = computed(() => errorStore.errorTitle);
+const errorBody = computed(() => errorStore.errorBody);
 
 function showWarning(){
   errorStore.showError("ERROR", "try again");
