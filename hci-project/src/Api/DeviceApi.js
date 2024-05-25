@@ -1,4 +1,4 @@
-import { Api } from "./api.js";
+import { Api } from "./api.js"; 
 //  TODO algunos metodos le pasan id y controller a getUrl en lugar de al metodo de api put/post/get.etc
 class DeviceApi {
   static getUrl(slug) {
@@ -11,6 +11,8 @@ class DeviceApi {
 
   static async modify(device, controller) {
     return await Api.put(DeviceApi.getUrl(device.id), device, controller);
+    //Nose si se usa pero, le pasas el id del mismo device que pasas para reemplazar los datos y sería uno nuevo
+    //revisar
   }
 
   static async remove(id, controller) {
