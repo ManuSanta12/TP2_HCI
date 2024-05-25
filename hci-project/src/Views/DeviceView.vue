@@ -26,12 +26,15 @@
       <!-- El container hace que este todo centrado en la pagina -->
       <v-container>
         <v-row class="scrollable" no-gutters>
+            <v-col v-for="device in Object.values(store.devices)" :key="device.id" cols="12">
+              <p>{{ device }}</p>
+            </v-col>
+            <v-col v-for="device in Object.values(store.devices)" :key="device.id" cols="12">
             <component
-              v-for="device in store.devices"
-              :key="device.id"
               :is="getComponent(device.type.id)"
               :device="device"
             />
+          </v-col>
         </v-row>
       </v-container>
     </v-main>

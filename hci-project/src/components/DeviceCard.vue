@@ -5,7 +5,7 @@
         <v-col>
           <v-row class="px-3">
             <v-col cols="10">
-              <v-card-title class="pa-0 text-h8">{{ device.name }}</v-card-title>
+              <v-card-title class="pa-0 text-h8">{{ deviceName }}</v-card-title>
             </v-col>
             <slot name="top-right-button"></slot>
           </v-row>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { DeviceApi } from '@/Api/DeviceApi';
 import { useErrorStore } from '@/Stores/ErrorStore';
@@ -43,27 +43,29 @@ const props = defineProps({
   device: Object
 });
 
-const store = useDeviceStoreApi();
-const result = ref(null);
-const errorStore = useErrorStore();
+onMounted(async () => {
+  console.log(props.device);
+});
 
-function setResult(r){
-  result.value = JSON.stringify(r, null, 2);
-}
+const deviceStore = useDeviceStoreApi();
+const errorStore = useErrorStore();
+const deviceName = computed(() => props.device["name"] || 'Unknown Device')
+
 
 async function deleteDevice() {
   try {
-    const _result = await store.removeDevice(props.device.id);
-    setResult(_result);
+    const _result = await deviceStore.removeDevice(props.device.id);
+    // setResult(_result);
     props.device = null;
-  } catch (e) {
-    setResult(e);
+  } catch (error) {
+    errorStore.showError("Couldn't delete device", "Please try again.");
   }
 }
 
-onMounted(async () => {
-  await store.getAll();
-});
+// TODO por que????????????
+// onMounted(async () => {
+//   await store.getAll();
+// });
 </script>
 
 <style scoped>

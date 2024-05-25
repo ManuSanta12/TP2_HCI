@@ -27,13 +27,16 @@ class DeviceApi {
     return await Api.get(DeviceApi.getUrl(), controller)
   }
 
+  static async get(id, controller) {
+    return await Api.get(DeviceApi.getUrl(id), controller)
+  }
+
   static async getDeviceTypes(deviceTypeId, controller) {
     return await Api.get(`${Api.baseUrl}/devicetypes/${deviceTypeId}`, controller)
   }
   
   static async runActionNoParams(id, actionName, controller) {
     const slug = `${id}/${actionName}`
-    console.log(DeviceApi.getUrl(slug))
     return await Api.putNoBody(DeviceApi.getUrl(slug), controller) 
   }
   
@@ -55,8 +58,8 @@ class Device {
     // this.state = state;
   }
   
-  toString(){
-    return JSON.stringtify(this, null, 2)
-  }
+  // toString(){
+  //   return JSON.stringtify(this, null, 2)
+  // }
 }
 export { DeviceApi, Device }
