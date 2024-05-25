@@ -60,7 +60,8 @@
   </template>
   
   <script setup>
-  import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+  import { Automation } from '@/Api/AutomationsApi';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
   import { defineProps, defineEmits, ref, computed} from 'vue';
   
   const props = defineProps({
@@ -82,12 +83,9 @@
   const automation = ref(props.defaultAutomation);
   
   const handleSave = () => {
-  emit('save',  {
-    ...automation.value,
-    startersLength: automation.value.starters.length,
-    actionsLength: automation.value.actions.length
-  });
-
+    const name = automation.value.name;
+    const actions = automation.value.actions;
+    emit('save',  new Automation(name, actions));
 };
   
   const addStarter = () => {
@@ -95,6 +93,7 @@
   };
   
   const addAction = () => {
+    console.log(automation.value.actions);
     automation.value.actions.push({ type: '' });
   };
   const deleteStarter = (index) => {

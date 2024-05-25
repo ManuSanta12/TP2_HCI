@@ -26,7 +26,7 @@ class AutomationsApi{
 
 class Automation{
     constructor(id,name,actions){
-        this.id=id;
+        //this.id=id;
         this.name = name;
         this.actions=actions; //Array de actions
     }
