@@ -1,25 +1,3 @@
-<!--
-  ========= MANERA VIEJA ========= 
-  <div v-for="device in devices" :key="device.id">
-    <component :is="getComponent(device.type)" :device="device" />
-  </div>  
--->
-<!-- 
-  ========= MANERA ACTUAL PERO CON LAS COLUMNAS HARDCODEADAS ========= 
-<v-col cols="4">
-  <p>COL 0</p>
-  <component v-for="device in devices.slice(0, Math.ceil(devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
-</v-col>
-<v-col cols="4">
-  <p>COL 1</p>
-  <component v-for="device in devices.slice(Math.ceil(devices.length / 3), Math.ceil(2 * devices.length / 3))" :key="device.id" :is="getComponent(device.type)" :device="device" />
-</v-col>
-<v-col cols="4">
-  <p>COL 2</p>
-  <component v-for="device in devices.slice(Math.ceil(2 * devices.length / 3), devices.length)" :key="device.id" :is="getComponent(device.type)" :device="device" />
-</v-col> 
--->
-
 <template>
   <v-layout class="rounded rounded-md">
     <v-main>

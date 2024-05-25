@@ -37,5 +37,5 @@ export const useAutomationStore = defineStore('Automation', () => {
         await getAll()
         return Object.assign(new Automation(), result)
     }
-    return {Automations, typeIdMap, addAutomation, modify, get, removeAutomation, getAll, runAction}
+    return {automations, typeIdMap, addAutomation, modify, get, removeAutomation, getAll, runAction}
 });
