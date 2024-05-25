@@ -57,10 +57,8 @@
 </DeviceCard>
 
 <v-snackbar v-model="snackbar" vertical color="error" variant="tonal">
-  <div class="text-subtitle-1 pb-2">Action failed</div>
-
-  <p>please try again</p>
-
+  <div class="text-subtitle-1 pb-2">{{ errorTitle }}</div>
+  <p>{{ errorMessage }}</p>
 </v-snackbar>
 </template>
 
@@ -82,7 +80,15 @@ const validFanSpeeds = ["auto", "25", "50", "75", "100"];
 const minTemp = 18;
 const maxTemp = 38;
 const validVSwings = ["auto", "22", "45", "67", "90"];
-const selectedMode = ref('cool')
+const selectedMode = ref("cool")
+const errorTitle = ref("Error");
+const errorMessage = ref("Please try again.");
+
+function handleError(title, body){
+  errorTitle.value = title;
+  errorMessage.value = body;
+  snackbar.value = true;
+}
 
 async function setMode(){
   let response = await DeviceApi.runAction(props.device["id"], "setMode", selectedMode.value )
@@ -91,20 +97,26 @@ async function setMode(){
 
 async function incrementTemp() {
   // Usamos [] ya que la propiedad "state" no esta declarada explicitamente en el codigo (llega de la api!!!)
-  const currentTemp = props.device["state"]["temperature"];
+  let currentTemp = props.device["state"]["temperature"];
   if (currentTemp < maxTemp) {
-    let response = await DeviceApi.runAction(props.device["id"], "setTemperature", ++currentTemp);
-    props.device["state"]["temperature"] = response ? currentTemp: response;
-    handleError(response)
+    try {
+      let response = await DeviceApi.runAction(props.device["id"], "setTemperature", ++currentTemp);
+      props.device["state"]["temperature"] = response ? currentTemp: response;
+    } catch(error){
+      handleError("Couldn't increase temperature", "Please try again.")
+    } 
   }
 }
 
 async function decrementTemp(){
   let currentTemp = props.device["state"]["temperature"];
-  if (currentTemp > minTemp) {
-    let response = await DeviceApi.runAction(props.device["id"], "setTemperature", --currentTemp);
-    props.device["state"]["temperature"] = response ? currentTemp: response;
-    handleError(response)
+  try {
+    if (currentTemp > minTemp) {
+      let response = await DeviceApi.runAction(props.device["id"], "setTemperature", --currentTemp);
+      props.device["state"]["temperature"] = response ? currentTemp: response;
+    }
+  } catch(error){
+    handleError("Couldn't decrease temperature", "Please try again.");
   }
 }
 
@@ -112,10 +124,13 @@ async function incrementFanSpeed(){
   const currentFanSpeed = props.device["state"]["fanSpeed"];
   const currentIndex = validFanSpeeds.indexOf(currentFanSpeed);
   if (currentIndex < validFanSpeeds.length - 1) {
-    const newFanSpeed = validFanSpeeds[currentIndex + 1];
-    let response = await DeviceApi.runAction(props.device["id"], "setFanSpeed", newFanSpeed);
-    props.device["state"]["fanSpeed"] = response ? newFanSpeed: response;
-    handleError(response)
+    try {
+      const newFanSpeed = validFanSpeeds[currentIndex + 1];
+      let response = await DeviceApi.runAction(props.device["id"], "setFanSpeed", newFanSpeed);
+      props.device["state"]["fanSpeed"] = response ? newFanSpeed: response;
+    } catch(error){
+      handleError("Couldn't increase fan speed", "Please try again.")
+    }
   }
 }
 
@@ -123,10 +138,13 @@ async function decrementFanSpeed(){
   const currentFanSpeed = props.device["state"]["fanSpeed"];
   const currentIndex = validFanSpeeds.indexOf(currentFanSpeed);
   if (currentIndex > 0) {
-    const newFanSpeed = validFanSpeeds[currentIndex - 1];
-    let response = await DeviceApi.runAction(props.device["id"], "setFanSpeed", newFanSpeed);
-    props.device["state"]["fanSpeed"] = response ? newFanSpeed: response;
-    handleError(response)
+    try {
+      const newFanSpeed = validFanSpeeds[currentIndex - 1];
+      let response = await DeviceApi.runAction(props.device["id"], "setFanSpeed", newFanSpeed);
+      props.device["state"]["fanSpeed"] = response ? newFanSpeed: response;
+    } catch(error){
+      handleError("Couldn't decrease fan speed", "Please try again.")
+    }
   }
 }
 
@@ -134,10 +152,13 @@ async function incrementVSwing(){
   const currentVSwing = props.device["state"]["verticalSwing"];
   const currentIndex = validVSwings.indexOf(currentVSwing);
   if (currentIndex < validVSwings.length - 1) {
-    const newVSwing = validVSwings[currentIndex + 1];
-    let response = await DeviceApi.runAction(props.device["id"],"setVerticalSwing", newVSwing);
-    props.device["state"]["verticalSwing"] = response ? newVSwing: response;
-    handleError(response)
+    try{
+      const newVSwing = validVSwings[currentIndex + 1];
+      let response = await DeviceApi.runAction(props.device["id"],"setVerticalSwing", newVSwing);
+      props.device["state"]["verticalSwing"] = response ? newVSwing: response;
+    } catch(error){
+      handleError("Couldn't increase vertical swing", "Please try again.")
+    }
   }
 }
 
@@ -145,10 +166,13 @@ async function decrementVSwing(){
   const currentVSwing = props.device["state"]["verticalSwing"];
   const currentIndex = validVSwings.indexOf(currentVSwing);
   if (currentIndex > 0) {
-    const newVSwing = validVSwings[currentIndex - 1];
-    let response = await DeviceApi.runAction(props.device["id"],"setVerticalSwing", newVSwing);
-    props.device["state"]["verticalSwing"] = response ? newVSwing: response;
-    handleError(response)
+    try {
+      const newVSwing = validVSwings[currentIndex - 1];
+      let response = await DeviceApi.runAction(props.device["id"],"setVerticalSwing", newVSwing);
+      props.device["state"]["verticalSwing"] = response ? newVSwing: response;
+    } catch(error){
+      handleError("Couldn't decrease vertical swing", "Please try again.")
+    }
   }
 }
 
@@ -156,10 +180,13 @@ async function incrementHSwing(){
   const currentHSwing = props.device["state"]["horizontalSwing"];
   const currentIndex = validHSwings.indexOf(currentHSwing);
   if (currentIndex < validHSwings.length - 1) {
-    const newHSwing = validHSwings[currentIndex + 1];
-    let response = await DeviceApi.runAction(props.device["id"],"setHorizontalSwing", newHSwing);
-    props.device["state"]["horizontalSwing"] = response ? newHSwing: response;
-    handleError(response)
+    try {
+      const newHSwing = validHSwings[currentIndex + 1];
+      let response = await DeviceApi.runAction(props.device["id"],"setHorizontalSwing", newHSwing);
+      props.device["state"]["horizontalSwing"] = response ? newHSwing: response;
+    } catch(error){
+      handleError("Couldn't increase horizontal swing", "Please try again.")
+    }
   }
 }
 
@@ -167,19 +194,17 @@ async function decrementHSwing(){
   const currentHSwing = props.device["state"]["horizontalSwing"];
   const currentIndex = validHSwings.indexOf(currentHSwing);
   if (currentIndex > 0) {
-    const newHSwing = validHSwings[currentIndex - 1];
-    let response = await DeviceApi.runAction(props.device["id"],"setHorizontalSwing", newHSwing);
-    props.device["state"]["horizontalSwing"] = response ? newHSwing: response;
-    handleError(response)
+    try {
+      const newHSwing = validHSwings[currentIndex - 1];
+      let response = await DeviceApi.runAction(props.device["id"],"setHorizontalSwing", newHSwing);
+      props.device["state"]["horizontalSwing"] = response ? newHSwing: response;
+    } catch(error){
+      handleError("Couldn't decrease horizontal swing", "Please try again.")
+    }
   }
 }
 
-function handleError(response){
-  if(response){
-      console.log("NO SE PUDO ACTUALIZAR LA VELOCIDAD DEL VENTILADOR");
-      snackbar.value= true;
-    }
-}
+
 </script>
 
 
