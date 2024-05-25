@@ -18,6 +18,7 @@
             v-model="action.deviceId"
             outlined
             dense
+            @change="getDevices()"
           />
         </v-col>
         <v-col cols="5">
@@ -76,8 +77,7 @@
   import { DeviceApi } from '@/Api/DeviceApi';
   import { de } from 'vuetify/locale';
 
-  await deviceStore.getAll();
-
+  // const devices =  await deviceStore.getAll();
   const props = defineProps({
       visible: Boolean,
       // Define default automation object
@@ -87,9 +87,6 @@
         },
     });
 
- 
-
- 
   const LightActions = ['Select Light color', 'Select Light Brightness']
   const actions = ['Select Ac mode', 'Select Ac Temperature',  'Select Speaker Volume', 'Select Sprinkler Pump'] ;
   const emit = defineEmits(['save', 'close']);
@@ -113,15 +110,9 @@
   const deleteAction = (index) => {
     automation.value.actions.splice(index, 1);
   };
-
-  const deviceStore = useDeviceStoreApi();
-  const devices = ref([])
-    console.log('devices availables:', devices.value)
-    console.log(devices.value[0].name)
-
-    console.log('Devices:' + deviceStore.getAll());
-    devices.value = deviceStore.getAll()
-
+  const deviceStore = useDeviceStoreApi()
+  console.log('devices availables:', deviceStore.devices)
+    // console.log(deviceStore.devices[0].name)
   // Computed property to format devices for v-select
   const selectableDevices = computed(() => {
     return devices.value.map(device => ({
@@ -129,8 +120,14 @@
       name: device.name
     }));
   });
+  let devices;
+  function getDevices(){
+    devices = deviceStore.devices;
+  }
   // Data model for selected device
-  
+  onMounted(() => {
+    getDevices()
+  })
   const selectedDevice = ref(null);
   // Log the formatted devices for selection once they are computed and whenever they change
 

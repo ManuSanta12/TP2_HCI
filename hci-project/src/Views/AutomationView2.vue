@@ -34,12 +34,9 @@ import DialogComponent from '@/components/DialogComponent.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 
-const deviceStore = useDeviceStoreApi()
-
 const dialog = ref(false); 
 const store = useAutomationStoreApi();
 const automations = store.automations;
-await deviceStore.getAll();
 
 const automationToUse = ref({});
 
@@ -52,11 +49,11 @@ const saveAutomationHandler = (automation) => {
   closeMyDialog();
 
 };
+const deviceStore = useDeviceStoreApi();
 
-console.log('devices availables:', deviceStore.devices)
-console.log('name:', deviceStore.devices.name)
-
-
+onMounted(async () => {
+  await deviceStore.getAll()
+})
 const closeMyDialog = () =>{
   dialog.value = false;
 };
