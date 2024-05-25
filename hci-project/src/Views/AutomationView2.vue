@@ -19,7 +19,7 @@
         :visible="dialog"
         :automation="automationToUse"
         @update:visible="dialog = $event"
-        @save="saveAutomationHander($event)" 
+        @save="saveAutomationHandler($event)" 
         @close="closeMyDialog"
       />
     </v-dialog>
@@ -28,13 +28,12 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useAutomationStore } from '@/Stores/AutomationStore';
+import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import AutomationsCard from '@/components/AutomationsCard.vue';
 import DialogComponent from '@/components/DialogComponent.vue';
 
 const dialog = ref(false); 
-const store = useAutomationStore();
-const { saveAutomation } = store;
+const store = useAutomationStoreApi();
 const automations = store.automations;
 
 const automationToUse = ref({});
@@ -42,8 +41,9 @@ const automationToUse = ref({});
 const handleAddNew = () => {
   automationToUse.value = {}; // Reset or set to defaults for new automation
 };
-const saveAutomationHander = (automation) => {
-  saveAutomation(automation);
+
+const saveAutomationHandler = (automation) => {
+  store.addAutomation(automation);  
   closeMyDialog();
 };
 

@@ -31,3 +31,5 @@ class Automation{
         this.actions=actions; //Array de actions
     }
 }
+
+export {AutomationsApi, Automation}

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { AutomationsApi, Automation} from '@/Api/AutomationsApi'
 
-export const useAutomationStore = defineStore('automations', () => {
+export const useAutomationStoreApi = defineStore('automations', () => {
     const automations = ref([]);
     
     //Porque en DeviceStoreApi no ponen los controller? 
