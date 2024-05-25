@@ -1,5 +1,5 @@
 <template>
-<DeviceCard :device="device" @toggle="handleToggle">
+<DeviceCardSwitch :device="device" @toggle="handleToggle">
     <template #details>
     <v-slider
         prepend-icon="mdi-brightness-6"
@@ -16,7 +16,7 @@
         <v-color-picker width="250" hide-inputs canvas-height="150" v-model="device.state.color" @click="setColor" @change="setColor"></v-color-picker>
     </v-row>
     </template>
-</DeviceCard>
+</DeviceCardSwitch>
 </template>
 
 <script setup>

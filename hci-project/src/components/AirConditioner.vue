@@ -1,5 +1,5 @@
 <template>
-<DeviceCard :device="device" @toggle="handleToggle">
+<DeviceCardSwitch :device="device" @toggle="handleToggle">
     <template #details>
         <v-col class="d-flex justify-center pa-0">
             <v-card-actions class="pa-0">
@@ -54,7 +54,7 @@
         </v-col>
     </v-row>
     </template>
-</DeviceCard>
+</DeviceCardSwitch>
 </template>
 
 
