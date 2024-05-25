@@ -1,6 +1,6 @@
 // stores/Automations.js
 import { defineStore } from 'pinia'
-import {onMounted, ref} from 'vue'
+import {ref} from 'vue'
 import { Automation, AutomationsApi } from '@/Api/AutomationsApi';
 
 export const useAutomationStoreApi = defineStore('Automation', () => {

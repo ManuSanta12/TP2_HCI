@@ -2,11 +2,11 @@
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable">
-        <div class="pa-6" v-for="auto in automations" :key="auto.id">
+        <!-- <div class="pa-6" v-for="auto in automations" :key="auto.id">
           <AutomationsCard 
           :automation="auto" 
           />
-        </div>
+        </div> -->
       </v-row>
     </v-main>
     <v-dialog v-model="dialog" width="700" scrollable>
@@ -27,14 +27,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import AutomationsCard from '@/components/AutomationsCard.vue';
 import DialogComponent from '@/components/DialogComponent.vue';
+import { DeviceApi } from '@/Api/DeviceApi';
+import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+
+const deviceStore = useDeviceStoreApi()
 
 const dialog = ref(false); 
 const store = useAutomationStoreApi();
 const automations = store.automations;
+await deviceStore.getAll();
 
 const automationToUse = ref({});
 
@@ -45,7 +50,11 @@ const handleAddNew = () => {
 const saveAutomationHandler = (automation) => {
   store.addAutomation(automation);  
   closeMyDialog();
+
 };
+
+console.log('devices availables:', deviceStore.devices)
+console.log('name:', deviceStore.devices.name)
 
 
 const closeMyDialog = () =>{

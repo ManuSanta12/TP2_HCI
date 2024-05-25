@@ -25,11 +25,20 @@ class AutomationsApi{
 }
 
 class Automation{
-    constructor(id,name,actions){
-        //this.id=id;
+    constructor(id,name,actions=[]){
+        this.id=id;
         this.name = name;
         this.actions=actions; //Array de actions
     }
 }
 
-export {AutomationsApi, Automation}
+class Action{
+    constructor(device,actionName,params=[], meta){
+        this.deviceId=device.id;
+        this.actionName=actionName;
+        this.params=params;
+        this.meta = meta;
+    }
+}
+
+export {AutomationsApi, Automation, Action}

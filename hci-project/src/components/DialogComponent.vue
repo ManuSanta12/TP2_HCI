@@ -7,37 +7,47 @@
       <v-card-text>
         <v-text-field label="Name" v-model="automation.name" outlined dense />
         <v-divider class="my-4" />
-        <v-subheader>Starters</v-subheader>
-        <v-row v-for="(starter, index) in automation.starters" :key="index">
-          <v-col cols="7">
-            <v-select :items="days" v-model="starter.day" label="Day" outlined dense />
-          </v-col>
-          <v-col cols="3" class="d-flex align-baseline justify-center">
-              <input 
-                  name="starter_time" 
-                  type="time"
-                  class="time-input"
-                  placeholder="Start time"
-                  v-model="starter.time"
-              />
-          </v-col>
-          <v-col cols="2" class="d-flex align-baseline justify-center"> 
-            <v-btn icon="mdi-trash-can-outline" color="red lighten-1" @click="deleteStarter(index)"></v-btn>
-          </v-col>
-        </v-row>
-        <v-btn class="ml-3" small @click="addStarter">Add Starter</v-btn>
-        <v-divider class="my-4" />
         <v-subheader>Actions</v-subheader>
         <v-row v-for="(action, index) in automation.actions" :key="index">
-          <v-col cols="5">
-            <v-select :items="selectableDevices" label="Device" item-text="name" item-value="id" v-model="selectedDevice" outlined dense />
+          <v-col>
+              <v-select
+            :items="devices"
+            label="Device"
+            item-text="name"
+            item-value="id"
+            v-model="action.deviceId"
+            outlined
+            dense
+          />
+        </v-col>
+        <v-col cols="5">
+          <!-- <v-select
+            :items="action.availableActions"
+            v-model="action.type"
+            label="Action Type"
+            item-text="name"
+            item-value="name"
+            outlined
+            dense
+          /> -->
+        </v-col>
+          <!-- <v-col cols="4">
+            <v-select :items="devices" label="Device" item-text="name" item-value="id" v-model="selectedDevice" outlined dense />
+          </v-col> -->
+          <!-- light -->
+          <!-- <v-col v-if="selectedDevice.type.id == 'go46xmbqeomjrsjr'"> 
+            <v-select :items="LightActions" v-model="actionType" label="Action Type" outlined dense></v-select>
           </v-col>
-          <v-col cols="5">
-            <v-select :items="actions" v-model="action.type" label="Action Type" outlined dense />
+          <v-col v-if="action.option == 'Select Light Color'">
+            <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0"></v-color-picker>
+          </v-col>
+          <v-col v-if="action.option === 'Select Light Brightness'">
+            <v-list-item-title class="pa-0">Brightness</v-list-item-title>
+            <v-slider dense :max="100" :min="0" thumb-label></v-slider>
           </v-col>
           <v-col cols="2" class="d-flex align-baseline justify-center"> 
            <v-btn icon="mdi-trash-can-outline" color="red lighten-1" @click="deleteAction(index)"></v-btn>
-        </v-col>
+        </v-col> -->
         </v-row>
         <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
         <v-divider class="my-4" />
@@ -60,23 +70,28 @@
   </template>
   
   <script setup>
-  import { Automation } from '@/Api/AutomationsApi';
-import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
-  import { defineProps, defineEmits, ref, computed} from 'vue';
-  
+  import { Automation, Action } from '@/Api/AutomationsApi';
+  import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+  import { defineProps, defineEmits, ref, computed, onMounted} from 'vue';
+  import { DeviceApi } from '@/Api/DeviceApi';
+  import { de } from 'vuetify/locale';
+
+  await deviceStore.getAll();
+
   const props = defineProps({
       visible: Boolean,
       // Define default automation object
       defaultAutomation: {
           type: Object,
-          default: () => ({ id: '', name: '', starters: [], actions: [],  startersLength: 0, actionsLength: 0, showInHome: false })
+          default: () => ({name: '', actions: [{ }], showInHome: false })
         },
     });
-    
-  const days= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'];
 
-  const actions = ['Select Ac mode', 'Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'] ;
+ 
 
+ 
+  const LightActions = ['Select Light color', 'Select Light Brightness']
+  const actions = ['Select Ac mode', 'Select Ac Temperature',  'Select Speaker Volume', 'Select Sprinkler Pump'] ;
   const emit = defineEmits(['save', 'close']);
   
   // Use ref to store the current automation object
@@ -85,33 +100,37 @@ import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
   const handleSave = () => {
     const name = automation.value.name;
     const actions = automation.value.actions;
-    emit('save',  new Automation(name, actions));
-};
-  
-  const addStarter = () => {
-    automation.value.starters.push({ day: '', time: '' });
+    emit('save',  new Automation(automation.value.id, name, actions));
   };
   
   const addAction = () => {
-    console.log(automation.value.actions);
-    automation.value.actions.push({ type: '' });
+    console.log(selectedDevice.value);
+    console.log(props.action);
+  
+    automation.value.actions.push(new Action(selectedDevice.value, props.action.type, params,meta));
   };
-  const deleteStarter = (index) => {
-    automation.value.starters.splice(index, 1);
-  };
+
   const deleteAction = (index) => {
     automation.value.actions.splice(index, 1);
   };
+
   const deviceStore = useDeviceStoreApi();
-  const devices = deviceStore.devices;
+  const devices = ref([])
+    console.log('devices availables:', devices.value)
+    console.log(devices.value[0].name)
+
+    console.log('Devices:' + deviceStore.getAll());
+    devices.value = deviceStore.getAll()
+
   // Computed property to format devices for v-select
   const selectableDevices = computed(() => {
-    return devices.map(device => ({
+    return devices.value.map(device => ({
       id: device.id,  // Assuming each device has an 'id' and 'name'
       name: device.name
     }));
   });
   // Data model for selected device
+  
   const selectedDevice = ref(null);
   // Log the formatted devices for selection once they are computed and whenever they change
 
