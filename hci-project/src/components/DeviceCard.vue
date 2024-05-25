@@ -44,6 +44,7 @@ import { useErrorStore } from '@/Stores/ErrorStore';
 const props = defineProps({
   device: Object
 });
+
 const store = useDeviceStoreApi();
 const result = ref(null)
 const switchStatus = ref(props.device["state"]["status"] == "on");

@@ -33,6 +33,7 @@ class DeviceApi {
   
   static async runActionNoParams(id, actionName, controller) {
     const slug = `${id}/${actionName}`
+    console.log(DeviceApi.getUrl(slug))
     return await Api.putNoBody(DeviceApi.getUrl(slug), controller) 
   }
   
