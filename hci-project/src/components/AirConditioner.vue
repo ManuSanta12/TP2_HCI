@@ -11,10 +11,10 @@
     </template>
     <template #expansion-panel>
         <div class="button-container-row ">
-          <v-btn-toggle v-model="selectedMode" @click="setMode">
-            <v-btn value="cool">Cool</v-btn>
-            <v-btn value="fan">Fan</v-btn>
-            <v-btn value="heat">Heat</v-btn>
+          <v-btn-toggle v-model="selectedMode">
+            <v-btn value="cool" @click="setMode('cool')">Cool</v-btn>
+            <v-btn value="fan" @click="setMode('fan')">Fan</v-btn>
+            <v-btn value="heat" @click="setMode('heat')">Heat</v-btn>
           </v-btn-toggle>
         </div>
     <v-row class="align-center pa-0">
@@ -75,22 +75,17 @@ const validFanSpeeds = ["auto", "25", "50", "75", "100"];
 const minTemp = 18;
 const maxTemp = 38;
 const validVSwings = ["auto", "22", "45", "67", "90"];
-const selectedMode = ref("cool");
 
 const deviceStore = useDeviceStoreApi();
 const errorStore = useErrorStore();
+const selectedMode = computed(() => props.device["state"]["mode"]);;
 const temp = computed(() => props.device["state"]["temperature"]);
 
-async function setMode(){
+async function setMode(mode){
   try{
-    let response = await DeviceApi.runAction(props.device["id"], "setMode", selectedMode.value )
-    if(response){
-      props.device["state"]["mode"] = response ? selectedMode.value : props.device["state"]["mode"];
-      selectedMode.value = props.device["state"]["mode"];
-    }
+    let response = await deviceStore.runAction(props.device["id"], "setMode", mode)
   } catch(error) {
     errorStore.showError("Couldn't change mode", "Please try again.")
-    selectedMode.value = props.device["state"]["mode"];
   }
 }
 
