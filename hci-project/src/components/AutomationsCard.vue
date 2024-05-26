@@ -1,6 +1,6 @@
 <template>
   <v-row dense>
-    <v-col >
+    <v-col>
       <v-card class="pa-3" width="300" color='#E1E3E2'>
         <v-row class="px-3 pt-3">
           <v-col cols="10">

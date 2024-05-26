@@ -3,7 +3,7 @@
     <v-main >
       <v-container>
         <v-row class="scrollable" no-gutters>
-          <div class="pa-2" v-for="auto in store.automations" :key="auto.id">
+          <div class="pa-4" v-for="auto in store.automations" :key="auto.id">
             <AutomationsCard 
             :automation="auto" 
             />

@@ -1,16 +1,22 @@
 <template>
-  <v-app-bar title="Home"  color="#E4DCD1"/>
+  <!-- <v-app-bar title="Home" text="Automations and devices with 'Show in Home' enabled will be shown in this screen" color="#E4DCD1"/> -->
+    <v-app-bar color="#E4DCD1">
+    <v-app-bar-title>
+      Home
+      <span class="subtitle">Automations and devices with 'Show in Home' enabled will be shown in this screen</span>
+    </v-app-bar-title>
+  </v-app-bar>
   <v-layout color='#E5E8DD' class="rounded rounded-md">
     <v-main color='#E5E8DD'>
-      <v-row class="scrollable pa-2">
+      <v-row class="scrollable px-8 py-7">
         <component
           v-for="device in deviceStore.showInHomeDevices" :key="device.id"
           :is="getComponent(device.type.id)"
           :device="device"
           ></component>
       </v-row>
-      <v-row class="pa-4">
-        <div class="pa-2" v-for="auto in automationStore.automations" :key="auto.id">
+      <v-row class="px-10">
+        <div class="pa-4" v-for="auto in automationStore.automations" :key="auto.id">
           <AutomationsCard 
           :automation="auto" 
           />
@@ -48,3 +54,11 @@ function getComponent(type){
   }
 }
 </script>
+
+<style scoped>
+.subtitle {
+  font-style: italic;
+  font-size: 14px;
+  margin-left: 8px;
+}
+</style>
