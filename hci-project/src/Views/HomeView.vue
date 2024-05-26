@@ -4,15 +4,11 @@
     <v-main color='#E5E8DD'>
       <v-row class="pa-6 scrollable" >
         <v-row class="scrollable" no-gutters>
-            <v-col v-for="device in deviceStore.showInHomeDevices" :key="device.id" cols="12">
-              <p>{{ device }}</p>
-            </v-col>
-            <v-col v-for="device in deviceStore.showInHomeDevices" :key="device.id" cols="12">
             <component
+              v-for="device in deviceStore.showInHomeDevices" :key="device.id"
               :is="getComponent(device.type.id)"
               :device="device"
-            />
-            </v-col>
+            ></component>
         </v-row>
       </v-row>
     </v-main>
