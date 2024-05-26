@@ -77,13 +77,13 @@
                 step="1"
               ></v-slider>
             </v-col>
-            <v-col v-if="action.actionName == 'dispense'" v-model="action.params[0]">
+            <v-col v-if="action.actionName == 'dispense'" >
               <v-row>
                 <v-col cols="5" class="px-1">
                   <v-text-field class="my-0" label="Quantity" v-model="action.params[0]"></v-text-field>
                 </v-col>
                 <v-col cols="5" class="px-0">
-                  <v-select label="unit" :items="units" ></v-select>
+                  <v-select label="unit" :items="units" v-model="action.params[1]"></v-select>
                 </v-col>
               </v-row>
             </v-col>
@@ -171,10 +171,11 @@ function saveAutomation() {
   const newAutomation = new Automation(automation.value.name, actionsToSave);
   try{
     store.addAutomation(newAutomation);
+    dialog.value = false;
+    restoreAutomation();
   } catch (error) {
     errorStore.showError("Error: Failed to save automation", "Please try again.");
   }
-  dialog.value = false;
 } 
 
 const cancel = () => {
