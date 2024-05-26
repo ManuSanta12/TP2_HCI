@@ -30,13 +30,13 @@
                 :items="devices"
                 label="Device"
                 item-title="name"
+                item-value="id"
                 v-model="action.device"
                 outlined
                 dense
                 return-object
                 @change="(device) => getActionsForDevice(device.id, index)"
               />
-              <p>{{ action.device.id }}</p>
             </v-col>
             <v-col cols="5">
               <v-select
@@ -48,11 +48,11 @@
               />
             </v-col>
             <v-col v-if="action.actionName === 'Select Light Color'">
-              <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0"></v-color-picker>
+              <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0" v-model="action.params[0]"></v-color-picker>
             </v-col>
             <v-col v-if="action.actionName === 'Select Light Brightness'">
               <v-list-item-title class="pa-0">Brightness</v-list-item-title>
-              <v-slider dense :max="100" :min="0" thumb-label></v-slider>
+              <v-slider dense :max="100" :min="0" thumb-label v-model="action.params[0]"></v-slider>
             </v-col>
           </v-row>
           <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
@@ -99,10 +99,10 @@ const automation = ref({
 });
 
 const actionsByDevice = ref({
-  'go46xmbqeomjrsjr': ['Select Light Color', 'Select Light Brightness'],
-  'c89b94e8581855bc': ['Speaker'],
-  'dbrlsh7o5sn8ur4i': ['Sprinkler'],
-  'li6cbv5sdlatti0j': ['AC']
+  'go46xmbqeomjrsjr': ['Select Light Color', 'Select Light Brightness','Turn on', 'Turn off'],
+  'c89b94e8581855bc': ['Set volume', 'Play song', 'Pause song', 'Skip song'],
+  'dbrlsh7o5sn8ur4i': ['pump water'],
+  'li6cbv5sdlatti0j': ['set temperature', 'set mode', 'set fan speed', 'turn on', 'turn off', 'set v swing', 'set h swing']
 });
 
 function saveAutomation() {
