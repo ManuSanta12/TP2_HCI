@@ -99,7 +99,7 @@ async function saveDevice(){
     let response = await store.addDevice(device);
     dialog.value = false;
   } catch (error) {
-    errorStore.showError("Couldn't add the device", error.message);
+    errorStore.showError("Couldn't add the device", "Please try again");
   }
 }
 
