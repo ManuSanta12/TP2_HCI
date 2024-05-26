@@ -47,9 +47,9 @@ const automationName = computed(() => props.automation["name"] || 'Unknown Devic
 async function executeAutomation() {
   try {
     await automationStore.executeAutomation(props.automation.id);
-    errorStore.showSuccess("Automation executed", `${automation["name"]} was executed successfully.`);
+    errorStore.showSuccess("Automation executed", `${props.automation["name"]} was executed successfully.`);
   } catch (error) {
-    errorStore.showError("Couldn't execute automation", "Please try again.");
+    errorStore.showError(`Couldn't execute ${props.automation["name"]}`, "Please try again.");
   }
 }
 
