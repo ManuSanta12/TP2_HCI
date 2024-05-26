@@ -7,37 +7,35 @@
       <v-card-text>
         <v-text-field label="Name" v-model="automation.name" outlined dense />
         <v-divider class="my-4" />
-        <v-subheader>Starters</v-subheader>
-        <v-row v-for="(starter, index) in automation.starters" :key="index">
-          <v-col cols="7">
-            <v-select :items="days" v-model="starter.day" label="Day" outlined dense />
-          </v-col>
-          <v-col cols="3" class="d-flex align-baseline justify-center">
-              <input 
-                  name="starter_time" 
-                  type="time"
-                  class="time-input"
-                  placeholder="Start time"
-                  v-model="starter.time"
-              />
-          </v-col>
-          <v-col cols="2" class="d-flex align-baseline justify-center"> 
-            <v-btn icon="mdi-trash-can-outline" color="red lighten-1" @click="deleteStarter(index)"></v-btn>
-          </v-col>
-        </v-row>
-        <v-btn class="ml-3" small @click="addStarter">Add Starter</v-btn>
-        <v-divider class="my-4" />
         <v-subheader>Actions</v-subheader>
         <v-row v-for="(action, index) in automation.actions" :key="index">
-          <v-col cols="5">
-            <v-select :items="selectableDevices" label="Device" item-text="name" item-value="id" v-model="selectedDevice" outlined dense />
-          </v-col>
-          <v-col cols="5">
-            <v-select :items="actions" v-model="action.type" label="Action Type" outlined dense />
-          </v-col>
-          <v-col cols="2" class="d-flex align-baseline justify-center"> 
-           <v-btn icon="mdi-trash-can-outline" color="red lighten-1" @click="deleteAction(index)"></v-btn>
+          <v-col>
+              <v-select
+                :items="devices"
+                label="Device"
+                item-title="name"
+                item-value="id"
+                v-model="action.deviceId"
+                outlined
+                dense
+                return-object
+                @change="getDevices()"
+              />
         </v-col>
+        <v-col cols="5">
+           <!-- <v-select
+            :items="actionsId"
+            v-model="action.type"
+            label="Action Type"
+            item-text="name"
+            item-value="type"
+            outlined
+            dense
+            return-object
+            @change="getActionsFromId(action.deviceId)"
+          />  -->
+        </v-col>
+        
         </v-row>
         <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
         <v-divider class="my-4" />
@@ -60,71 +58,80 @@
   </template>
   
   <script setup>
+  import { Automation, Action } from '@/Api/AutomationsApi';
   import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
-  import { defineProps, defineEmits, ref, computed} from 'vue';
-  
+  import { defineProps, defineEmits, ref, computed, onMounted} from 'vue';
+  import { DeviceApi } from '@/Api/DeviceApi';
+  import { de } from 'vuetify/locale';
+  let devices;
   const props = defineProps({
       visible: Boolean,
       // Define default automation object
-      defaultAutomation: {
+      automation: {
           type: Object,
-          default: () => ({ id: '', name: '', starters: [], actions: [],  startersLength: 0, actionsLength: 0, showInHome: false })
+          default: () => ({name: '', actions: [{  }], showInHome: false })
         },
     });
+ const automation = ref({
+    name: '',
+    actions: [ {deviceId: '', actionName: '', params: []}],
+    showInHome: false
+ })
     
-  const days= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday'];
-
-  const actions = ['Select Ac mode', 'Select Ac Temperature', 'Select Light color', 'Select Light Brightness', 'Select Speaker Volume', 'Select Sprinkler Pump'] ;
-
+  const actions = ['Select Ac mode', 'Select Ac Temperature',  'Select Speaker Volume', 'Select Sprinkler Pump'] ;
   const emit = defineEmits(['save', 'close']);
   
   // Use ref to store the current automation object
   const automation = ref(props.defaultAutomation);
-  
+ 
   const handleSave = () => {
-  emit('save',  {
-    ...automation.value,
-    startersLength: automation.value.starters.length,
-    actionsLength: automation.value.actions.length
-  });
-
-};
-  
-  const addStarter = () => {
-    automation.value.starters.push({ day: '', time: '' });
+    const name = automation.value.name;
+    const actions = automation.value.actions;
   };
   
   const addAction = () => {
-    automation.value.actions.push({ type: '' });
+    // console.log(selectedDevice.value);
+    // console.log(props.action);
+  
+    automation.value.actions.push(new Automation(automation.name, automation.actions, params,meta));
   };
-  const deleteStarter = (index) => {
-    automation.value.starters.splice(index, 1);
-  };
+
   const deleteAction = (index) => {
     automation.value.actions.splice(index, 1);
   };
-  const deviceStore = useDeviceStoreApi();
-  const devices = deviceStore.devices;
-  // Computed property to format devices for v-select
-  const selectableDevices = computed(() => {
-    return devices.map(device => ({
-      id: device.id,  // Assuming each device has an 'id' and 'name'
-      name: device.name
+  const deviceStore = useDeviceStoreApi()
+
+  function getDevices(){
+    devices = deviceStore.devices;
+    console.log('devices availables:', devices)
+  }
+  let actionsId 
+  function getActionsFromId(id){
+    console.log('ID', id)
+    switch (id){
+      case "go46xmbqeomjrsjr": 
+        actionsId = ['Select Light color', 'Select Light Brightness'];
+        break;
+    }
+    // actionsId = deviceStore.devices.map(device => ({
+
+    // }))
+    
+  }
+  function test() {
+    const test = deviceStore.devices.map(device => ({
+    id: device.id,
+    name: device.name
     }));
-  });
+    console.log('actions', automation.actions)
+  }
   // Data model for selected device
+  onMounted(() => {
+    getDevices()
+    test()
+  })
   const selectedDevice = ref(null);
   // Log the formatted devices for selection once they are computed and whenever they change
 
 </script>
-<style>
-.time-input {
-  font-size: 1.4em; /* Larger text size */
-  padding: 10px 20px; /* Larger padding for better touch interaction */
-  border: 2px solid #ccc; 
-  border-radius: 5px; /* Rounded corners for aesthetic */
-  width: 100%; /* Full width of the column, adjust as needed */
-  max-width: 200px; /* Maximum width, adjust based on your layout */
-  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
-}
-</style>
+

@@ -60,8 +60,8 @@ class Device {
     this.meta = meta;
   }
   
-  // toString(){
-  //   return JSON.stringtify(this, null, 2)
-  // }
+  toString(){
+    return this.name
+  }
 }
 export { DeviceApi, Device }

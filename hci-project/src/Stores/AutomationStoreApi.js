@@ -1,42 +1,37 @@
+// stores/Automations.js
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { AutomationsApi, Automation} from '@/Api/AutomationsApi'
+import {ref} from 'vue'
+import { Automation, AutomationsApi } from '@/Api/AutomationsApi';
 
-export const useAutomationStore = defineStore('automations', () => {
+export const useAutomationStoreApi = defineStore('Automation', () => {
     const automations = ref([]);
-    
-    //Porque en DeviceStoreApi no ponen los controller? 
-    async function addAutomation(automation, controller = null) {
-        const result = await AutomationsApi.add(automation, controller);
-        await getAll(controller);
-        return Object.assign(new Automation(), result);
-    }
 
-    async function modifyAutomation(automation, controller = null) {
-        const result = await AutomationsApi.modify(automation.id, automation, controller);
-        await getAll(controller);
-        return Object.assign(new Automation(), result);
+    async function addAutomation(Automation) {
+        const result = await AutomationsApi.add(Automation)
+        await getAll()
+        return Object.assign(new Automation(), result)
     }
-
-    async function removeAutomation(id, controller = null) {
-        const result = await AutomationsApi.remove(id, controller);
-        await getAll(controller);
-        return result;
+    async function modifyAutomation(Automation) {
+        const result = await AutomationsApi.modify(Automation)
+        await getAll()
+        return Object.assign(new Automation(), result)
     }
-
-    async function getAutomation(id, controller = null) {
-        const result = await AutomationsApi.get(id, controller);
-        await getAll(controller);
-        return Object.assign(new Automation(), result);
+    async function removeAutomation(id) {
+        const result =  await AutomationsApi.remove(id)
+        await getAll()
+        return result
     }
-
+    async function getAutomation(id) {
+        const result = await AutomationsApi.get(id)
+        await getAll()
+        return Object.assign(new Automation(), result)
+    }
     async function getAll(controller = null) {
         let result = await AutomationsApi.getAll(controller);
-        result = result.map((automation) => Object.assign(new Automation(), automation));
-        automations.value = result;
-        return result;
+        result = result.map((Automation) => Object.assign(new Automation(), Automation));
+        automations.value = result
+        return result
     }
-
     async function executeAutomation(id, controller = null) {
         const result = await AutomationsApi.execute(id, controller);
         await getAll(controller);

@@ -48,6 +48,7 @@ export const useDeviceStoreApi = defineStore('device', () => {
         showInHomeDevices.value = newShowInHomeDevices
         return result
     }
+    
     async function runAction(id, actionName, data = null) {
         const result = await DeviceApi.runAction(id, actionName, data)
         console.log("se ejecuto la accion", actionName, "con data", data, "y resultado", result)
