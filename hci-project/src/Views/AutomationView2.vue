@@ -41,7 +41,7 @@
                 @change="(device) => {getActionsForDevice(device.id, index)}"
               />
             </v-col>
-            <v-col cols="5">
+            <v-col cols="3">
               <v-select
                 :items="actionsByDevice[action.device?.type?.id] || []"
                 label="Action Type"
@@ -50,12 +50,70 @@
                 dense
               />
             </v-col>
-            <v-col v-if="action.actionName === 'Select Light Color'">
-              <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0" v-model="action.params[0]"></v-color-picker>
+            <v-col v-if="action.actionName === 'setColor'">
+              <v-color-picker hide-inputs color-picker-controls-padding="0" v-model="action.params[0]" ></v-color-picker>
             </v-col>
             <v-col v-if="action.actionName === 'setBrightness'">
               <v-list-item-title class="pa-0">Brightness</v-list-item-title>
               <v-slider dense :max="100" :min="0" thumb-label v-model="action.params[0]"></v-slider>
+            </v-col>
+            <v-col v-if="action.actionName === 'setVolume'" class="align-center">
+              <v-slider dense :max="10" :min="0" thumb-label v-model="action.params[0]"></v-slider>            
+            </v-col>
+            <v-col v-if="action.actionName === 'setGenre'" class="align-center">
+              <v-select dense solo hide-details outlined compact
+              v-model="action.params[0]"
+              :items="genres"
+              label="Pick Genre"
+      ></v-select>         
+            </v-col>
+            <v-col v-if="action.actionName == 'setTemperature'">
+              <v-slider 
+                dense 
+                :max="38" 
+                :min="18" 
+                thumb-label 
+                v-model="action.params[0]"
+                step="1"
+              ></v-slider>
+            </v-col>
+            <v-col v-if="action.actionName == 'dispense'" v-model="action.params[0]">
+              <v-row>
+                <v-col cols="5" class="px-1">
+                  <v-text-field class="my-0" label="Quantity" v-model="action.params[0]"></v-text-field>
+                </v-col>
+                <v-col cols="5" class="px-0">
+                  <v-select label="unit" :items="units" ></v-select>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col v-if="action.actionName == 'setMode'">
+              <v-btn-toggle v-model="action.params[0]">
+              <v-btn value="cool">Cool</v-btn>
+              <v-btn value="fan">Fan</v-btn>
+              <v-btn value="heat">Heat</v-btn>
+            </v-btn-toggle>
+            </v-col>
+            <v-col v-if="action.actionName == 'setFanSpeed'">
+              <v-select dense solo hide-details outlined compact
+              v-model="action.params[0]"
+              :items="fanSpeeds"
+              label="Pick Speed"> 
+              </v-select>
+            </v-col>
+            <v-col v-if="action.actionName == 'setVerticalSwing'">
+              <v-select dense solo hide-details outlined compact
+                v-model="action.params[0]"
+                :items="VSwings"
+                label="Pick V-Swing"> 
+              </v-select>
+            </v-col>
+            <v-col v-if="action.actionName == 'setHorizontalSwing'">
+              <v-select dense solo hide-details outlined compact
+                v-model="action.params[0]"
+                :items="HSwings"
+                label="Pick H-Swing"> 
+              </v-select>
             </v-col>
           </v-row>
           <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
@@ -89,12 +147,16 @@ import { Automation, Action } from '@/Api/AutomationsApi';
 
 const dialog = ref(false); 
 const store = useAutomationStoreApi();
+const genres = ['classical', 'country', 'dance', 'latina', 'pop', 'rock'];
+const units = [ "ml","cl","dl","l","dal","hl","kl"]
+const fanSpeeds = ["auto", "25", "50", "75", "100"];
+const VSwings = ["auto", "22", "45", "67", "90"];
+const HSwings = ["auto", "-90", "-45", "0", "45", "90"];
 
 //const automations = store.automations;
 const devices = ref([]);
 const deviceStore = useDeviceStoreApi();
 getAllAutomations()
-const actions = ['Select Light Color', 'Select Light Brightness'];
 const result = ref(null)
 const automation = ref({
   name: '',
@@ -111,7 +173,7 @@ const actionsByDevice = ref({
 
 function saveAutomation() {
   const actionsToSave = automation.value.actions.map(action => new Action({id: action.device.id}, action.actionName, action.params));
-  const newAutomation = new Automation(automation.value.name, actionsToSave);
+  const newAutomation = new Automation(automation.value.name, actionsToSave,automation.value.showInHome);
   console.log('newAutomation:',newAutomation);
   store.addAutomation(newAutomation);
   console.log('store',store.automations);
@@ -119,7 +181,7 @@ function saveAutomation() {
 } 
 
 const addAction = () => {
-  automation.value.actions.push({ device: {}, actionName: '', params: [] });
+  automation.value.actions.push({ device: null, actionName: '', params: [] });
 }
 
 const deleteAction = (index) => {
