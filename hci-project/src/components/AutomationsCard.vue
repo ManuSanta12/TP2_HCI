@@ -1,14 +1,14 @@
 <template>
   <v-row dense>
     <v-col >
-      <v-card class="pa-2" width="300">
+      <v-card class="pa-2" width="300" color='#E1E3E2'>
         <v-row class="px-3 pt-3">
           <v-col cols="10">
             <v-card-title class="pa-0 text-h8">{{ automationName }}</v-card-title>
           </v-col>
           <v-col cols="2" class="d-flex justify-end pa-0">
             <v-btn icon :color="iconColor" @click="togglePlay" v-model="isOn">
-              <v-icon>{{ icon }}</v-icon>
+              <v-icon>mdi-play</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -55,9 +55,6 @@ async function deleteAutomation() {
 }
 
 const isOn = ref(false);
-let icon = 'mdi-pause';
-let iconColor = 'red';
-
 
 const togglePlay = () => {
   isOn.value = !isOn.value;
