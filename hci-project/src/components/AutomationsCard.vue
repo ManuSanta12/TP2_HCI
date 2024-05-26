@@ -19,11 +19,6 @@
             <v-expansion-panel-content>
                 <v-expansion-panel-text>
                     <v-row no-gutters>
-                      <v-checkbox
-                      v-model="automation.showInHome"
-                      label="Show in home"
-                      class="my-4"
-                      ></v-checkbox>
                       <v-col >
                           <v-btn block variant="tonal" color="error" prepend-icon="mdi-trash-can-outline" @click="deleteAutomation">Delete</v-btn>
                       </v-col>
