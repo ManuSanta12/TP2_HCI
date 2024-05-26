@@ -5,6 +5,7 @@ import {Device, DeviceApi} from '@/Api/DeviceApi'
 
 export const useDeviceStoreApi = defineStore('device', () => {
     const devices = ref([]);
+    const showInHomeDevices = ref([]);
     const typeIdMap = {
         'Speaker': "c89b94e8581855bc",
         'Sprinkler': "dbrlsh7o5sn8ur4i",
@@ -34,8 +35,17 @@ export const useDeviceStoreApi = defineStore('device', () => {
     }
     async function getAll(controller = null) {
         let result = await DeviceApi.getAll(controller);
-        result = result.map((device) => Object.assign(new Device(), device));
-        devices.value = result
+        let newDevices = [];
+        let newShowInHomeDevices = [];
+        for (let i = 0; i < result.length; i++) {
+          let device = result[i];
+          newDevices.push(Object.assign(new Device(), device));
+          if(device.meta && device.meta.showInHome) {
+            newShowInHomeDevices.push(Object.assign(new Device(), device));
+          }
+        }
+        devices.value = newDevices
+        showInHomeDevices.value = newShowInHomeDevices
         return result
     }
     async function runAction(id, actionName, data = null) {
@@ -60,7 +70,7 @@ export const useDeviceStoreApi = defineStore('device', () => {
         await getAll()
         return result
     }
-    return {devices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction, runActionNoParams, runActionArray, setShowInHome}
+    return {devices, showInHomeDevices, typeIdMap, addDevice, modify, get, removeDevice, getAll, runAction, runActionNoParams, runActionArray, setShowInHome}
 });
 
 // // stores/devices.js

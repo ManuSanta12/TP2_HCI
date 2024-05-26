@@ -12,7 +12,7 @@
               :is="getComponent(device.type.id)"
               :device="device"
             />
-          </v-col>
+            </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -78,7 +78,7 @@ const deviceTypes = [
 ];
 const typeIdMap = store.typeIdMap;
 
-getAllDevices()
+getAllDevices();
 
 const newDevice = ref({
   name: '',
@@ -94,8 +94,8 @@ const saveDevice = () => {
   const name = newDevice.value.name;
   const deviceType = newDevice.value.type;
   const typeId = getDevId(deviceType);
-  const deviceA = new Device(undefined, name, {id: typeId}, {});
-  store.addDevice(deviceA)
+  const device = new Device(undefined, name, {id: typeId}, {showInHome: newDevice.value.showInHome});
+  store.addDevice(device)
   dialog.value = false;
 };
 

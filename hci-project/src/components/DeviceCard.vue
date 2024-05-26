@@ -43,10 +43,10 @@ const props = defineProps({
   device: Object
 });
 
-onMounted(async () => {
-  console.log(props.device);
-  await deviceStore.setShowInHome(props.device["id"], props.device["name"], false);
-});
+// onMounted(async () => {
+//   console.log(props.device);
+//   await deviceStore.setShowInHome(props.device["id"], props.device["name"], false);
+// });
 
 const deviceStore = useDeviceStoreApi();
 const errorStore = useErrorStore();
@@ -71,11 +71,6 @@ async function deleteDevice() {
     errorStore.showError("Couldn't delete device", "Please try again.");
   }
 }
-
-// TODO por que????????????
-// onMounted(async () => {
-//   await store.getAll();
-// });
 </script>
 
 <style scoped>

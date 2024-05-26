@@ -6,7 +6,7 @@ class DeviceApi {
   }
 
   static async add(device, controller) {
-    return await Api.post(DeviceApi.getUrl(),device, controller);
+    return await Api.post(DeviceApi.getUrl(), device, controller);
   }
 
   static async remove(id, controller) {
@@ -58,7 +58,6 @@ class Device {
     this.name = name;
     this.type = type;
     this.meta = meta;
-    // this.state = state;
   }
   
   // toString(){

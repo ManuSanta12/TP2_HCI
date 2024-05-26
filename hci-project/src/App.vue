@@ -7,7 +7,6 @@
           <div class="text-subtitle-1 pb-2">{{ errorTitle }}</div>
           <p> {{ errorBody }} </p> 
         </v-snackbar>
-        <v-btn @click="showWarning">SHOW WARNING</v-btn>
       </v-main>
       
     </v-app>
@@ -27,10 +26,6 @@ const snackbar = computed({
 
 const errorTitle = computed(() => errorStore.errorTitle);
 const errorBody = computed(() => errorStore.errorBody);
-
-function showWarning(){
-  errorStore.showError("ERROR", "try again");
-}
 </script> 
 
 

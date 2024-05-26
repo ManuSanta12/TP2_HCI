@@ -4,15 +4,15 @@
     <v-main color='#E5E8DD'>
       <v-row class="pa-6 scrollable" >
         <v-row class="scrollable" no-gutters>
-            <v-col v-for="device in deviceStore.devices" :key="device.id" cols="12">
+            <v-col v-for="device in deviceStore.showInHomeDevices" :key="device.id" cols="12">
               <p>{{ device }}</p>
             </v-col>
-            <v-col v-for="device in store.devices" :key="device.id" cols="12" v-if="device['meta']['ShowInHome']">
+            <v-col v-for="device in deviceStore.showInHomeDevices" :key="device.id" cols="12">
             <component
               :is="getComponent(device.type.id)"
               :device="device"
             />
-          </v-col>
+            </v-col>
         </v-row>
       </v-row>
     </v-main>
@@ -21,7 +21,7 @@
 
 <script setup>
 
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import AirConditioner from '@/components/AirConditioner.vue';
 import Sprinkler from '@/components/Sprinkler.vue';
 import Speaker from '@/components/Speaker.vue';
@@ -30,13 +30,17 @@ import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 
 const deviceStore = useDeviceStoreApi();
 
-function getComponent(type) {
+onMounted(() => {
+  deviceStore.getAll();
+});
+
+function getComponent(type){
   switch (type) {
-    case 'Air Conditioner': return AirConditioner;
-    case 'Light Panel': return Light;
-    case 'Speaker': return Speaker;
-    case 'Sprinkler': return Sprinkler;
-    default: return 'div'; // Default or unknown type handler
+    case 'li6cbv5sdlatti0j': return AirConditioner;
+    case 'go46xmbqeomjrsjr': return Light;
+    case 'c89b94e8581855bc': return Speaker;
+    case 'dbrlsh7o5sn8ur4i': return Sprinkler;
+    default: return 'div';
   }
 }
 </script>
