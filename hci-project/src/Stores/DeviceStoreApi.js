@@ -16,7 +16,7 @@ export const useDeviceStoreApi = defineStore('device', () => {
     async function addDevice(device) {
         const result = await DeviceApi.add(device)
         await getAll()
-        return Object.assign(new Device(), result)
+        return result;
     }
     async function modify(device) {
         const result = await DeviceApi.modify(device)

@@ -7,12 +7,11 @@
             <v-col v-for="device in store.devices" :key="device.id" cols="12">
               <p>{{ device }}</p>
             </v-col>
-            <v-col v-for="device in store.devices" :key="device.id" cols="12">
             <component
+              v-for="device in store.devices" :key="device.id"
               :is="getComponent(device.type.id)"
               :device="device"
             />
-            </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -63,9 +62,11 @@ import Speaker from '@/components/Speaker.vue';
 import Light from '@/components/Light.vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { Device } from '@/Api/DeviceApi';
+import { useErrorStore } from '@/Stores/ErrorStore';
 
 // Data
 const store = useDeviceStoreApi();
+const errorStore = useErrorStore();
 
 const inputId = ref('')
 const inputAction = ref('')
@@ -87,17 +88,20 @@ const newDevice = ref({
 });
 
 const getDevId = (type) => typeIdMap[type] || null;
-
 const isDisabled = computed(() => newDevice.value.name.length < 3)
 
-const saveDevice = () => {
+async function saveDevice(){
   const name = newDevice.value.name;
   const deviceType = newDevice.value.type;
   const typeId = getDevId(deviceType);
-  const device = new Device(undefined, name, {id: typeId}, {showInHome: newDevice.value.showInHome});
-  store.addDevice(device)
-  dialog.value = false;
-};
+  const device = new Device(undefined, name, { id: typeId }, { showInHome: newDevice.value.showInHome });
+  try {
+    let response = await store.addDevice(device);
+    dialog.value = false;
+  } catch (error) {
+    errorStore.showError("Couldn't add the device", error.message);
+  }
+}
 
 const cancel = () => {
   dialog.value = false;
