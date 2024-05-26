@@ -9,7 +9,7 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
     async function addAutomation(Automation) {
         const result = await AutomationsApi.add(Automation)
         // automations.push(result)
-       await getAll()
+        await getAll()
         return result
     }
     async function modifyAutomation(Automation) {

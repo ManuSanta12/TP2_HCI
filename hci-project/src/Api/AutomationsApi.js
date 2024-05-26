@@ -20,7 +20,7 @@ class AutomationsApi{
     }
     static async execute(id, controller){
         const slug = `${id}/execute`;
-        return await Api.put(AutomationsApi.getUrl(slug), controller);
+        return await Api.putNoBody(AutomationsApi.getUrl(slug), controller);
     }
 }
 

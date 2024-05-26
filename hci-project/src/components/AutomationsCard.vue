@@ -7,7 +7,7 @@
             <v-card-title class="pa-0 text-h8">{{ automationName }}</v-card-title>
           </v-col>
           <v-col cols="2" class="d-flex justify-end pa-0">
-            <v-btn icon :color="iconColor" @click="togglePlay" v-model="isOn">
+            <v-btn icon :color="iconColor" @click="executeAutomation">
               <v-icon>mdi-play</v-icon>
             </v-btn>
           </v-col>
@@ -44,6 +44,15 @@ const props = defineProps({
 });
 const automationName = computed(() => props.automation["name"] || 'Unknown Device')
 
+async function executeAutomation() {
+  try {
+    const _result = await automationStore.executeAutomation(props.automation.id);
+    errorStore.showSuccess("Automation executed", `${automation["name"]} was executed successfully.`);
+  } catch (error) {
+    errorStore.showError("Couldn't execute automation", "Please try again.");
+  }
+}
+
 async function deleteAutomation() {
   try {
     const _result = await automationStore.removeAutomation(props.automation.id);
@@ -53,8 +62,6 @@ async function deleteAutomation() {
     errorStore.showError("Couldn't delete device", "Please try again.");
   }
 }
-
-const isOn = ref(false);
 
 const togglePlay = () => {
   isOn.value = !isOn.value;

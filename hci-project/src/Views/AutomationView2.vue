@@ -140,8 +140,10 @@ import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import AutomationsCard from '@/components/AutomationsCard.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { useErrorStore } from '@/Stores/ErrorStore';
 import { Automation, Action } from '@/Api/AutomationsApi';
 
+const errorStore = useErrorStore();
 const dialog = ref(false); 
 const store = useAutomationStoreApi();
 const genres = ['classical', 'country', 'dance', 'latina', 'pop', 'rock'];
@@ -170,11 +172,24 @@ const actionsByDevice = ref({
 function saveAutomation() {
   const actionsToSave = automation.value.actions.map(action => new Action({id: action.device.id}, action.actionName, action.params));
   const newAutomation = new Automation(automation.value.name, actionsToSave);
-  console.log('newAutomation:',newAutomation);
-  store.addAutomation(newAutomation);
-  console.log('store',store.automations);
+  try{
+    store.addAutomation(newAutomation);
+  } catch (error) {
+    errorStore.showError("Error: Failed to save automation", "Please try again.");
+  }
   dialog.value = false;
 } 
+
+const cancel = () => {
+  dialog.value = false;
+  restoreAutomation()
+};
+function restoreAutomation(){
+  automation.value = {
+  name: '',
+  actions: [{ device: null, actionName: '', params: [] }],
+  };
+}
 
 const addAction = () => {
   automation.value.actions.push({ device: null, actionName: '', params: [] });
@@ -198,9 +213,6 @@ onMounted(async () => {
   devices.value = deviceStore.devices;
 });
 
-// function setResult(r){
-//   result.value = JSON.stringify(r, null, 2)
-// }
 async function getAllAutomations() {
     try {
         controller.value = new AbortController()
@@ -211,9 +223,6 @@ async function getAllAutomations() {
       // setResult(e)
     }
 }
-const cancel = () => {
-  dialog.value = false;
-};
 </script>
 
 <style>
