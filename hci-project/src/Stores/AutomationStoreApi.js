@@ -8,8 +8,9 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
 
     async function addAutomation(Automation) {
         const result = await AutomationsApi.add(Automation)
-        await getAll()
-        return Object.assign(new Automation(), result)
+        // automations.push(result)
+       await getAll()
+        return result
     }
     async function modifyAutomation(Automation) {
         const result = await AutomationsApi.modify(Automation)
@@ -27,10 +28,25 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
         return Object.assign(new Automation(), result)
     }
     async function getAll(controller = null) {
+        // let result = await AutomationsApi.getAll(controller);
+        // result = result.map((Automation) => Object.assign(new Automation(), Automation));
+        // console.log('RESULT', result)
+        // automations.value = result
+        // return result
         let result = await AutomationsApi.getAll(controller);
-        result = result.map((Automation) => Object.assign(new Automation(), Automation));
-        automations.value = result
-        return result
+        let newAutomations = [];
+        // let newShowInHomeDevices = [];
+        for (let i = 0; i < result.length; i++) {
+         // newAutomations = result[i];
+         let automanu = result[i];
+          newAutomations.push(Object.assign(new Automation(), automanu));
+        //   if(device.meta && device.meta.showInHome) {
+        //     newShowInHomeDevices.push(Object.assign(new Device(), device));
+        //   }
+        }
+        automations.value = newAutomations
+        // showInHomeDevices.value = newShowInHomeDevices
+        return newAutomations
     }
     async function executeAutomation(id, controller = null) {
         const result = await AutomationsApi.execute(id, controller);

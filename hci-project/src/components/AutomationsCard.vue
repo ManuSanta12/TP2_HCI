@@ -4,7 +4,7 @@
       <v-card class="pa-2" width="300">
         <v-row class="px-3 pt-3">
           <v-col cols="10">
-            <v-card-title class="pa-0 text-h8">{{ automation.name }}</v-card-title>
+            <v-card-title class="pa-0 text-h8">{{ automationName }}</v-card-title>
           </v-col>
           <v-col cols="2" class="d-flex justify-end pa-0">
             <v-btn icon :color="iconColor" @click="togglePlay" v-model="isOn">
@@ -25,7 +25,7 @@
                       class="my-4"
                       ></v-checkbox>
                       <v-col >
-                          <v-btn block variant="tonal" color="error" prepend-icon="mdi-trash-can-outline" @click="deleteAuto(automation.id)">Delete</v-btn>
+                          <v-btn block variant="tonal" color="error" prepend-icon="mdi-trash-can-outline" @click="deleteAutomation">Delete</v-btn>
                       </v-col>
                     </v-row>
                   </v-expansion-panel-text>
@@ -39,21 +39,27 @@
 
 <script setup>
 import { defineEmits, ref } from 'vue'; 
-import { useAutomationStore } from '@/Stores/AutomationStore';
+import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 //import { openEditDialog } from '@/Views/AutomationView2.vue'; 
 
-const { removeAutomation} = useAutomationStore();
-
+const automationStore = useAutomationStoreApi();
+const errorStore = useErrorStore();
 
 const props = defineProps({
   automation: Object
 });
+const automationName = computed(() => props.automation["name"] || 'Unknown Device')
+// const showInHome = computed(() => props.automation["meta"]["showInHome"]);
 
-const deleteAuto = (id) =>{
-  console.log('auto id', id);
-  removeAutomation(id);
+async function deleteAutomation() {
+  try {
+    const _result = await automationStore.removeAutomation(props.automation.id);
+    // setResult(_result);
+    props.automation = null;
+  } catch (error) {
+    errorStore.showError("Couldn't delete device", "Please try again.");
+  }
 }
-
 
 const isOn = ref(false);
 let icon = 'mdi-pause';

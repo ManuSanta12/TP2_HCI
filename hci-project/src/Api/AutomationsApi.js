@@ -30,6 +30,9 @@ class Automation{
         this.actions=actions; //Array de actions
         this.meta=meta;
     }
+    toString(){
+        return JSON.stringtify(this, null, 2)
+      }
 }
 
 class Action{
@@ -40,4 +43,5 @@ class Action{
         this.meta = meta;
     }
 }
+
 export {AutomationsApi, Automation, Action}

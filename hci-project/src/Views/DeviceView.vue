@@ -5,7 +5,6 @@
       <v-container>
         <v-row class="scrollable" no-gutters>
             <v-col v-for="device in store.devices" :key="device.id" cols="12">
-              <p>{{ device }}</p>
             </v-col>
             <component
               v-for="device in store.devices" :key="device.id"
