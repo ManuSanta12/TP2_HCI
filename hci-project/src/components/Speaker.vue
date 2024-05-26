@@ -2,7 +2,7 @@
   <DeviceCard :device="device">
     <template #top-right-button>
       <v-col cols="2" class="d-flex justify-end pa-0">
-        <v-btn v-if="!isStopped" icon="mdi-stop" @click="stop"></v-btn>
+        <v-btn class="my-2" v-if="!isStopped" icon="mdi-stop" @click="stop"></v-btn>
       </v-col>
     </template>
     <template #details>

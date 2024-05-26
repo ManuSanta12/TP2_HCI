@@ -1,4 +1,3 @@
-// stores/Automations.js
 import { defineStore } from 'pinia'
 import {ref} from 'vue'
 import { Automation, AutomationsApi } from '@/Api/AutomationsApi';
@@ -8,7 +7,6 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
 
     async function addAutomation(Automation) {
         const result = await AutomationsApi.add(Automation)
-        // automations.push(result)
         await getAll()
         return result
     }
@@ -31,7 +29,6 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
         let result = await AutomationsApi.getAll(controller);
         let newAutomations = [];
         for (let i = 0; i < result.length; i++) {
-         // newAutomations = result[i];
          let automanu = result[i];
           newAutomations.push(Object.assign(new Automation(), automanu));
         }

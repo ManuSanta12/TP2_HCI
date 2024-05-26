@@ -1,7 +1,5 @@
 export { Api }
-//lo saque de un TP ver como se adapta a nuestra api
 class Api {
-
   static get baseUrl() {
     return "http://localhost:8080/api";
   }
@@ -10,7 +8,6 @@ class Api {
     return 60 * 1000;
   }
 
-  //TODO moidifique esta funcion para que lance exception si no es codigo entre 200 - 299
   static async fetch(url, init = {}, controller) {
     controller = controller || new AbortController()
     init.signal = controller.signal

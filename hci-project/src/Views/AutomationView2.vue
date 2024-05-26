@@ -149,7 +149,6 @@ const fanSpeeds = ["auto", "25", "50", "75", "100"];
 const VSwings = ["auto", "22", "45", "67", "90"];
 const HSwings = ["auto", "-90", "-45", "0", "45", "90"];
 
-//const automations = store.automations;
 const devices = ref([]);
 const deviceStore = useDeviceStoreApi();
 getAllAutomations()
@@ -218,21 +217,8 @@ async function getAllAutomations() {
         controller.value = new AbortController()
         const automations = await store.getAll(controller)
         controller.value = null
-        // setResult(automations)
     } catch (e) {
-      // setResult(e)
+
     }
 }
 </script>
-
-<style>
-.time-input {
-  font-size: 1.4em; /* Larger text size */
-  padding: 10px 20px; /* Larger padding for better touch interaction */
-  border: 2px solid #ccc; 
-  border-radius: 5px; /* Rounded corners for aesthetic */
-  width: 100%; /* Full width of the column, adjust as needed */
-  max-width: 200px; /* Maximum width, adjust based on your layout */
-  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
-}
-</style>

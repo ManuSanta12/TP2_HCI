@@ -2,7 +2,7 @@
   <DeviceCard :device="device">
     <template #top-right-button>
       <v-col cols="2" class="d-flex justify-end pa-0">
-        <v-switch inset color="green" class="small-switch" v-model="deviceStatus" @click="toggleDevice"></v-switch>
+        <v-switch inset color="#878C61" class="small-switch" v-model="deviceStatus" @click="toggleDevice"></v-switch>
       </v-col>
     </template>
     <template #details>

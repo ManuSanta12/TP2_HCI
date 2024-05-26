@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { defineEmits, ref , computed} from 'vue'; 
+import { ref , computed} from 'vue'; 
 import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import { useErrorStore } from '@/Stores/ErrorStore';
 const automationStore = useAutomationStoreApi();
@@ -58,7 +58,6 @@ async function executeAutomation() {
 async function deleteAutomation() {
   try {
     const _result = await automationStore.removeAutomation(props.automation.id);
-    // setResult(_result);
     props.automation = null;
   } catch (error) {
     errorStore.showError("Couldn't delete device", "Please try again.");

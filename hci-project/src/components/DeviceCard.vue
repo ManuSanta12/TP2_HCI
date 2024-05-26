@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
 import { useErrorStore } from '@/Stores/ErrorStore';
 
@@ -42,11 +42,6 @@ import { useErrorStore } from '@/Stores/ErrorStore';
 const props = defineProps({
   device: Object
 });
-
-// onMounted(async () => {
-//   console.log(props.device);
-//   await deviceStore.setShowInHome(props.device["id"], props.device["name"], false);
-// });
 
 const deviceStore = useDeviceStoreApi();
 const errorStore = useErrorStore();
