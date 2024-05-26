@@ -2,8 +2,8 @@
   <v-layout class="rounded rounded-md"> 
     <v-main >
       <v-container>
-        <v-row class="pa-6 scrollable" no-gutters>
-          <div class="pa-6" v-for="auto in store.automations" :key="auto.id">
+        <v-row class="scrollable" no-gutters>
+          <div class="pa-2" v-for="auto in store.automations" :key="auto.id">
             <AutomationsCard 
             :automation="auto" 
             />
@@ -115,14 +115,11 @@
                 label="Pick H-Swing"> 
               </v-select>
             </v-col>
-          </v-row>
-          <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
-          <v-divider class="my-4" />
-          <v-row>
-            <v-col cols="10" class="d-flex align-center">
-              <v-list-item class="pa-0 text-subtitle-1">Show in home</v-list-item>
+            <v-col cols="1">
+              <v-btn icon="mdi-trash-can" color="error" @click="deleteAction(index)"></v-btn>
             </v-col>
           </v-row>
+          <v-btn small class="ml-3" @click="addAction">Add Action</v-btn>
         </v-card-text>
         <v-divider />
         <v-card-actions>
