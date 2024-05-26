@@ -125,14 +125,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn variant="tonal" color="error" text @click="cancel">Cancel</v-btn>
-          <v-btn variant="tonal" color="primary" text @click="saveAutomation">Save</v-btn>
+          <v-btn variant="tonal" color="primary" text @click="saveAutomation" :disabled="isDisabled">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import AutomationsCard from '@/components/AutomationsCard.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
@@ -163,7 +163,7 @@ const actionsByDevice = ref({
   'go46xmbqeomjrsjr': ['setColor', 'setBrightness','turnOn', 'turnOff'],
   'c89b94e8581855bc': ['setVolume', 'play', 'pause', 'stop', 'previousSong', 'nextSong', 'setGenre'],
   'dbrlsh7o5sn8ur4i': ['open', 'close', 'dispense'],
-  'li6cbv5sdlatti0j': ['setTemperature', 'setMode', 'setFanSpeed', 'turnOn', 'turnOff', 'setVerticalSwing', 'setHorizontalWwing']
+  'li6cbv5sdlatti0j': ['setTemperature', 'setMode', 'setFanSpeed', 'turnOn', 'turnOff', 'setVerticalSwing', 'setHorizontalSwing']
 });
 
 function saveAutomation() {
@@ -188,6 +188,8 @@ function restoreAutomation(){
   actions: [{ device: null, actionName: '', params: [] }],
   };
 }
+
+const isDisabled = computed(() => automation.value.name.length < 3)
 
 const addAction = () => {
   automation.value.actions.push({ device: null, actionName: '', params: [] });
