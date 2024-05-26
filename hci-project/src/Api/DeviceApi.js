@@ -61,7 +61,7 @@ class Device {
   }
   
   toString(){
-    return this.name
+    return JSON.stringify(this, null, 2)
   }
 }
 export { DeviceApi, Device }

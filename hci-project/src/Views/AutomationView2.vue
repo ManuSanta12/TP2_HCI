@@ -3,9 +3,7 @@
     <v-main >
       <v-container>
         <v-row class="pa-6 scrollable" no-gutters>
-          <v-btn @click="manusa"> holas </v-btn>
           <div class="pa-6" v-for="auto in store.automations" :key="auto.id">
-            <p>{{ auto.id }}</p>
             <AutomationsCard 
             :automation="auto" 
             />
@@ -91,6 +89,7 @@ import { Automation, Action } from '@/Api/AutomationsApi';
 
 const dialog = ref(false); 
 const store = useAutomationStoreApi();
+
 //const automations = store.automations;
 const devices = ref([]);
 const deviceStore = useDeviceStoreApi();
@@ -99,7 +98,7 @@ const actions = ['Select Light Color', 'Select Light Brightness'];
 const result = ref(null)
 const automation = ref({
   name: '',
-  actions: [{ device: {}, actionName: '', params: [] }],
+  actions: [{ device: null, actionName: '', params: [] }],
   showInHome: false
 });
 
@@ -118,10 +117,6 @@ function saveAutomation() {
   console.log('store',store.automations);
   dialog.value = false;
 } 
-function manusa(){
-  console.log('get all devuelve:' + store.getAll())
-}
-
 
 const addAction = () => {
   automation.value.actions.push({ device: {}, actionName: '', params: [] });

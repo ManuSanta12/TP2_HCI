@@ -4,7 +4,7 @@ class AutomationsApi{
         return `${Api.baseUrl}/routines${ slug ? `/${slug}` : ""}`;
     }
     static async getAll(controller){
-        return await Api.get(AutomationsApi.getUrl, controller);
+        return await Api.get(AutomationsApi.getUrl(), controller);
     }
     static async add(automation, controller){
         return await Api.post(AutomationsApi.getUrl(),automation, controller);

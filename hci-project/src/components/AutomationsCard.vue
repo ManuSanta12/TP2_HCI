@@ -12,7 +12,7 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-card-text class="px-3 pb-3">Includes {{ automation.actions.length()}} actions</v-card-text>
+        <v-card-text class="px-3 pb-3">Includes {{ automation.actions.length }} actions</v-card-text>
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-title >More</v-expansion-panel-title>
@@ -38,10 +38,9 @@
 </template>
 
 <script setup>
-import { defineEmits, ref } from 'vue'; 
+import { defineEmits, ref , computed} from 'vue'; 
 import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
-//import { openEditDialog } from '@/Views/AutomationView2.vue'; 
-
+import { useErrorStore } from '@/Stores/ErrorStore';
 const automationStore = useAutomationStoreApi();
 const errorStore = useErrorStore();
 

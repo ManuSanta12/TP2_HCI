@@ -28,11 +28,6 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
         return Object.assign(new Automation(), result)
     }
     async function getAll(controller = null) {
-        // let result = await AutomationsApi.getAll(controller);
-        // result = result.map((Automation) => Object.assign(new Automation(), Automation));
-        // console.log('RESULT', result)
-        // automations.value = result
-        // return result
         let result = await AutomationsApi.getAll(controller);
         let newAutomations = [];
         // let newShowInHomeDevices = [];
