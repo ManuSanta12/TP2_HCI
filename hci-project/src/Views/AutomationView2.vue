@@ -2,11 +2,11 @@
   <v-layout class="rounded rounded-md">
     <v-main color='#DDEAF4'>
       <v-row class="pa-6 scrollable">
-        <!-- <div class="pa-6" v-for="auto in automations" :key="auto.id">
+        <div class="pa-6" v-for="auto in store.automations" :key="auto.id">
           <AutomationsCard 
           :automation="auto" 
           />
-        </div> -->
+        </div> 
       </v-row>
     </v-main>
     <v-dialog v-model="dialog" width="1300" scrollable>
@@ -35,7 +35,8 @@
                 outlined
                 dense
                 return-object
-                @change="(device) => getActionsForDevice(device.id, index)"
+                @change="(device) => {getActionsForDevice(device.id, index)}"
+
               />
             </v-col>
             <v-col cols="5">
@@ -50,7 +51,7 @@
             <v-col v-if="action.actionName === 'Select Light Color'">
               <v-color-picker hide-canvas hide-inputs color-picker-controls-padding="0" v-model="action.params[0]"></v-color-picker>
             </v-col>
-            <v-col v-if="action.actionName === 'Select Light Brightness'">
+            <v-col v-if="action.actionName === 'setBrightness'">
               <v-list-item-title class="pa-0">Brightness</v-list-item-title>
               <v-slider dense :max="100" :min="0" thumb-label v-model="action.params[0]"></v-slider>
             </v-col>
@@ -83,10 +84,11 @@ import { useAutomationStoreApi } from '@/Stores/AutomationStoreApi';
 import AutomationsCard from '@/components/AutomationsCard.vue';
 import { DeviceApi } from '@/Api/DeviceApi';
 import { useDeviceStoreApi } from '@/Stores/DeviceStoreApi';
+import { Automation, Action } from '@/Api/AutomationsApi';
 
 const dialog = ref(false); 
 const store = useAutomationStoreApi();
-const automations = store.automations;
+//const automations = store.automations;
 const devices = ref([]);
 const deviceStore = useDeviceStoreApi();
 
@@ -99,14 +101,17 @@ const automation = ref({
 });
 
 const actionsByDevice = ref({
-  'go46xmbqeomjrsjr': ['Select Light Color', 'Select Light Brightness','Turn on', 'Turn off'],
+  'go46xmbqeomjrsjr': ['Select Light Color', 'setBrightness','Turn on', 'Turn off'],
   'c89b94e8581855bc': ['Set volume', 'Play song', 'Pause song', 'Skip song'],
   'dbrlsh7o5sn8ur4i': ['pump water'],
   'li6cbv5sdlatti0j': ['set temperature', 'set mode', 'set fan speed', 'turn on', 'turn off', 'set v swing', 'set h swing']
 });
 
 function saveAutomation() {
-  // Lógica para guardar la automatización
+  const actionsToSave = automation.value.actions.map(action => new Action({id: action.device.id}, action.actionName, action.params));
+  const newAutomation = new Automation(automation.value.name, actionsToSave);
+  console.log(newAutomation);
+  store.addAutomation(newAutomation);
   dialog.value = false;
 }
 
