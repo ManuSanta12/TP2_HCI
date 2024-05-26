@@ -122,9 +122,6 @@
             <v-col cols="10" class="d-flex align-center">
               <v-list-item class="pa-0 text-subtitle-1">Show in home</v-list-item>
             </v-col>
-            <v-col cols="2" class="d-flex justify-end align-center">
-              <v-switch inset color="green" class="small-switch align-center" v-model="automation.showInHome"></v-switch>
-            </v-col>
           </v-row>
         </v-card-text>
         <v-divider />
@@ -161,7 +158,6 @@ const result = ref(null)
 const automation = ref({
   name: '',
   actions: [{ device: null, actionName: '', params: [] }],
-  showInHome: false
 });
 
 const actionsByDevice = ref({
@@ -173,7 +169,7 @@ const actionsByDevice = ref({
 
 function saveAutomation() {
   const actionsToSave = automation.value.actions.map(action => new Action({id: action.device.id}, action.actionName, action.params));
-  const newAutomation = new Automation(automation.value.name, actionsToSave,automation.value.showInHome);
+  const newAutomation = new Automation(automation.value.name, actionsToSave);
   console.log('newAutomation:',newAutomation);
   store.addAutomation(newAutomation);
   console.log('store',store.automations);

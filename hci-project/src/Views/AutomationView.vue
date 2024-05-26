@@ -77,9 +77,6 @@
           <v-card-text class="py-2 px-3">
             <v-btn @click="addAction">Add Action</v-btn>
           </v-card-text>
-          <!-- <v-col cols="2" class="d-flex justify-end align-center"> 
-                <v-switch inset color="green" class="small-switch align-center mt-4" v-model="action.showInHome"></v-switch>
-              </v-col> -->
         <v-divider/>
         <v-card-actions>
               <v-btn prepend-icon="mdi-delete" variant="tonal" small color="error" dark @click="dialog = false">Delete</v-btn>

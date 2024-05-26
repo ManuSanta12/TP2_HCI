@@ -30,17 +30,12 @@ export const useAutomationStoreApi = defineStore('Automation', () => {
     async function getAll(controller = null) {
         let result = await AutomationsApi.getAll(controller);
         let newAutomations = [];
-        // let newShowInHomeDevices = [];
         for (let i = 0; i < result.length; i++) {
          // newAutomations = result[i];
          let automanu = result[i];
           newAutomations.push(Object.assign(new Automation(), automanu));
-        //   if(device.meta && device.meta.showInHome) {
-        //     newShowInHomeDevices.push(Object.assign(new Device(), device));
-        //   }
         }
         automations.value = newAutomations
-        // showInHomeDevices.value = newShowInHomeDevices
         return newAutomations
     }
     async function executeAutomation(id, controller = null) {

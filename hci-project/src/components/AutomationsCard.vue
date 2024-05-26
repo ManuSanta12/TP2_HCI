@@ -43,7 +43,6 @@ const props = defineProps({
   automation: Object
 });
 const automationName = computed(() => props.automation["name"] || 'Unknown Device')
-// const showInHome = computed(() => props.automation["meta"]["showInHome"]);
 
 async function deleteAutomation() {
   try {
