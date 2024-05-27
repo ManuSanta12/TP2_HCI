@@ -1,6 +1,6 @@
 INSTRUCTIVO DE INSTALACIÓN
 
-La aplicación puede correr en Google Chrome (Versión 124.0.6367.155) y …
+La aplicación puede correr en Google Chrome (Versión 124.0.6367.155) y Edge (versión 125.0.2535.67)
 
 Para correr la página es necesario tener node instalado en la computadora y tener la api corriendo de acuerdo al instructivo proporcionado por la cátedra. A continuación ejecutar los siguientes pasos en terminal dentro del directorio hci-project:
 
