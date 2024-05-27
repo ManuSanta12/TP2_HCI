@@ -110,7 +110,6 @@ function getComponent(type){
 }
 
 function runAction(id, actionName, data) {
-  console.log(id, actionName, data)
   store.runAction(id, actionName, data)
 }
 

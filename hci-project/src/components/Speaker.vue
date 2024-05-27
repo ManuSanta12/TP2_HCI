@@ -100,7 +100,7 @@ async function pause(){
   try {
     let response = await deviceStore.runActionNoParams(props.device["id"], "pause");
   } catch (error) {
-    console.error("Error pausing the device", "Please try again");
+    errorStore.showError("Couldn't pause playback", "Please try again");
   }
 }
 
@@ -129,7 +129,6 @@ async function previous(){
 }
 
 async function setGenre() {
-  console.log("Selected genre: ", selectedGenre.value)
   try {
     let response = await deviceStore.runAction(props.device["id"], "setGenre", selectedGenre.value);
   } catch(error){

@@ -23,7 +23,7 @@ export const useDeviceStoreApi = defineStore('device', () => {
         return Object.assign(new Device(), result)
     }
     async function removeDevice(id) {
-        const result =  await DeviceApi.remove(id)
+        const result = await DeviceApi.remove(id)
         await getAll()
         return result
     }
@@ -50,7 +50,6 @@ export const useDeviceStoreApi = defineStore('device', () => {
     
     async function runAction(id, actionName, data = null) {
         const result = await DeviceApi.runAction(id, actionName, data)
-        console.log("se ejecuto la accion", actionName, "con data", data, "y resultado", result)
         await getAll()
         return result
     }
@@ -61,7 +60,6 @@ export const useDeviceStoreApi = defineStore('device', () => {
     }
     async function runActionNoParams(id, actionName) {
         const result = await DeviceApi.runActionNoParams(id, actionName)
-        console.log("se ejecuto la accion", actionName, "con resultado", result)
         await getAll()
         return result
     }

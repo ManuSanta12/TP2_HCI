@@ -59,8 +59,7 @@ async function toggleShowInHome() {
 
 async function deleteDevice() {
   try {
-    const _result = await deviceStore.removeDevice(props.device.id);
-    // setResult(_result);
+    await deviceStore.removeDevice(props.device.id);
     props.device = null;
   } catch (error) {
     errorStore.showError("Couldn't delete device", "Please try again.");

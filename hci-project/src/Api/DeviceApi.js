@@ -10,11 +10,11 @@ class DeviceApi {
   }
 
   static async remove(id, controller) {
-    return await Api.delete(DeviceApi.getUrl(), id, controller);
+    return await Api.delete(DeviceApi.getUrl(id, controller));
   }
 
   static async get(id, controller) {
-    return await Api.get(DeviceApi.getUrl(), id, controller);
+    return await Api.get(DeviceApi.getUrl(id, controller));
   }
 
   static async getAll(controller) {
