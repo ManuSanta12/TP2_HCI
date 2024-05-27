@@ -34,7 +34,6 @@ const errorStore = useErrorStore();
 const deviceStore = useDeviceStoreApi();
 
 async function setColor(){
-  console.log(props.device["state"]["color"])
   const currentColor = props.device["state"]["color"].slice(1)
   try {
     let response = await deviceStore.runAction(props.device["id"], "setColor", currentColor)

@@ -90,6 +90,7 @@ async function saveDevice(){
   try {
     let response = await store.addDevice(device);
     dialog.value = false;
+    restoreDevice();
   } catch (error) {
     errorStore.showError("Couldn't add the device", "Please try again");
   }
@@ -97,6 +98,7 @@ async function saveDevice(){
 
 const cancel = () => {
   dialog.value = false;
+  restoreDevice();
 };
 
 function getComponent(type){
@@ -126,7 +128,12 @@ async function getAllDevices() {
       setResult(e)
     }
 }
-
+function restoreDevice(){
+  newDevice.value = {
+    name: '',
+    type: '',
+    showInHome: false }
+}
 onMounted(async () => {
   await store.getAll()
 })
